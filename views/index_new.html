@@ -33,7 +33,7 @@
 
         <div style="border: 1px solid #ccc; width: 350px">
             New Issue Filter
-            <select name="issuetype" class="" id="issuetype" >
+            <select name="issuetype" class="" id="issuetype">
                 <option value="">-- Select Issue Type --</option>
                 {{#data}}
                     <option value="{{issuetype}}">{{issuetype}}</option>
@@ -49,17 +49,16 @@
                         <li class="taluk">Taluk</li>
                         <li class="acres">No. of Acres</li>
                     </ul>
-                    <div class="sub-filter item2">
+                    <div class="sub-filter item2 ">
                         <div class="content">
                             <h1>Filter Popup</h1>
                             <div class="close">back</div>
-                            <ul class="district">
-                                <li><input type="checkbox" name="Kurnool" value="Kurnool">Kurnool</li>
-                                <li><input type="checkbox" name="Anantapur" value="Anantapur">Anantapur</li>
-                                <li><input type="checkbox" name="Vizianagaram" value="Vizianagaram">Vizianagaram</li>
-                                <li><input type="checkbox" name="Anantapur" value="Anantapur">Anantapur</li>
-                                <li><input type="checkbox" name="Srikakulam" value="Srikakulam">Srikakulam</li>
-                            </ul>
+                            <select name="district" class="" id="district">
+                                <option value="">-- Select Districts --</option>
+                                {{#data1}}
+                                    <option value="{{districts}}">{{districts}}</option>
+                                {{/data1}}
+                            </select>
                             <div class="btn-grp">
                                 <div class="next">Add more filter</div>
                                 <div class="add">Add this filter</div>
@@ -71,12 +70,12 @@
                         <div class="content">
                             <h1>Filter Popup</h1>
                             <div class="close">back</div>
-                            <ul class="Taluk">
-                                <li><input type="checkbox" name="Achampeta" value="Achampeta">Achampeta</li>
-                                <li><input type="checkbox" name="Adoni" value="Adoni">Adoni</li>
-                                <li><input type="checkbox" name="Alair" value="Alair">Alair</li>
-                                <li><input type="checkbox" name="Alamanada" value="Alamanada">Alamanada</li>
-                            </ul>
+                            <select name="taluk" class="" id="taluk">
+                                <option value="">-- Select Taluks --</option>
+                                    {{#data2}}
+                                        <option value="{{taluks}}">{{taluks}}</option>
+                                    {{/data2}}
+                            </select>
                             <div class="btn-grp">
                                 <div class="next">Add more filter</div>
                                 <div class="add">Add this filter</div>
