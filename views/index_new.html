@@ -5,6 +5,7 @@
     <title></title>
     <!--<link href="/css/style.css" rel="stylesheet">-->
     <link href="/css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/graph.js"></script>
 </head>
 <body>
 <header>
@@ -150,11 +151,13 @@
             <div style="height: 5px;"></div>
         </div>
         <div style="border: 1px solid #ccc; width: 400px" class="graph-type-bar graph-container">
+
+            <form method="post" id="formBarGraph">
             <table>
 
                 <tr>
                     <td>Graph title:</td>
-                    <td><input></td>
+                    <td><input type="text" name="graphTitle" id="graphTitle"></td>
                 </tr>
                 <tr>
                     <td>Horizontal axis label:</td>
@@ -206,6 +209,8 @@
                         </select></td>
                 </tr>
             </table>
+                <input type="button" name="btnBarGraph" id="btnBarGraph" value="Create Graph">
+            </form>
         </div>
 
         <div style="border: 1px solid #ccc; width: 400px" class="graph-type-line graph-container">
@@ -655,4 +660,15 @@
                 document.getElementById(cityName).style.display = "block";
                 evt.currentTarget.className += " active";
             }
+
+
+            $('#formBarGraph').on('click', '#btnBarGraph',  function (e) { alert('clicked');
+                e.preventDefault();
+                e.stopPropagation();
+                $.post('/graph/bar', $('#formBarGraph').serialize())
+                .done(function (data) {
+
+                });
+            });
+
         </script>
