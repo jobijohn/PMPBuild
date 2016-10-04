@@ -13,7 +13,7 @@ function indexPage(req, res) {
         common.getAllUniqueIssueTypes(issueData, function (err, issueTypes) {
             console.log('issue types -', issueTypes);
             // console.log('issueTypes - ',issueTypes);
-            res.render('index_new', {data:'appu'});
+            res.render('index_new', {data:issueTypes});
         });
     });
 

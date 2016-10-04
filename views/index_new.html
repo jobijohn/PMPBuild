@@ -33,45 +33,12 @@
 
         <div style="border: 1px solid #ccc; width: 350px">
             New Issue Filter
-
-            <ul class="primary-filter">
-                <li class="">
-                    <a href="#" class="item1">Member On-boarding</a>
-                    <!--<ul class="tree filterPop">
-                        <li><a href="#" class="tree-toggler">District</a>
-                            <ul class="tree">
-                                <li><input type="checkbox" name="Kurnool" value="Kurnool">Kurnool</li>
-                                <li><input type="checkbox" name="Anantapur" value="Anantapur">Anantapur</li>
-                                <li><input type="checkbox" name="Vizianagaram" value="Vizianagaram">Vizianagaram</li>
-                                <li><input type="checkbox" name="Anantapur" value="Anantapur">Anantapur</li>
-                                <li><input type="checkbox" name="Srikakulam" value="Srikakulam">Srikakulam</li>
-                            </ul>
-                        </li>
-                        <li class=""><a href="#" class="tree-toggler">Taluk</a>
-                            <ul class="tree">
-                                <li><input type="checkbox" name="Achampeta" value="Achampeta">Achampeta</li>
-                                <li><input type="checkbox" name="Adoni" value="Adoni">Adoni</li>
-                                <li><input type="checkbox" name="Alair" value="Alair">Alair</li>
-                                <li><input type="checkbox" name="Alamanada" value="Alamanada">Alamanada</li>
-                            </ul>
-                        </li>
-                        <li class=""><a href="#" class="tree-toggler">No. of Acres</a>
-                            <ul class="tree">
-                                <li><input type="text" name="" value="&gt;50"></li>
-                                <li><input type="text" name="" value="&lt;100"></li>
-                            </ul>
-                        </li>
-                    </ul>-->
-                </li>
-                <li class="">
-                    <a href="#" class="seed">Seed Distribution</a>
-                    <!--<ul class="tree">
-                        <li><a href="#">District</a></li>
-                        <li><a href="#">Taluk</a></li>
-                        <li><a href="#">No. of Acres</a></li>
-                    </ul>-->
-                </li>
-            </ul>
+            <select name="issuetype" class="" id="issuetype" >
+                <option value="">-- Select Issue Type --</option>
+                {{#data}}
+                    <option value="{{issuetype}}">{{issuetype}}</option>
+                {{/data}}
+            </select>
 
             <div class="filter-modal item1" id="modal">
                 <div class="content">

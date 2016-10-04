@@ -33,6 +33,9 @@ function getAllUniqueIssueTypes(jsonJiraProject, callback) {
     uniqueIssueTypes = issueTypes.filter(function (elem, index, self) {         // To get unique issue types from all issues
         return index == self.indexOf(elem);
     });
+    for (var j = 0;j<uniqueIssueTypes.length;j++) {
+        uniqueIssueTypes[j] = {issuetype:uniqueIssueTypes[j]};
+    }
     callback(null, uniqueIssueTypes);
 }
 
