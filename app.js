@@ -26,6 +26,10 @@ function launchApp() {
     app.engine('html', consolidate.handlebars);
     app.set('view engine', 'html');
     app.set('views', __dirname + '/views');
+    app.use('/js', express.static(__dirname + '/public/js'));
+    app.use('/css', express.static(__dirname + '/public/css'));
+    app.use('/img', express.static(__dirname + '/public/img'));
+    app.use('/', express.static(__dirname + '/public/'));
 
     app.use(session({
         secret: 'cookie_secret',
