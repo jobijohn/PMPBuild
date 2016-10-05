@@ -13,10 +13,6 @@ function indexPage(req, res) {
         common.getAllUniqueIssueTypes(issueData, function (err, issueTypes) {
             common.getAllUniqueDistricts(issueData, function (err, districts) {
                 common.getAllUniqueTaluks(issueData, function (err, taluks) {
-                    console.log('issue types -', issueTypes);
-                    console.log('districts -', districts);
-                    console.log('taluks -', taluks);
-                    // console.log('issueTypes - ',issueTypes);
                     res.render('index_new', {data:issueTypes, data1:districts, data2:taluks});
                 });
             });

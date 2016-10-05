@@ -63,8 +63,8 @@
                                 {{/data1}}
                             </select>
                             <div class="btn-grp">
-                                <div class="next">Add more filter</div>
-                                <div class="add">Add this filter</div>
+                                <button type="button" class="next">Add more filter</button>
+                                <button type="button" id="addDistrict">Add this filter</button>
                             </div>
                         </div>
                     </div>
@@ -80,8 +80,8 @@
                                     {{/data2}}
                             </select>
                             <div class="btn-grp">
-                                <div class="next">Add more filter</div>
-                                <div class="add">Add this filter</div>
+                                <button type="button" class="next">Add more filter</button>
+                                <button type="button" id="addTaluk">Add this filter</button>
                             </div>
                         </div>
                     </div>
@@ -91,17 +91,16 @@
                             <h1>Filter Popup</h1>
                             <div class="close">back</div>
                             <ul class="Acres" style="padding: 0">
-                                <select>
-                                    <option>&gt;</option>
-                                    <option>&lt;</option>
-                                    <option>=</option>
+                                <select name="acreSymbol" id="acreSymbol">
+                                    <option value=">">&gt;</option>
+                                    <option value="<">&lt;</option>
+                                    <option value="=">=</option>
                                 </select>
-                                <input type="text" value="" name="">
-                                <input type="button" value="add">
+                                <input type="text" value="" id="acreValue">
                             </ul>
                             <div class="btn-grp">
-                                <div class="next">Add more filter</div>
-                                <div class="add">Add this filter</div>
+                                <button type="button" class="next">Add more filter</button>
+                                <button type="button" id="addAcre">Add this filter</button>
                             </div>
                         </div>
                     </div>
@@ -131,7 +130,7 @@
 
         </div>
         <div style="height: 10px;"></div>
-        <textarea style="height: 50px; width: 235px; margin-left: 0">Issue Type = Member On-boarding & District = Kurnool,Anantapur & Taluk = Achampeta, Alair & No. of Acres = >50, <100</textarea>
+        <textarea name="filterText" style="height: 50px; width: 235px; margin-left: 0"></textarea>
         <br/>
         <button>Save Filter</button>
     </td>
@@ -441,7 +440,6 @@
         </tr>
     </table>
 </div>
-
 </body>
 </html>
 
@@ -580,10 +578,54 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
         <script>
-            $('#refreshJson').click(function () {
-                alert('button click');
-                $.get('/jira', function (data, status) {
-                    alert("Data: " + data + "\nStatus: " + status);
+            $(document).ready(function () {
+                $('#refreshJson').click(function () {
+                    $(this).after("<img src='/ajax-loader.gif' alt='loading' />");
+                    $.get('/jira', function () {
+                    });
+                });
+                $('#issuetype').on('change', function() {
+                    if(this.value) {
+                        var issue1 = 'issueType=' + this.value;
+                        //  Issue Type = Member On-boarding & District = Kurnool,Anantapur & Taluk = Achampeta, Alair & No. of Acres = >50, <100
+                        $("textarea[name=filterText]").val(issue1);
+                        $('.filter-modal.item1').addClass('enable');
+                    } else {
+                        $("textarea[name=filterText]").val("");
+                    }
+                });
+
+                $('#addDistrict').click(function () {
+                        var _district = $("#district").val();
+                        if(_district) {
+                            var oldFilter = $("textarea[name=filterText]").val();
+                            $("textarea[name=filterText]").val(oldFilter+' & District='+ _district);
+                            $('#district option').prop('selected', function() {
+                                return this.defaultSelected;
+                            });
+                        }
+                });
+
+                $('#addTaluk').click(function () {
+                    var _taluk = $("#taluk").val();
+                    if(_taluk) {
+                        var oldFilter = $("textarea[name=filterText]").val();
+                        $("textarea[name=filterText]").val(oldFilter+' & Taluk='+ _taluk);
+                        $('#taluk option').prop('selected', function() {
+                            return this.defaultSelected;
+                        });
+                    }
+                });
+
+                $('#addAcre').click(function () {
+                    var _acreSymbol = $("#acreSymbol").val();
+                    var _acreValue = $("#acreValue").val();
+                    var _acre = _acreSymbol + _acreValue;
+                    if(_acre) {
+                        var oldFilter = $("textarea[name=filterText]").val();
+                        $("textarea[name=filterText]").val(oldFilter+' & NoOfAcres='+ _acre);
+                        $("#acreValue").val("");
+                    }
                 });
             });
             /*$('.filter-modal').click(function(){
@@ -610,14 +652,14 @@
             var modal = document.getElementById('modal');
             var modal2 = document.getElementById('modal2');
 
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    console.log(event.target);
-                    $('.filter-modal.item1').removeClass('enable');
-                    $('.sub-filter, .sub-filter-taluk, .sub-filter-acres').removeClass('enable');
-                }
-            };
+//            // When the user clicks anywhere outside of the modal, close it
+//            window.onclick = function(event) {
+//                if (event.target == modal) {
+//                    console.log(event.target);
+//                    $('.filter-modal.item1').removeClass('enable');
+//                    $('.sub-filter, .sub-filter-taluk, .sub-filter-acres').removeClass('enable');
+//                }
+//            };
 
 
             $('.close').click(function(){
@@ -685,5 +727,6 @@
 
                 });
             });
+
 
         </script>
