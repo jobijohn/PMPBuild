@@ -1,7 +1,8 @@
 var express = require('express'),
     consolidate = require('consolidate'),
     index = require('./index'),
-    session = require('express-session');
+    session = require('express-session'),
+    graph = require('./graph');
 
 
 function launchApp() {
@@ -30,9 +31,10 @@ function launchApp() {
     app.use('/css', express.static(__dirname + '/public/css'));
     app.use('/img', express.static(__dirname + '/public/img'));
     app.use('/', express.static(__dirname + '/public/'));
+    app.use(express.bodyParser());
 
     app.use(session({
-        secret: 'cookie_secret',
+        secret: 'sssh!!!',
         proxy: true,
         resave: true,
         saveUninitialized: true
@@ -42,6 +44,8 @@ function launchApp() {
     app.get('/jira', index.getOAuth);
     app.get('/jira/callback', index.getOAuthCallback);
     app.get('/projects', index.projects);
+    app.post('/graph/bar', graph.generateBarGraph);
+    app.get('/get-json-from-jira', index.getJsonFromJira);
 
     var port = app.get('port') || 1337;
     app.listen(port);

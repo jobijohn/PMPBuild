@@ -3,7 +3,8 @@ var express = require('express');
 var session = require('express-session');
 var OAuth = require('oauth').OAuth;
 var fs = require('fs'),
-    common = require('./common');
+    common = require('./common'),
+    graph = require('./graph');
 
 var base_url = "https://swarmact.atlassian.net"; //example https://test.atlassian.net
 
@@ -11,9 +12,15 @@ function indexPage(req, res) {
     var issueJsonFile = 'jiraissues.json';
     common.readJsonFile(issueJsonFile, function (err, issueData) {
         common.getAllUniqueIssueTypes(issueData, function (err, issueTypes) {
-            console.log('issue types -', issueTypes);
-            // console.log('issueTypes - ',issueTypes);
-            res.render('index_new', {data:issueTypes});
+            common.getAllUniqueDistricts(issueData, function (err, districts) {
+                common.getAllUniqueTaluks(issueData, function (err, taluks) {
+                    console.log('issue types -', issueTypes);
+                    console.log('districts -', districts);
+                    console.log('taluks -', taluks);
+                    // console.log('issueTypes - ',issueTypes);
+                    res.render('index_new', {data:issueTypes, data1:districts, data2:taluks});
+                });
+            });
         });
     });
 
@@ -66,12 +73,12 @@ function getOAuthCallback (req, res) {
                 //     access_token: oauth_access_token,
                 //     secret: oauth_access_token_secret
                 // });
-                res.redirect('/projects');
+                res.redirect('/get-json-from-jira');
             }
         });
 }
 
-function projects (req, res) {
+function getJsonFromJira(req, res) {
     var consumer = new OAuth(
         base_url+"/plugins/servlet/oauth/request-token",
         base_url+"/plugins/servlet/oauth/access-token",
@@ -97,4 +104,4 @@ function projects (req, res) {
 exports.indexPage = indexPage;
 exports.getOAuth = getOAuth;
 exports.getOAuthCallback = getOAuthCallback;
-exports.projects = projects;
+exports.getJsonFromJira = getJsonFromJira;
