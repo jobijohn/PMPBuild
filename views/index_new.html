@@ -19,7 +19,7 @@
 </ul>
 
 <div id="Settings" class="tabcontent">
-<button>Refresh</button>
+    <a href="/jira" class="btn-submit">Refresh</a>
     <table style="width: 100%">
     <tr>
     <td style="vertical-align: top">
@@ -564,12 +564,28 @@
                 border-radius: 5px;
                 cursor: pointer;
             }
+            .btn-submit {
+                color: white;
+                background-color: blue;
+                border: none;
+                text-decoration: none;
+                padding: 6px 18px 6px 19px;
+                font-size: 16px;
+                margin: 12px 0px 12px 0px;
+                cursor: pointer;
+                float: left;
+            }
 
         </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
         <script>
-
+            $('#refreshJson').click(function () {
+                alert('button click');
+                $.get('/jira', function (data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
+            });
             /*$('.filter-modal').click(function(){
                 $(this).parent().children('ul.tree').toggle(300);
             });*/
