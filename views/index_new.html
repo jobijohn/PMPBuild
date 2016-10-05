@@ -3,484 +3,491 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <!--<link href="/css/style.css" rel="stylesheet">-->
-    <link href="/css/style.css" rel="stylesheet">
-    <script type="text/javascript" src="/js/graph.js"></script>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <!-- bootstrap css --->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+    <!-- bootstrap css -->
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
-<header>
-    <h1>Project Management Prototype Build</h1>
-</header>
+    <div class="container">
+        <header>
+            <h1>Project Management Prototype Build</h1>
+        </header>
 
-
-<ul class="tab">
-    <li><a href="#" class="tablinks" onclick="openCity(event, 'Settings')">Settings</a></li>
-    <li><a href="#" class="tablinks" onclick="openCity(event, 'Dashboard')">Dashboard</a></li>
-</ul>
-
-<div id="Settings" class="tabcontent">
-    <a href="/jira" class="btn-submit">Refresh</a>
-    <table style="width: 100%">
-    <tr>
-    <td style="vertical-align: top">
-        Saved Filters:
-        <select>
-            <option value="">Issue filter 1</option>
-            <option value="">Issue filter 2</option>
-            <option value="">Issue filter 3</option>
-            <option value="">Issue filter 4</option>
-        </select>
-        <br/>
-
-        <div style="height: 10px"></div>
-
-        <div style="border: 1px solid #ccc; width: 350px">
-            New Issue Filter
-            <select name="issuetype" class="" id="issuetype">
-                <option value="">-- Select Issue Type --</option>
-                {{#data}}
-                    <option value="{{issuetype}}">{{issuetype}}</option>
-                {{/data}}
-            </select>
-
-            <div class="filter-modal item1" id="modal">
-                <div class="content">
-                    <h1>Filter Popup</h1>
-                    <div class="close">Close</div>
-                    <ul class="membes-on">
-                        <li class="district">District</li>
-                        <li class="taluk">Taluk</li>
-                        <li class="acres">No. of Acres</li>
+        <div class="row box-theme">
+            <div class="nav-bar">
+                <div class="col-sm-3">
+                    <ul class="tab">
+                        <li><a href="#" class="tablinks" onclick="openCity(event, 'Settings')">Settings</a></li>
+                        <li><a href="#" class="tablinks" onclick="openCity(event, 'Dashboard')">Dashboard</a></li>
                     </ul>
-                    <div class="sub-filter item2 ">
-                        <div class="content">
-                            <h1>Filter Popup</h1>
-                            <div class="close">back</div>
-                            <select name="district" class="" id="district">
-                                <option value="">-- Select Districts --</option>
-                                {{#data1}}
-                                    <option value="{{districts}}">{{districts}}</option>
-                                {{/data1}}
-                            </select>
-                            <div class="btn-grp">
-                                <button type="button" class="next">Add more filter</button>
-                                <button type="button" id="addDistrict">Add this filter</button>
+                </div>
+                <div class="col-sm-9">
+                </div>
+            </div>
+
+
+            <div id="Settings" class="tabcontent default-active">
+                <div class="col-sm-3 filter-pan">
+                    <a href="/jira" class="btn-submit">Refresh</a>
+                    <br/><br/><br/>
+                    <div class="clear"></div>
+                    Saved Filters:
+                    <select>
+                        <option value="">Issue filter 1</option>
+                        <option value="">Issue filter 2</option>
+                        <option value="">Issue filter 3</option>
+                        <option value="">Issue filter 4</option>
+                    </select>
+                    <br/>
+
+                    <div style="height: 10px"></div>
+
+                    <div >
+                        New Issue Filter
+                        <select name="issuetype" class="" id="issuetype" >
+                            <option value="">-- Select Issue Type --</option>
+                            {{#data}}
+                            <option value="{{issuetype}}">{{issuetype}}</option>
+                            {{/data}}
+                        </select>
+                    </div>
+                    <div style="height: 10px;"></div>
+                    <textarea name="filterText" style="height: 50px; width: 235px; margin-left: 0"></textarea>
+                    <br/>
+                    <button>Save Filter</button>
+
+                </div>
+
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-8">
+                                <label for="graph-type" class="control-label col-sm-4">Graph type:</label>
+                                <div class="col-sm-8">
+                                    <select id="graph-type" class="form-control">
+                                        <option value="bar">Bar</option>
+                                        <option value="line">Line</option>
+                                        <option value="pie">Pie</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+
+                        <div class="col-sm-12">
+                            <div class="graph-type-bar graph-container filter-form">
+                                <div class="col-sm-6 form-horizontal">
+                                    <div class="form-group">
+                                        <label for="graph-title" class="control-label col-sm-4">Graph title:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="graph-title">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="horizontal-axis-label" class="control-label col-sm-4">Horizontal axis label:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="horizontal-axis-label">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="vertical-axis-label" class="control-label col-sm-4">Vertical axis label:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="vertical-axis-label">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="horizontal-data-type" class="control-label col-sm-4">Horizontal data type:</label>
+                                        <div class="col-sm-8">
+                                            <select id="horizontal-data-type" class="form-control">
+                                                <option value="">District</option>
+                                                <option value="">Taluk</option>
+                                                <option value="">No. of Acres</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 form-horizontal">
+                                    <div class="form-group">
+                                        <label for="horizontal-data-values" class="control-label col-sm-4">Horizontal data values:</label>
+                                        <div class="col-sm-8">
+                                            <textarea style="height: 50px" id="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="vertical-data-type" class="control-label col-sm-4">Vertical data type:</label>
+                                        <div class="col-sm-8">
+                                            <select id="vertical-data-type" class="form-control">
+                                                <option value="">No. of Acres</option>
+                                                <option value="">District</option>
+                                                <option value="">Taluk</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="vertical-data-values" class="control-label col-sm-4">Vertical data values:</label>
+                                        <div class="col-sm-8">
+                                            <textarea style="height: 50px" id="vertical-data-values" class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="number-of-bars" class="control-label col-sm-4">Number of Bars:</label>
+                                        <div class="col-sm-8">
+                                            <select id="number-of-bars" class="form-control">
+                                                <option value="">1</option>
+                                                <option value="">2</option>
+                                                <option value="">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="graph-type-line graph-container filter-form">
+                                <div class="col-sm-6 form-horizontal">
+                                    <div class="form-group">
+                                        <label for="graph-title-line" class="control-label col-sm-4">Graph title:</label>
+                                        <div class="col-sm-8">
+                                            <input id="graph-title-line" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <table>
+                                    <tr>
+                                        <td>Horizontal axis label:</td>
+                                        <td><input></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vertical axis label:</td>
+                                        <td><input></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Horizontal data type:</td>
+                                        <td>
+                                            <select>
+                                                <option value="">District</option>
+                                                <option value="">Taluk</option>
+                                                <option value="">No. of Acres</option>
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Horizontal data values:</td>
+                                        <td>
+                                            <textarea style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
+                                            </textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vertical data type:</td>
+                                        <td>
+                                            <select>
+                                                <option value="">No. of Acres</option>
+                                                <option value="">District</option>
+                                                <option value="">Taluk</option>
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vertical data values:</td>
+                                        <td>
+                                            <textarea style="height: 50px">50&#13;&#10;100&#13;&#10;150
+                                            </textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Number of Lines</td>
+                                        <td>
+                                            <select>
+                                                <option value="">1</option>
+                                                <option value="">2</option>
+                                                <option value="">3</option>
+                                            </select></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                        <div style="border: 1px solid #ccc; width: 400px" class="graph-type-pie graph-container">
+                            <table>
+
+                                <tr>
+                                    <td>Graph title:</td>
+                                    <td><input></td>
+                                </tr>
+                                <tr>
+
+                                <tr>
+                                    <td>Data name:</td>
+                                    <td>
+                                        <select>
+                                            <option value="">District</option>
+                                            <option value="">Taluk</option>
+                                            <option value="">No. of Acres</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td>Data names:</td>
+                                    <td>
+                                        <textarea style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
+                                        </textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Data value:</td>
+                                    <td>
+                                        <select>
+                                            <option value="">No. of Acres</option>
+                                            <option value="">District</option>
+                                            <option value="">Taluk</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td>Data values:</td>
+                                    <td>
+                                        <textarea style="height: 50px">50&#13;&#10;100&#13;&#10;150
+                                        </textarea>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Slice text</td>
+                                    <td>
+                                        <select>
+                                            <option value="">Percentage</option>
+                                            <option value="">Names</option>
+                                            <option value="">Values</option>
+                                            <option value="">None</option>
+                                        </select></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div style="border: 1px solid #ccc; width: 100%">
+                                <img src="{{imageUrl}}" style="width:345px" >
+                            </div>
+                            <button>Save Graph</button>
+                        </div>
+                        <div class="col-sm-6">
+                            <div style="border: 1px solid #ccc; width: 100%">
+                                Issues:
+                                <ul>
+                                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                                    <li><a href=""> This is an example issue for jira-connector</a></li>
+                                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
 
-                    <div class="sub-filter-taluk item3">
-                        <div class="content">
-                            <h1>Filter Popup</h1>
-                            <div class="close">back</div>
-                            <select name="taluk" class="" id="taluk">
-                                <option value="">-- Select Taluks --</option>
-                                    {{#data2}}
-                                        <option value="{{taluks}}">{{taluks}}</option>
-                                    {{/data2}}
-                            </select>
-                            <div class="btn-grp">
-                                <button type="button" class="next">Add more filter</button>
-                                <button type="button" id="addTaluk">Add this filter</button>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+            </div>
 
-                    <div class="sub-filter-acres item4">
-                        <div class="content">
-                            <h1>Filter Popup</h1>
-                            <div class="close">back</div>
-                            <ul class="Acres" style="padding: 0">
-                                <select name="acreSymbol" id="acreSymbol">
-                                    <option value=">">&gt;</option>
-                                    <option value="<">&lt;</option>
-                                    <option value="=">=</option>
-                                </select>
-                                <input type="text" value="" id="acreValue">
+            <div id="Dashboard" class="tabcontent">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="border: 1px solid #ccc; width: 100%">
+                                <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
+                            </div>
+                        </td>
+                        <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
+                            Issues:
+                            <ul>
+                                <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                                <li><a href=""> This is an example issue for jira-connector</a></li>
+                                <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+
                             </ul>
-                            <div class="btn-grp">
-                                <button type="button" class="next">Add more filter</button>
-                                <button type="button" id="addAcre">Add this filter</button>
+                        </div></td>
+
+                        <td rowspan="3" style="vertical-align: top">
+                            <div style="border: 1px solid #ccc; width: 100%; vertical-align: top; height: 780px; padding: 10px; font-size: 20px">
+                                After click on a particular issue, <br/>
+                                then the corresponding JIRA Issue page <br/>
+                                will be displayed in this pane...
                             </div>
-                        </div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="border: 1px solid #ccc; width: 100%">
+                                <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
+                            </div>
+                        </td>
+                        <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
+                            Issues:
+                            <ul>
+                                <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                                <li><a href=""> This is an example issue for jira-connector</a></li>
+                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                            </ul>
+                        </div></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="border: 1px solid #ccc; width: 100%">
+                                <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
+                            </div>
+                        </td>
+                        <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
+                            Issues:
+                            <ul>
+                                <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                                <li><a href=""> This is an example issue for jira-connector</a></li>
+                                <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                            </ul>
+                        </div></td>
+                        <td style="vertical-align: top">
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+<!--- modal --->
+    <div class="filter-modal item1" id="modal">
+        <div class="content">
+            <h1>Filter Popup</h1>
+            <div class="close">Close</div>
+            <ul class="membes-on">
+                <li class="district">District</li>
+                <li class="taluk">Taluk</li>
+                <li class="acres">No. of Acres</li>
+            </ul>
+            <div class="sub-filter item2">
+                <div class="content">
+                    <h1>Filter Popup</h1>
+                    <div class="close">back</div>
+                    <select name="district" class="" id="district">
+                        <option value="">-- Select Districts --</option>
+                        {{#data1}}
+                        <option value="{{districts}}">{{districts}}</option>
+                        {{/data1}}
+                    </select>
+                    <div class="btn-grp">
+                        <button type="button" class="next">Add more filter</button>
+                        <button type="button" id="addDistrict">Add this filter</button>
                     </div>
                 </div>
             </div>
 
-            <div class="filter-modal item2" id="modal">
+            <div class="sub-filter-taluk item3">
                 <div class="content">
                     <h1>Filter Popup</h1>
-                    <div class="close">Close</div>
-                    <ul class="membes-on">
-                        <li class="">District</li>
-                        <li class="">Taluk</li>
-                        <li class="">No. of Acres</li>
-                    </ul>
+                    <div class="close">back</div>
+                    <select name="taluk" class="" id="taluk">
+                        <option value="">-- Select Taluks --</option>
+                        {{#data2}}
+                        <option value="{{taluks}}">{{taluks}}</option>
+                        {{/data2}}
+                    </select>
+                    <div class="btn-grp">
+                        <button type="button" class="next">Add more filter</button>
+                        <button type="button" id="addTaluk">Add this filter</button>
+                    </div>
                 </div>
             </div>
 
-
-
-
-
-
-
-            <br/>
-            <br/>
-
+            <div class="sub-filter-acres item4">
+                <div class="content">
+                    <h1>Filter Popup</h1>
+                    <div class="close">back</div>
+                    <ul class="Acres" style="padding: 0">
+                        <select name="acreSymbol" id="acreSymbol">
+                            <option value=">">&gt;</option>
+                            <option value="<">&lt;</option>
+                            <option value="=">=</option>
+                        </select>
+                        <input type="text" value="" id="acreValue">
+                    </ul>
+                    <div class="btn-grp">
+                        <button type="button" class="next">Add more filter</button>
+                        <button type="button" id="addAcre">Add this filter</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div style="height: 10px;"></div>
-        <textarea name="filterText" style="height: 50px; width: 235px; margin-left: 0"></textarea>
-        <br/>
-        <button>Save Filter</button>
-    </td>
-    <td style="vertical-align: top">
-        <div>
-            <table>
-                <tr>
-                    <td>Graph type:</td>
-                    <td> <select id="graph-type">
-                        <option value="bar">Bar</option>
-                        <option value="line">Line</option>
-                        <option value="pie">Pie</option>
-                    </select></td>
-                </tr>
-            </table>
-            <div style="height: 5px;"></div>
-        </div>
-        <div style="border: 1px solid #ccc; width: 400px" class="graph-type-bar graph-container">
+    </div>
 
-            <form method="post" id="formBarGraph">
-            <table>
-
-                <tr>
-                    <td>Graph title:</td>
-                    <td><input type="text" name="graphTitle" id="graphTitle"></td>
-                </tr>
-                <tr>
-                    <td>Horizontal axis label:</td>
-                    <td><input></td>
-                </tr>
-                <tr>
-                    <td>Vertical axis label:</td>
-                    <td><input></td>
-                </tr>
-                <tr>
-                    <td>Horizontal data type:</td>
-                    <td>
-                        <select>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                            <option value="">No. of Acres</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Horizontal data values:</td>
-                    <td>
-                        <textarea style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Vertical data type:</td>
-                    <td>
-                        <select>
-                            <option value="">No. of Acres</option>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Vertical data values:</td>
-                    <td>
-                        <textarea style="height: 50px">50&#13;&#10;100&#13;&#10;150
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Number of Bars</td>
-                    <td>
-                        <select>
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                        </select></td>
-                </tr>
-            </table>
-                <input type="button" name="btnBarGraph" id="btnBarGraph" value="Create Graph">
-            </form>
-        </div>
-
-        <div style="border: 1px solid #ccc; width: 400px" class="graph-type-line graph-container">
-            <table>
-
-                <tr>
-                    <td>Graph title:</td>
-                    <td><input></td>
-                </tr>
-                <tr>
-                    <td>Horizontal axis label:</td>
-                    <td><input></td>
-                </tr>
-                <tr>
-                    <td>Vertical axis label:</td>
-                    <td><input></td>
-                </tr>
-                <tr>
-                    <td>Horizontal data type:</td>
-                    <td>
-                        <select>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                            <option value="">No. of Acres</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Horizontal data values:</td>
-                    <td>
-                        <textarea style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Vertical data type:</td>
-                    <td>
-                        <select>
-                            <option value="">No. of Acres</option>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Vertical data values:</td>
-                    <td>
-                        <textarea style="height: 50px">50&#13;&#10;100&#13;&#10;150
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Number of Lines</td>
-                    <td>
-                        <select>
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                        </select></td>
-                </tr>
-            </table>
-        </div>
-
-        <div style="border: 1px solid #ccc; width: 400px" class="graph-type-pie graph-container">
-            <table>
-
-                <tr>
-                    <td>Graph title:</td>
-                    <td><input></td>
-                </tr>
-                <tr>
-
-                <tr>
-                    <td>Data name:</td>
-                    <td>
-                        <select>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                            <option value="">No. of Acres</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Data names:</td>
-                    <td>
-                        <textarea style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Data value:</td>
-                    <td>
-                        <select>
-                            <option value="">No. of Acres</option>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Data values:</td>
-                    <td>
-                        <textarea style="height: 50px">50&#13;&#10;100&#13;&#10;150
-                        </textarea>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Slice text</td>
-                    <td>
-                        <select>
-                            <option value="">Percentage</option>
-                            <option value="">Names</option>
-                            <option value="">Values</option>
-                            <option value="">None</option>
-                        </select></td>
-                </tr>
-            </table>
-        </div>
-
-
-
-    </td>
-    <td style="vertical-align: top">
-
-        <div style="border: 1px solid #ccc; width: 100%">
-            <img src="" style="width:345px" id="imgBarGraph">
-        </div>
-
-        <button>Save Graph</button>
-        <br/>
-        <div style="border: 1px solid #ccc; width: 100%">
-            Issues:
-            <ul>
-                <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                <li><a href=""> This is an example issue for jira-connector</a></li>
-                <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+    <div class="filter-modal item2" id="modal2">
+        <div class="content">
+            <h1>Filter Popup</h1>
+            <div class="close">Close</div>
+            <ul class="membes-on">
+                <li class="">District</li>
+                <li class="">Taluk</li>
+                <li class="">No. of Acres</li>
             </ul>
         </div>
-    </td>
-
-    </tr>
-    </table>
-</div>
-
-<div id="Dashboard" class="tabcontent">
-    <table>
-        <tr>
-            <td>
-                <div style="border: 1px solid #ccc; width: 100%">
-                    <img src="" style="width:345px" >
-                </div>
-            </td>
-            <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
-                Issues:
-                <ul>
-                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                    <li><a href=""> This is an example issue for jira-connector</a></li>
-                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-
-                </ul>
-            </div></td>
-
-            <td rowspan="3" style="vertical-align: top">
-                <div style="border: 1px solid #ccc; width: 100%; vertical-align: top; height: 780px; padding: 10px; font-size: 20px">
-                    After click on a particular issue, <br/>
-                    then the corresponding JIRA Issue page <br/>
-                    will be displayed in this pane...
-                </div>
-            </td>
-
-        </tr>
-        <tr>
-            <td>
-                <div style="border: 1px solid #ccc; width: 100%">
-                    <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
-                </div>
-            </td>
-            <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
-                Issues:
-                <ul>
-                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                    <li><a href=""> This is an example issue for jira-connector</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                </ul>
-            </div></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>
-                <div style="border: 1px solid #ccc; width: 100%">
-                    <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
-                </div>
-            </td>
-            <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
-                Issues:
-                <ul>
-                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                    <li><a href=""> This is an example issue for jira-connector</a></li>
-                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                </ul>
-            </div></td>
-            <td style="vertical-align: top">
-
-            </td>
-        </tr>
-    </table>
-</div>
+    </div>
+<!-- modal end -->
 </body>
 </html>
 
         <style>
             /* Style the list */
-            ul.tab {
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-                overflow: hidden;
-                border: 1px solid #ccc;
-                background-color: #f1f1f1;
-            }
+
 
             /* Float the list items side by side */
             ul.tab li {float: left;}
 
-            /* Style the links inside the list items */
-            ul.tab li a {
-                display: inline-block;
-                color: black;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                transition: 0.3s;
-                font-size: 17px;
-            }
 
-            /* Change background color of links on hover */
-            ul.tab li a:hover {background-color: #ddd;}
+
+
 
             /* Create an active/current tablink class */
             ul.tab li a:focus, .active {background-color: #ccc;}
 
-            /* Style the tab content */
-            .tabcontent {
-                display: none;
-                padding: 6px 12px;
-                border: 1px solid #ccc;
-                border-top: none;
-            }
+
             .tree {
                 display: none;
             }
@@ -564,12 +571,12 @@
             }
             .btn-submit {
                 color: white;
-                background-color: blue;
+                background-color: orange;
                 border: none;
                 text-decoration: none;
                 padding: 6px 18px 6px 19px;
                 font-size: 16px;
-                margin: 12px 0px 12px 0px;
+                margin: 12px 0px 12px 80px;
                 cursor: pointer;
                 float: left;
             }
@@ -596,14 +603,14 @@
                 });
 
                 $('#addDistrict').click(function () {
-                        var _district = $("#district").val();
-                        if(_district) {
-                            var oldFilter = $("textarea[name=filterText]").val();
-                            $("textarea[name=filterText]").val(oldFilter+' & District='+ _district);
-                            $('#district option').prop('selected', function() {
-                                return this.defaultSelected;
-                            });
-                        }
+                    var _district = $("#district").val();
+                    if(_district) {
+                        var oldFilter = $("textarea[name=filterText]").val();
+                        $("textarea[name=filterText]").val(oldFilter+' & District='+ _district);
+                        $('#district option').prop('selected', function() {
+                            return this.defaultSelected;
+                        });
+                    }
                 });
 
                 $('#addTaluk').click(function () {
@@ -628,6 +635,7 @@
                     }
                 });
             });
+
             /*$('.filter-modal').click(function(){
                 $(this).parent().children('ul.tree').toggle(300);
             });*/
@@ -652,7 +660,7 @@
             var modal = document.getElementById('modal');
             var modal2 = document.getElementById('modal2');
 
-//            // When the user clicks anywhere outside of the modal, close it
+            // When the user clicks anywhere outside of the modal, close it
 //            window.onclick = function(event) {
 //                if (event.target == modal) {
 //                    console.log(event.target);
@@ -705,7 +713,9 @@
                 tabcontent = document.getElementsByClassName("tabcontent");
                 for (i = 0; i < tabcontent.length; i++) {
                     tabcontent[i].style.display = "none";
+                    $('.tabcontent').removeClass('default-active');
                 }
+
 
                 // Get all elements with class="tablinks" and remove the class "active"
                 tablinks = document.getElementsByClassName("tablinks");
@@ -717,16 +727,4 @@
                 document.getElementById(cityName).style.display = "block";
                 evt.currentTarget.className += " active";
             }
-
-
-            $('#formBarGraph').on('click', '#btnBarGraph',  function (e) {
-                $.post('/graph/bar', $('#formBarGraph').serialize())
-                .done(function (data) {
-                    if (data) {
-                        $("#imgBarGraph").attr("src", data.imageUrl);
-                    }
-                });
-            });
-
-
         </script>
