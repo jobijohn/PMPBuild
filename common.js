@@ -10,7 +10,12 @@ function readJsonFile(jsonFileName, callback){
         if (err) {
             callback(err, null);
         }
+
+
+
         var parsedJsonData = JSON.parse(jsonData);
+
+
         callback(null, parsedJsonData);
     });
 }

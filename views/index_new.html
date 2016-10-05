@@ -33,7 +33,8 @@
 
             <div id="Settings" class="tabcontent default-active">
                 <div class="col-sm-3 filter-pan">
-                    <button>Refresh</button>
+                    <a href="/jira" class="btn-submit">Refresh</a>
+                    <br/><br/><br/>
                     <div class="clear"></div>
                     Saved Filters:
                     <select>
@@ -56,9 +57,9 @@
                         </select>
                     </div>
                     <div style="height: 10px;"></div>
+                    <textarea name="filterText" style="height: 50px; width: 235px; margin-left: 0"></textarea>
                     <br/>
                     <button>Save Filter</button>
-
                 </div>
 
                 <div class="col-sm-9">
@@ -422,16 +423,15 @@
                 <div class="content">
                     <h1>Filter Popup</h1>
                     <div class="close">back</div>
-                    <ul class="district">
-                        <li><input type="checkbox" name="Kurnool" value="Kurnool">Kurnool</li>
-                        <li><input type="checkbox" name="Anantapur" value="Anantapur">Anantapur</li>
-                        <li><input type="checkbox" name="Vizianagaram" value="Vizianagaram">Vizianagaram</li>
-                        <li><input type="checkbox" name="Anantapur" value="Anantapur">Anantapur</li>
-                        <li><input type="checkbox" name="Srikakulam" value="Srikakulam">Srikakulam</li>
-                    </ul>
+                    <select name="district" class="" id="district">
+                        <option value="">-- Select Districts --</option>
+                        {{#data1}}
+                        <option value="{{districts}}">{{districts}}</option>
+                        {{/data1}}
+                    </select>
                     <div class="btn-grp">
-                        <div class="next">Add more filter</div>
-                        <div class="add">Add this filter</div>
+                        <button type="button" class="next">Add more filter</button>
+                        <button type="button" id="addDistrict">Add this filter</button>
                     </div>
                 </div>
             </div>
@@ -440,15 +440,15 @@
                 <div class="content">
                     <h1>Filter Popup</h1>
                     <div class="close">back</div>
-                    <ul class="Taluk">
-                        <li><input type="checkbox" name="Achampeta" value="Achampeta">Achampeta</li>
-                        <li><input type="checkbox" name="Adoni" value="Adoni">Adoni</li>
-                        <li><input type="checkbox" name="Alair" value="Alair">Alair</li>
-                        <li><input type="checkbox" name="Alamanada" value="Alamanada">Alamanada</li>
-                    </ul>
+                    <select name="taluk" class="" id="taluk">
+                        <option value="">-- Select Taluks --</option>
+                        {{#data2}}
+                        <option value="{{taluks}}">{{taluks}}</option>
+                        {{/data2}}
+                    </select>
                     <div class="btn-grp">
-                        <div class="next">Add more filter</div>
-                        <div class="add">Add this filter</div>
+                        <button type="button" class="next">Add more filter</button>
+                        <button type="button" id="addTaluk">Add this filter</button>
                     </div>
                 </div>
             </div>
@@ -458,17 +458,16 @@
                     <h1>Filter Popup</h1>
                     <div class="close">back</div>
                     <ul class="Acres" style="padding: 0">
-                        <select>
-                            <option>&gt;</option>
-                            <option>&lt;</option>
-                            <option>=</option>
+                        <select name="acreSymbol" id="acreSymbol">
+                            <option value=">">&gt;</option>
+                            <option value="<">&lt;</option>
+                            <option value="=">=</option>
                         </select>
-                        <input type="text" value="" name="">
-                        <input type="button" value="add">
+                        <input type="text" value="" id="acreValue">
                     </ul>
                     <div class="btn-grp">
-                        <div class="next">Add more filter</div>
-                        <div class="add">Add this filter</div>
+                        <button type="button" class="next">Add more filter</button>
+                        <button type="button" id="addAcre">Add this filter</button>
                     </div>
                 </div>
             </div>
@@ -586,11 +585,72 @@
                 border-radius: 5px;
                 cursor: pointer;
             }
+            .btn-submit {
+                color: white;
+                background-color: orange;
+                border: none;
+                text-decoration: none;
+                padding: 6px 18px 6px 19px;
+                font-size: 16px;
+                margin: 12px 0px 12px 80px;
+                cursor: pointer;
+                float: left;
+            }
 
         </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
         <script>
+            $(document).ready(function () {
+                $('#refreshJson').click(function () {
+                    $(this).after("<img src='/ajax-loader.gif' alt='loading' />");
+                    $.get('/jira', function () {
+                    });
+                });
+                $('#issuetype').on('change', function() {
+                    if(this.value) {
+                        var issue1 = 'issueType=' + this.value;
+                        //  Issue Type = Member On-boarding & District = Kurnool,Anantapur & Taluk = Achampeta, Alair & No. of Acres = >50, <100
+                        $("textarea[name=filterText]").val(issue1);
+                        $('.filter-modal.item1').addClass('enable');
+                    } else {
+                        $("textarea[name=filterText]").val("");
+                    }
+                });
+
+                $('#addDistrict').click(function () {
+                    var _district = $("#district").val();
+                    if(_district) {
+                        var oldFilter = $("textarea[name=filterText]").val();
+                        $("textarea[name=filterText]").val(oldFilter+' & District='+ _district);
+                        $('#district option').prop('selected', function() {
+                            return this.defaultSelected;
+                        });
+                    }
+                });
+
+                $('#addTaluk').click(function () {
+                    var _taluk = $("#taluk").val();
+                    if(_taluk) {
+                        var oldFilter = $("textarea[name=filterText]").val();
+                        $("textarea[name=filterText]").val(oldFilter+' & Taluk='+ _taluk);
+                        $('#taluk option').prop('selected', function() {
+                            return this.defaultSelected;
+                        });
+                    }
+                });
+
+                $('#addAcre').click(function () {
+                    var _acreSymbol = $("#acreSymbol").val();
+                    var _acreValue = $("#acreValue").val();
+                    var _acre = _acreSymbol + _acreValue;
+                    if(_acre) {
+                        var oldFilter = $("textarea[name=filterText]").val();
+                        $("textarea[name=filterText]").val(oldFilter+' & NoOfAcres='+ _acre);
+                        $("#acreValue").val("");
+                    }
+                });
+            });
 
             /*$('.filter-modal').click(function(){
                 $(this).parent().children('ul.tree').toggle(300);
@@ -617,13 +677,13 @@
             var modal2 = document.getElementById('modal2');
 
             // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    console.log(event.target);
-                    $('.filter-modal.item1').removeClass('enable');
-                    $('.sub-filter, .sub-filter-taluk, .sub-filter-acres').removeClass('enable');
-                }
-            };
+//            window.onclick = function(event) {
+//                if (event.target == modal) {
+//                    console.log(event.target);
+//                    $('.filter-modal.item1').removeClass('enable');
+//                    $('.sub-filter, .sub-filter-taluk, .sub-filter-acres').removeClass('enable');
+//                }
+//            };
 
 
             $('.close').click(function(){
