@@ -151,120 +151,145 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="border: 1px solid #ccc; width: 400px" class="graph-type-line graph-container">
-                            <table>
 
-                                <tr>
-                                    <td>Graph title:</td>
-                                    <td><input></td>
-                                </tr>
-                                <tr>
-                                    <td>Horizontal axis label:</td>
-                                    <td><input></td>
-                                </tr>
-                                <tr>
-                                    <td>Vertical axis label:</td>
-                                    <td><input></td>
-                                </tr>
-                                <tr>
-                                    <td>Horizontal data type:</td>
-                                    <td>
-                                        <select>
-                                            <option value="">District</option>
-                                            <option value="">Taluk</option>
-                                            <option value="">No. of Acres</option>
-                                        </select></td>
-                                </tr>
-                                <tr>
-                                    <td>Horizontal data values:</td>
-                                    <td>
-                                        <textarea style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
-                                        </textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Vertical data type:</td>
-                                    <td>
-                                        <select>
-                                            <option value="">No. of Acres</option>
-                                            <option value="">District</option>
-                                            <option value="">Taluk</option>
-                                        </select></td>
-                                </tr>
-                                <tr>
-                                    <td>Vertical data values:</td>
-                                    <td>
-                                        <textarea style="height: 50px">50&#13;&#10;100&#13;&#10;150
-                                        </textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Number of Lines</td>
-                                    <td>
-                                        <select>
-                                            <option value="">1</option>
-                                            <option value="">2</option>
-                                            <option value="">3</option>
-                                        </select></td>
-                                </tr>
-                            </table>
+                        <div class="col-sm-12">
+                            <div class="graph-type-line graph-container filter-form">
+                                <div class="col-sm-6 form-horizontal">
+                                    <div class="form-group">
+                                        <label for="graph-title-line" class="control-label col-sm-4">Graph title:</label>
+                                        <div class="col-sm-8">
+                                            <input id="graph-title-line" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="horizontal-axis-label" class="control-label col-sm-4">Horizontal axis label:</label>
+                                        <div class="col-sm-8">
+                                            <input id="horizontal-axis-label-line" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="vertical-axis-label-line" class="control-label col-sm-4">Vertical axis label:</label>
+                                        <div class="col-sm-8">
+                                            <input id="vertical-axis-label-line" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="horizontal-data-type-line" class="control-label col-sm-4">Horizontal data type:</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" id="horizontal-data-type-line">
+                                                <option value="">District</option>
+                                                <option value="">Taluk</option>
+                                                <option value="">No. of Acres</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-horizontal">
+                                    <div class="form-group">
+                                        <label for="horizontal-data-values-line" class="control-label col-sm-4">Horizontal data values:</label>
+                                        <div class="col-sm-8">
+                                            <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="vertical-data-type-line" class="control-label col-sm-4">Vertical data type:</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" id="vertical-data-type-line">
+                                                <option value="">No. of Acres</option>
+                                                <option value="">District</option>
+                                                <option value="">Taluk</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="vertical-data-values-line" class="control-label col-sm-4">Vertical data values:</label>
+                                        <div class="col-sm-8">
+                                            <textarea style="height: 50px" class="form-control" id="vertical-data-values-line">50&#13;&#10;100&#13;&#10;150</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="number-of-lines-line" class="control-label col-sm-4">Number of Lines:</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" id="number-of-lines-line">
+                                                <option value="">1</option>
+                                                <option value="">2</option>
+                                                <option value="">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div style="border: 1px solid #ccc; width: 400px" class="graph-type-pie graph-container">
-                            <table>
+                        <div class="col-sm-12">
+                            <div class="graph-type-pie graph-container filter-form">
+                                <div class="col-sm-6 form-horizontal">
+                                    <div class="form-group">
+                                        <label for="graph-title-pie" class="control-label col-sm-4">Graph title:</label>
+                                        <div class="col-sm-8">
+                                            <input id="graph-title-pie" type="text" class="form-control">
+                                        </div>
+                                    </div>
 
-                                <tr>
-                                    <td>Graph title:</td>
-                                    <td><input></td>
-                                </tr>
-                                <tr>
+                                    <div class="form-group">
+                                        <label for="data-name-pie" class="control-label col-sm-4">Data name:</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" id="data-name-pie">
+                                                <option value="">District</option>
+                                                <option value="">Taluk</option>
+                                                <option value="">No. of Acres</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
-                                <tr>
-                                    <td>Data name:</td>
-                                    <td>
-                                        <select>
-                                            <option value="">District</option>
-                                            <option value="">Taluk</option>
-                                            <option value="">No. of Acres</option>
-                                        </select></td>
-                                </tr>
-                                <tr>
-                                    <td>Data names:</td>
-                                    <td>
-                                        <textarea style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
-                                        </textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Data value:</td>
-                                    <td>
-                                        <select>
-                                            <option value="">No. of Acres</option>
-                                            <option value="">District</option>
-                                            <option value="">Taluk</option>
-                                        </select></td>
-                                </tr>
-                                <tr>
-                                    <td>Data values:</td>
-                                    <td>
-                                        <textarea style="height: 50px">50&#13;&#10;100&#13;&#10;150
-                                        </textarea>
-                                    </td>
-                                </tr>
+                                    <div class="form-group">
+                                        <label for="data-names-pie" class="control-label col-sm-4">Data names:</label>
+                                        <div class="col-sm-8">
+                                            <textarea style="height: 50px" class="form-control" id="data-names-pie">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                                        </div>
+                                    </div>
 
-                                <tr>
-                                    <td>Slice text</td>
-                                    <td>
-                                        <select>
-                                            <option value="">Percentage</option>
-                                            <option value="">Names</option>
-                                            <option value="">Values</option>
-                                            <option value="">None</option>
-                                        </select></td>
-                                </tr>
-                            </table>
+                                </div>
+                                <div class="col-sm-6 form-horizontal">
+
+                                    <div class="form-group">
+                                        <label for="data-value-pie" class="control-label col-sm-4">Data value:</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" id="data-value-pie">
+                                                <option value="">No. of Acres</option>
+                                                <option value="">District</option>
+                                                <option value="">Taluk</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="data-values-pie" class="control-label col-sm-4">Data values:</label>
+                                        <div class="col-sm-8">
+                                            <textarea style="height: 50px" class="form-control" id="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="slice-text-pie" class="control-label col-sm-4">Slice text:</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" id="slice-text-pie">
+                                                <option value="">Percentage</option>
+                                                <option value="">Names</option>
+                                                <option value="">Values</option>
+                                                <option value="">None</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
 
                     <div class="row">
