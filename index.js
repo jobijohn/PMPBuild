@@ -3,7 +3,8 @@ var express = require('express');
 var session = require('express-session');
 var OAuth = require('oauth').OAuth;
 var fs = require('fs'),
-    common = require('./common');
+    common = require('./common'),
+    graph = require('./graph');
 
 var base_url = "https://swarmact.atlassian.net"; //example https://test.atlassian.net
 

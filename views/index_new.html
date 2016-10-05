@@ -332,7 +332,7 @@
     <td style="vertical-align: top">
 
         <div style="border: 1px solid #ccc; width: 100%">
-            <img src="{{imageUrl}}" style="width:345px" >
+            <img src="" style="width:345px" id="imgBarGraph">
         </div>
 
         <button>Save Graph</button>
@@ -359,7 +359,7 @@
         <tr>
             <td>
                 <div style="border: 1px solid #ccc; width: 100%">
-                    <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
+                    <img src="" style="width:345px" >
                 </div>
             </td>
             <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
@@ -661,12 +661,12 @@
             }
 
 
-            $('#formBarGraph').on('click', '#btnBarGraph',  function (e) { alert('clicked');
-                e.preventDefault();
-                e.stopPropagation();
+            $('#formBarGraph').on('click', '#btnBarGraph',  function (e) {
                 $.post('/graph/bar', $('#formBarGraph').serialize())
                 .done(function (data) {
-
+                    if (data) {
+                        $("#imgBarGraph").attr("src", data.imageUrl);
+                    }
                 });
             });
 

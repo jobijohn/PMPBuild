@@ -44,7 +44,7 @@ function launchApp() {
     app.get('/jira', index.getOAuth);
     app.get('/jira/callback', index.getOAuthCallback);
     app.get('/projects', index.projects);
-    app.post('/graph/bar', graph.createBarGraph);
+    app.post('/graph/bar', graph.generateBarGraph);
 
     var port = app.get('port') || 1337;
     app.listen(port);
