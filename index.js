@@ -73,12 +73,12 @@ function getOAuthCallback (req, res) {
                 //     access_token: oauth_access_token,
                 //     secret: oauth_access_token_secret
                 // });
-                res.redirect('/projects');
+                res.redirect('/get-json-from-jira');
             }
         });
 }
 
-function projects (req, res) {
+function getJsonFromJira(req, res) {
     var consumer = new OAuth(
         base_url+"/plugins/servlet/oauth/request-token",
         base_url+"/plugins/servlet/oauth/access-token",
@@ -104,4 +104,4 @@ function projects (req, res) {
 exports.indexPage = indexPage;
 exports.getOAuth = getOAuth;
 exports.getOAuthCallback = getOAuthCallback;
-exports.projects = projects;
+exports.getJsonFromJira = getJsonFromJira;
