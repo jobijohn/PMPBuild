@@ -9,7 +9,7 @@ function generateBarGraph(req, res) {
     var yLabel = req.param('yLabel');
     var xData = req.param('xData');
     var yData = req.param('yData');*/
-    return res.json({imageUrl: imageUrl});
+    return res.json({test: 'test'});
 }
 
 function generateLineGraph(req, res) {

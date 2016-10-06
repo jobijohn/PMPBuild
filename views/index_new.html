@@ -81,29 +81,30 @@
 
 <div class="col-sm-12">
     <div class="graph-type-bar graph-container filter-form">
+        <form method="post" id="formBarGraph">
         <div class="col-sm-6 form-horizontal">
             <div class="form-group">
-                <label for="graph-title" class="control-label col-sm-4">Graph title:</label>
+                <label for="graph-title" class="control-label col-sm-4">Title:</label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control" id="graph-title">
                 </div>
             </div>
             <div class="form-group">
-                <label for="horizontal-axis-label" class="control-label col-sm-4">Horizontal axis label:</label>
+                <label for="horizontal-axis-label" class="control-label col-sm-4">x Label:</label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control" id="horizontal-axis-label">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="vertical-axis-label" class="control-label col-sm-4">Vertical axis label:</label>
+                <label for="vertical-axis-label" class="control-label col-sm-4">y Label:</label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control" id="vertical-axis-label">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="horizontal-data-type" class="control-label col-sm-4">Horizontal data type:</label>
+                <label for="horizontal-data-type" class="control-label col-sm-4">x Data:</label>
                 <div class="col-sm-8">
                     <select id="horizontal-data-type" class="form-control">
                         <option value="">District</option>
@@ -114,17 +115,17 @@
             </div>
         </div>
 
-        <form method="post" id="formBarGraph">
+
             <div class="col-sm-6 form-horizontal">
                 <div class="form-group">
-                    <label for="horizontal-data-values" class="control-label col-sm-4">Horizontal data values:</label>
+                    <label for="horizontal-data-values" class="control-label col-sm-4">x Values:</label>
                     <div class="col-sm-8">
                         <textarea style="height: 50px" id="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="vertical-data-type" class="control-label col-sm-4">Vertical data type:</label>
+                    <label for="vertical-data-type" class="control-label col-sm-4">v Data:</label>
                     <div class="col-sm-8">
                         <select id="vertical-data-type" class="form-control">
                             <option value="">No. of Acres</option>
@@ -135,7 +136,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="vertical-data-values" class="control-label col-sm-4">Vertical data values:</label>
+                    <label for="vertical-data-values" class="control-label col-sm-4">v Values:</label>
                     <div class="col-sm-8">
                         <textarea style="height: 50px" id="vertical-data-values" class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
                     </div>
@@ -154,28 +155,28 @@
     <div class="graph-type-line graph-container filter-form">
         <div class="col-sm-6 form-horizontal">
             <div class="form-group">
-                <label for="graph-title-line" class="control-label col-sm-4">Graph title:</label>
+                <label for="graph-title-line" class="control-label col-sm-4">Title:</label>
                 <div class="col-sm-8">
                     <input id="graph-title-line" type="text" class="form-control">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="horizontal-axis-label" class="control-label col-sm-4">Horizontal axis label:</label>
+                <label for="horizontal-axis-label" class="control-label col-sm-4">x Label:</label>
                 <div class="col-sm-8">
                     <input id="horizontal-axis-label-line" type="text" class="form-control">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="vertical-axis-label-line" class="control-label col-sm-4">Vertical axis label:</label>
+                <label for="vertical-axis-label-line" class="control-label col-sm-4">y Label:</label>
                 <div class="col-sm-8">
                     <input id="vertical-axis-label-line" type="text" class="form-control">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="horizontal-data-type-line" class="control-label col-sm-4">Horizontal data type:</label>
+                <label for="horizontal-data-type-line" class="control-label col-sm-4">x Data:</label>
                 <div class="col-sm-8">
                     <select class="form-control" id="horizontal-data-type-line">
                         <option value="">District</option>
@@ -187,14 +188,14 @@
         </div>
         <div class="col-sm-6 form-horizontal">
             <div class="form-group">
-                <label for="horizontal-data-values-line" class="control-label col-sm-4">Horizontal data values:</label>
+                <label for="horizontal-data-values-line" class="control-label col-sm-4">x Values:</label>
                 <div class="col-sm-8">
                     <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="vertical-data-type-line" class="control-label col-sm-4">Vertical data type:</label>
+                <label for="vertical-data-type-line" class="control-label col-sm-4">v Data:</label>
                 <div class="col-sm-8">
                     <select class="form-control" id="vertical-data-type-line">
                         <option value="">No. of Acres</option>
@@ -205,16 +206,17 @@
             </div>
 
             <div class="form-group">
-                <label for="vertical-data-values-line" class="control-label col-sm-4">Vertical data values:</label>
+                <label for="vertical-data-values-line" class="control-label col-sm-4">v Values:</label>
                 <div class="col-sm-8">
                     <textarea style="height: 50px" class="form-control" id="vertical-data-values-line">50&#13;&#10;100&#13;&#10;150</textarea>
                 </div>
             </div>
+            <div class="form-group">
+                <input type="button" name="btnLineGraph" id="btnLineGraph" value="Create Line Graph">
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <input type="button" name="btnLineGraph" id="btnLineGraph" value="Create Line Graph">
-    </div>
+
 </div>
 </form>
 
@@ -223,7 +225,7 @@
     <div class="graph-type-pie graph-container filter-form">
         <div class="col-sm-6 form-horizontal">
             <div class="form-group">
-                <label for="graph-title-pie" class="control-label col-sm-4">Graph title:</label>
+                <label for="graph-title-pie" class="control-label col-sm-4">Title:</label>
                 <div class="col-sm-8">
                     <input id="graph-title-pie" type="text" class="form-control">
                 </div>
@@ -241,7 +243,7 @@
             </div>
 
             <div class="form-group">
-                <label for="data-names-pie" class="control-label col-sm-4">Data names:</label>
+                <label for="data-names-pie" class="control-label col-sm-4">Data Names:</label>
                 <div class="col-sm-8">
                     <textarea style="height: 50px" class="form-control" id="data-names-pie">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
                 </div>
@@ -251,7 +253,7 @@
         <div class="col-sm-6 form-horizontal">
 
             <div class="form-group">
-                <label for="data-value-pie" class="control-label col-sm-4">Data value:</label>
+                <label for="data-value-pie" class="control-label col-sm-4">Data Value:</label>
                 <div class="col-sm-8">
                     <select class="form-control" id="data-value-pie">
                         <option value="">No. of Acres</option>
@@ -262,14 +264,14 @@
             </div>
 
             <div class="form-group">
-                <label for="data-values-pie" class="control-label col-sm-4">Data values:</label>
+                <label for="data-values-pie" class="control-label col-sm-4">Data Values:</label>
                 <div class="col-sm-8">
                     <textarea style="height: 50px" class="form-control" id="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="slice-text-pie" class="control-label col-sm-4">Slice text:</label>
+                <label for="slice-text-pie" class="control-label col-sm-4">Slice Text:</label>
                 <div class="col-sm-8">
                     <select class="form-control" id="slice-text-pie">
                         <option value="">Percentage</option>
