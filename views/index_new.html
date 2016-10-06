@@ -10,6 +10,7 @@
     <link href="/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
     <!-- bootstrap css -->
     <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 </head>
 <body>
@@ -113,43 +114,48 @@
             </div>
         </div>
 
-        <div class="col-sm-6 form-horizontal">
-            <div class="form-group">
-                <label for="horizontal-data-values" class="control-label col-sm-4">Horizontal data values:</label>
-                <div class="col-sm-8">
-                    <textarea style="height: 50px" id="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+        <form method="post" id="formBarGraph">
+            <div class="col-sm-6 form-horizontal">
+                <div class="form-group">
+                    <label for="horizontal-data-values" class="control-label col-sm-4">Horizontal data values:</label>
+                    <div class="col-sm-8">
+                        <textarea style="height: 50px" id="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="vertical-data-type" class="control-label col-sm-4">Vertical data type:</label>
-                <div class="col-sm-8">
-                    <select id="vertical-data-type" class="form-control">
-                        <option value="">No. of Acres</option>
-                        <option value="">District</option>
-                        <option value="">Taluk</option>
-                    </select>
+                <div class="form-group">
+                    <label for="vertical-data-type" class="control-label col-sm-4">Vertical data type:</label>
+                    <div class="col-sm-8">
+                        <select id="vertical-data-type" class="form-control">
+                            <option value="">No. of Acres</option>
+                            <option value="">District</option>
+                            <option value="">Taluk</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="vertical-data-values" class="control-label col-sm-4">Vertical data values:</label>
-                <div class="col-sm-8">
-                    <textarea style="height: 50px" id="vertical-data-values" class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
+                <div class="form-group">
+                    <label for="vertical-data-values" class="control-label col-sm-4">Vertical data values:</label>
+                    <div class="col-sm-8">
+                        <textarea style="height: 50px" id="vertical-data-values" class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="number-of-bars" class="control-label col-sm-4">Number of Bars:</label>
-                <div class="col-sm-8">
-                    <select id="number-of-bars" class="form-control">
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                    </select>
+                <div class="form-group">
+                    <label for="number-of-bars" class="control-label col-sm-4">Number of Bars:</label>
+                    <div class="col-sm-8">
+                        <select id="number-of-bars" class="form-control">
+                            <option value="">1</option>
+                            <option value="">2</option>
+                            <option value="">3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="button" name="btnBarGraph" id="btnBarGraph" value="Create Graph">
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -296,7 +302,8 @@
 <div class="row">
     <div class="col-sm-6">
         <div style="border: 1px solid #ccc; width: 100%">
-            <img src="{{imageUrl}}" style="width:345px" >
+            <!--<img src="{{imageUrl}}" style="width:345px" >-->
+            <div id="chart_div"></div>
         </div>
         <button>Save Graph</button>
     </div>
@@ -744,3 +751,41 @@
         evt.currentTarget.className += " active";
     }
 </script>
+
+        <script>
+            $('#formBarGraph').on('click', '#btnBarGraph',  function (e) {
+                $.post('/graph/bar', $('#formBarGraph').serialize())
+                        .done(function (data) {
+                            google.charts.load('current', {packages: ['corechart', 'bar']});
+                            google.charts.setOnLoadCallback(drawBasic);
+
+                            function drawBasic() {
+
+                                var data = google.visualization.arrayToDataTable([
+                                    ['', 'District' ],
+                                    ['Ernakulam', 50],
+                                    ['Idukki', 40],
+                                    ['Apappuzha', 80],
+                                    ['Wayanad', 10],
+                                    ['Kottayam', 25]
+                                ]);
+
+                                var options = {
+                                    title: 'PMP Build Test graph',
+                                    chartArea: {width: '50%'},
+                                    hAxis: {
+                                        title: 'Districts',
+                                        minValue: 0
+                                    },
+                                    vAxis: {
+                                        title: 'No. of Acres'
+                                    }
+                                };
+
+                                var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+                                chart.draw(data, options);
+                            }
+                        });
+            });
+        </script>
