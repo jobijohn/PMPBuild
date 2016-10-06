@@ -32,33 +32,48 @@
 
 
             <div id="Settings" class="tabcontent default-active">
-                <div class="col-sm-3 filter-pan">
-                    <a href="/jira" class="btn-submit">Refresh</a>
-                    <br/><br/><br/>
-                    <div class="clear"></div>
-                    Saved Filters:
-                    <select>
-                        <option value="">Issue filter 1</option>
-                        <option value="">Issue filter 2</option>
-                        <option value="">Issue filter 3</option>
-                        <option value="">Issue filter 4</option>
-                    </select>
-                    <br/>
-
-                    <div style="height: 10px"></div>
-
-                    <div >
-                        New Issue Filter
-                        <select name="issuetype" class="" id="issuetype" >
-                            <option value="">-- Select Issue Type --</option>
-                            {{#data}}
-                            <option value="{{issuetype}}">{{issuetype}}</option>
-                            {{/data}}
-                        </select>
+                <div class="col-sm-3 filter-pan p0">
+                    <div class="form-group">
+                        <a href="/jira" class="btn-submit filter-btn">Refresh</a>
                     </div>
-                    <div style="height: 10px;"></div>
-                    <textarea name="filterText" style="height: 50px; width: 235px; margin-left: 0"></textarea>
-                    <br/>
+                    <div class="form-group">
+                        <label for="savedFilter" class="control-label col-sm-12 text-left">Saved Filters:</label>
+                        <div class="col-sm-12 text-left custom-select">
+                            <select id="savedFilter" class="">
+                                <option value="">Issue filter 1</option>
+                                <option value="">Issue filter 2</option>
+                                <option value="">Issue filter 3</option>
+                                <option value="">Issue filter 4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issuetype" class="control-label col-sm-12 text-left">New Issue Filter :</label>
+                        <div class="col-sm-8 text-left custom-select">
+                            <select name="issuetype" class="" id="issuetype" >
+                                <option value="">-- Select Issue Type --</option>
+                                {{#data}}
+                                <option value="{{issuetype}}">{{issuetype}}</option>
+                                {{/data}}
+                            </select>
+                        </div>
+                        <div class="col-sm-4 pl0">
+                            <div class="add-filter-btn p0">
+                                <buton id="filter-Add" class="">Add Filter</buton>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <ul>
+                        <li>Filter1</li>
+                        <li>Filter2</li>
+                        <li>Filter1</li>
+                        <li>Filter1</li>
+                    </ul>
+
+
                     <button>Save Filter</button>
                 </div>
 
@@ -293,24 +308,28 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div style="border: 1px solid #ccc; width: 100%">
-                                <img src="{{imageUrl}}" style="width:345px" >
+                    <div class="row mT15">
+                        <div class="col-sm-6 pR0">
+                            <div class="entries graph-box">
+                                <div>
+                                    <img src="{{imageUrl}}" style="width:345px" >
+                                </div>
+                                <button>Save Graph</button>
                             </div>
-                            <button>Save Graph</button>
                         </div>
                         <div class="col-sm-6">
-                            <div style="border: 1px solid #ccc; width: 100%">
-                                Issues:
-                                <ul>
-                                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                                    <li><a href=""> This is an example issue for jira-connector</a></li>
-                                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                </ul>
+                            <div class="entries">
+                                <div>
+                                    Issues:
+                                    <ul>
+                                        <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                                        <li><a href=""> This is an example issue for jira-connector</a></li>
+                                        <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                        <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -587,12 +606,9 @@
             }
             .btn-submit {
                 color: white;
-                background-color: orange;
-                border: none;
                 text-decoration: none;
-                padding: 6px 18px 6px 19px;
+                padding: 8px 18px 8px 18px;
                 font-size: 16px;
-                margin: 12px 0px 12px 80px;
                 cursor: pointer;
                 float: left;
             }
