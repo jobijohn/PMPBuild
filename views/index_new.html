@@ -67,11 +67,7 @@
                         </div>
                     </div>
 
-                    <ul>
-                        <li>Filter1</li>
-                        <li>Filter2</li>
-                        <li>Filter1</li>
-                        <li>Filter1</li>
+                    <ul id="filterList" class="filter-List-ul">
                     </ul>
 
 
@@ -484,6 +480,8 @@
                             <option value="=">=</option>
                         </select>
                         <input type="text" value="" id="acreValue">
+                        <button id="addAcreSingle">Add</button>
+                        <label id="lblAcreValues"></label>
                     </ul>
                     <div class="btn-grp">
                         <button type="button" id="addAcre">Add this filter</button>
@@ -629,47 +627,53 @@
                     $.get('/jira', function () {
                     });
                 });
-                $('#issuetype').on('change', function() {
-                    if(this.value) {
-                        var issue1 = 'issueType=' + this.value;
-                        //  Issue Type = Member On-boarding & District = Kurnool,Anantapur & Taluk = Achampeta, Alair & No. of Acres = >50, <100
-                        $("textarea[name=filterText]").val(issue1);
-                        $('.filter-modal.item1').addClass('enable');
-                    } else {
-                        $("textarea[name=filterText]").val("");
-                    }
+
+                $('#filter-Add').click(function () {
+                    $('.filter-modal.item1').addClass('enable');
                 });
 
                 $('#addDistrict').click(function () {
                     var _district = $("#district").val();
                     if(_district) {
-                        var oldFilter = $("textarea[name=filterText]").val();
-                        $("textarea[name=filterText]").val(oldFilter+' & District='+ _district);
-                        $('#district option').prop('selected', function() {
-                            return this.defaultSelected;
-                        });
+                        var ul = document.getElementById("filterList");
+                        var li = document.createElement("li");
+                        li.appendChild(document.createTextNode("District -  " + _district));
+                        ul.appendChild(li);
+//                        $(".chosen-select").val('').trigger("chosen:updated");
                     }
                 });
 
                 $('#addTaluk').click(function () {
                     var _taluk = $("#taluk").val();
                     if(_taluk) {
-                        var oldFilter = $("textarea[name=filterText]").val();
-                        $("textarea[name=filterText]").val(oldFilter+' & Taluk='+ _taluk);
-                        $('#taluk option').prop('selected', function() {
-                            return this.defaultSelected;
-                        });
+                        var ul = document.getElementById("filterList");
+                        var li = document.createElement("li");
+                        li.appendChild(document.createTextNode("Taluk - " + _taluk));
+                        ul.appendChild(li);
+//                        $(".chosen-select").val('').trigger("chosen:updated");
                     }
                 });
 
-                $('#addAcre').click(function () {
+                $('#addAcreSingle').click(function () {
                     var _acreSymbol = $("#acreSymbol").val();
                     var _acreValue = $("#acreValue").val();
                     var _acre = _acreSymbol + _acreValue;
-                    if(_acre) {
-                        var oldFilter = $("textarea[name=filterText]").val();
-                        $("textarea[name=filterText]").val(oldFilter+' & NoOfAcres='+ _acre);
-                        $("#acreValue").val("");
+                    var lblAcreValuesOld = $('#lblAcreValues').text();
+                    if(lblAcreValuesOld) {
+                        $('#lblAcreValues').text(lblAcreValuesOld + ',' + _acre);
+                    } else {
+                        $('#lblAcreValues').text(_acre);
+                    }
+                    $("#acreValue").val("");
+                });
+
+                $('#addAcre').click(function () {
+                    if($('#lblAcreValues').text()) {
+                        var ul = document.getElementById("filterList");
+                        var li = document.createElement("li");
+                        li.appendChild(document.createTextNode("Acre -  " + $('#lblAcreValues').text()));
+                        ul.appendChild(li);
+                        $('#lblAcreValues').text("");
                     }
                 });
             });
