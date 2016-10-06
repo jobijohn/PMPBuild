@@ -156,20 +156,20 @@
 
                 <tr>
                     <td>Graph title:</td>
-                    <td><input type="text" name="graphTitle" id="graphTitle"></td>
+                    <td><input type="text" name="title" id="title"></td>
                 </tr>
                 <tr>
                     <td>Horizontal axis label:</td>
-                    <td><input></td>
+                    <td><input type="text" name="xLabel" id="xLabel"></td>
                 </tr>
                 <tr>
                     <td>Vertical axis label:</td>
-                    <td><input></td>
+                    <td><input type="text" name="yLabel" id="yLabel"></td>
                 </tr>
                 <tr>
                     <td>Horizontal data type:</td>
                     <td>
-                        <select>
+                        <select name="xData" id="xData">
                             <option value="">District</option>
                             <option value="">Taluk</option>
                             <option value="">No. of Acres</option>
@@ -178,14 +178,14 @@
                 <tr>
                     <td>Horizontal data values:</td>
                     <td>
-                        <textarea style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
+                        <textarea name="xDataValues" id="xDataValues" style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
                         </textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>Vertical data type:</td>
                     <td>
-                        <select>
+                        <select name="yData" id="yData">
                             <option value="">No. of Acres</option>
                             <option value="">District</option>
                             <option value="">Taluk</option>
@@ -194,19 +194,11 @@
                 <tr>
                     <td>Vertical data values:</td>
                     <td>
-                        <textarea style="height: 50px">50&#13;&#10;100&#13;&#10;150
+                        <textarea name="yDataValues" id="yDataValues" style="height: 50px">50&#13;&#10;100&#13;&#10;150
                         </textarea>
                     </td>
                 </tr>
-                <tr>
-                    <td>Number of Bars</td>
-                    <td>
-                        <select>
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                        </select></td>
-                </tr>
+
             </table>
                 <input type="button" name="btnBarGraph" id="btnBarGraph" value="Create Graph">
             </form>
@@ -333,6 +325,7 @@
 
         <div style="border: 1px solid #ccc; width: 100%">
             <img src="" style="width:345px" id="imgBarGraph">
+            <div id="chart_div"></div>
         </div>
 
         <button>Save Graph</button>
@@ -441,6 +434,8 @@
         </tr>
     </table>
 </div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 </body>
 </html>
@@ -579,6 +574,7 @@
         </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
+
         <script>
             $('#refreshJson').click(function () {
                 alert('button click');
@@ -680,10 +676,40 @@
             $('#formBarGraph').on('click', '#btnBarGraph',  function (e) {
                 $.post('/graph/bar', $('#formBarGraph').serialize())
                 .done(function (data) {
-                    if (data) {
-                        $("#imgBarGraph").attr("src", data.imageUrl);
-                    }
+                            google.charts.load('current', {packages: ['corechart', 'bar']});
+                            google.charts.setOnLoadCallback(drawBasic);
+
+                            function drawBasic() {
+
+                                var data = google.visualization.arrayToDataTable([
+                                    ['', 'District' ],
+                                    ['Ernakulam', 50],
+                                    ['Idukki', 40],
+                                    ['Apappuzha', 80],
+                                    ['Wayanad', 10],
+                                    ['Kottayam', 25]
+                                ]);
+
+                                var options = {
+                                    title: 'PMP Build Test graph',
+                                    chartArea: {width: '50%'},
+                                    hAxis: {
+                                        title: 'Districts',
+                                        minValue: 0
+                                    },
+                                    vAxis: {
+                                        title: 'No. of Acres'
+                                    }
+                                };
+
+                                var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+                                chart.draw(data, options);
+                            }
                 });
             });
 
         </script>
+
+
+

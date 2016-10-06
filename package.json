@@ -4,23 +4,27 @@
   "private": true,
   "main": "index.js",
   "description": "Server side app for Lastplot agent portal",
-
   "dependencies": {
     "assert": "*",
     "async": "*",
     "aws-sdk-apis": "*",
+    "bower": "~1.7.7",
+    "chart.js": "^2.3.0",
     "connect-flash": "*",
     "connect-redis": "*",
     "consolidate": "*",
     "express": "*",
-    "gcloud": "*",
-    "mysql": "*",
     "express-session": "*",
+    "gcloud": "*",
     "geocoder": "*",
     "googleapis": "^2.1.7",
+    "grunt": "~0.4",
+    "grunt-cli": "~0.1",
+    "gulp": "~3.9.1",
     "handlebars": "*",
     "imagemagick": "*",
     "mocha": "*",
+    "mysql": "*",
     "nimble": "*",
     "nodemailer": "*",
     "numeral": "*",
@@ -37,25 +41,19 @@
     "winston": "*",
     "winston-slack": "*",
     "xml2js": "*",
-    "xmlbuilder": "*",
-      "grunt": "~0.4",
-      "grunt-cli": "~0.1",
-      "gulp": "~3.9.1",
-      "bower": "~1.7.7"
+    "xmlbuilder": "*"
   },
-
   "scripts": {
     "test": "node_modules/.bin/mocha -w test",
-     "deploy": "gcloud preview app deploy app.yaml"
+    "deploy": "gcloud preview app deploy app.yaml"
   },
-
   "devDependencies": {
     "pre-commit": "*",
-     "mocha": "~2.4",
-     "mocha-bamboo-reporter": "*",
-     "nodeunit": "~0.9"
+    "mocha": "~2.4",
+    "mocha-bamboo-reporter": "*",
+    "nodeunit": "~0.9"
   },
-    "engines": {
-        "node": "*"
-    }
+  "engines": {
+    "node": "*"
+  }
 }
