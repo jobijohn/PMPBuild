@@ -44,7 +44,6 @@
                         <option value="">Issue filter 4</option>
                     </select>
                     <br/>
-
                     <div style="height: 10px"></div>
 
                     <div >
@@ -423,14 +422,16 @@
                 <div class="content">
                     <h1>Filter Popup</h1>
                     <div class="close">back</div>
-                    <select name="district" class="" id="district">
-                        <option value="">-- Select Districts --</option>
-                        {{#data1}}
-                        <option value="{{districts}}">{{districts}}</option>
-                        {{/data1}}
-                    </select>
+                    <div class="col-sm-12">
+                        <select data-placeholder="Select Districts" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
+                            <option value=""></option>
+                            {{#data1}}
+                            <option value="{{districts}}">{{districts}}</option>
+                            {{/data1}}
+                        </select>
+                    </div>
+
                     <div class="btn-grp">
-                        <button type="button" class="next">Add more filter</button>
                         <button type="button" id="addDistrict">Add this filter</button>
                     </div>
                 </div>
@@ -440,14 +441,13 @@
                 <div class="content">
                     <h1>Filter Popup</h1>
                     <div class="close">back</div>
-                    <select name="taluk" class="" id="taluk">
-                        <option value="">-- Select Taluks --</option>
+                    <select data-placeholder="Select Taluks" name="taluk" class="chosen-select" multiple style="width: 100px;" id="taluk">
+                        <option value=""></option>
                         {{#data2}}
                         <option value="{{taluks}}">{{taluks}}</option>
                         {{/data2}}
                     </select>
                     <div class="btn-grp">
-                        <button type="button" class="next">Add more filter</button>
                         <button type="button" id="addTaluk">Add this filter</button>
                     </div>
                 </div>
@@ -466,7 +466,6 @@
                         <input type="text" value="" id="acreValue">
                     </ul>
                     <div class="btn-grp">
-                        <button type="button" class="next">Add more filter</button>
                         <button type="button" id="addAcre">Add this filter</button>
                     </div>
                 </div>
@@ -599,9 +598,15 @@
 
         </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
+<link rel="stylesheet" href="/css/chosen.min.css">
+<script src="/js/chosen.jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+</script>
         <script>
             $(document).ready(function () {
+
+                $(".chosen-select").chosen({width: "100%"});
+
                 $('#refreshJson').click(function () {
                     $(this).after("<img src='/ajax-loader.gif' alt='loading' />");
                     $.get('/jira', function () {
