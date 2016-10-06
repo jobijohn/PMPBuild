@@ -14,6 +14,9 @@
 
 </head>
 <body>
+    <input type="hidden" name="filteredDistrict" id="filteredDistrict">
+    <input type="hidden" name="filteredTaluk" id="filteredTaluk">
+    <input type="hidden" name="filteredAcre" id="filteredAcre">
     <div class="container">
         <header>
             <h1>Project Management Prototype Build</h1>
@@ -118,9 +121,7 @@
                                             <label for="horizontal-data-type" class="control-label col-sm-4">x Data:</label>
                                             <div class="col-sm-8">
                                                 <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
-                                                    <option value="">District</option>
-                                                    <option value="">Taluk</option>
-                                                    <option value="">No. of Acres</option>
+
                                                 </select>
                                             </div>
                                         </div>
@@ -139,9 +140,7 @@
                                             <label for="vertical-data-type" class="control-label col-sm-4">v Data:</label>
                                             <div class="col-sm-8">
                                                 <select id="vertical-data-type" name="vertical-data-type" class="form-control">
-                                                    <option value="">No. of Acres</option>
-                                                    <option value="">District</option>
-                                                    <option value="">Taluk</option>
+
                                                 </select>
                                             </div>
                                         </div>
@@ -190,9 +189,7 @@
                                             <label for="horizontal-data-type-line" class="control-label col-sm-4">x Data:</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control" id="horizontal-data-type-line" name="horizontal-data-type-line">
-                                                    <option value="">District</option>
-                                                    <option value="">Taluk</option>
-                                                    <option value="">No. of Acres</option>
+
                                                 </select>
                                             </div>
                                         </div>
@@ -209,9 +206,7 @@
                                             <label for="vertical-data-type-line" class="control-label col-sm-4">v Data:</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control" id="vertical-data-type-line" name="vertical-data-type-line">
-                                                    <option value="">No. of Acres</option>
-                                                    <option value="">District</option>
-                                                    <option value="">Taluk</option>
+
                                                 </select>
                                             </div>
                                         </div>
@@ -639,7 +634,31 @@
                         var li = document.createElement("li");
                         li.appendChild(document.createTextNode("District -  " + _district));
                         ul.appendChild(li);
-//                        $(".chosen-select").val('').trigger("chosen:updated");
+                        var filteredDistrict = $('#filteredDistrict').val();
+                        if(filteredDistrict){
+                            $('#filteredDistrict').val($('#filteredDistrict').val() + ',' + _district);
+                        } else {
+                            $('#filteredDistrict').val(_district);
+                        }
+
+
+                        if (!$("#horizontal-data-type option[value='District']").length) {
+                            $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
+                        }
+
+                        if (!$("#vertical-data-type option[value='District']").length) {
+                            $('<option>').val('District').text('District').appendTo($('#vertical-data-type'));
+                        }
+
+
+                        if (!$("#horizontal-data-type-line option[value='District']").length) {
+                            $('<option>').val('District').text('District').appendTo($('#horizontal-data-type-line'));
+                        }
+
+                        if (!$("#vertical-data-type-line option[value='District']").length) {
+                            $('<option>').val('District').text('District').appendTo($('#vertical-data-type-line'));
+                        }
+//                      $(".chosen-select").val('').trigger("chosen:updated");
                     }
                 });
 
@@ -650,6 +669,28 @@
                         var li = document.createElement("li");
                         li.appendChild(document.createTextNode("Taluk - " + _taluk));
                         ul.appendChild(li);
+                        var filteredTaluk = $('#filteredTaluk').val();
+                        if(filteredTaluk){
+                            $('#filteredTaluk').val($('#filteredTaluk').val() + ',' + _taluk);
+                        } else {
+                            $('#filteredTaluk').val(_taluk);
+                        }
+
+                        if (!$("#horizontal-data-type option[value='Taluk']").length) {
+                            $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
+                        }
+
+                        if (!$("#vertical-data-type option[value='Taluk']").length) {
+                            $('<option>').val('Taluk').text('Taluk').appendTo($('#vertical-data-type'));
+                        }
+
+                        if (!$("#horizontal-data-type-line option[value='Taluk']").length) {
+                            $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type-line'));
+                        }
+
+                        if (!$("#vertical-data-type-line option[value='Taluk']").length) {
+                            $('<option>').val('Taluk').text('Taluk').appendTo($('#vertical-data-type-line'));
+                        }
 //                        $(".chosen-select").val('').trigger("chosen:updated");
                     }
                 });
@@ -673,6 +714,30 @@
                         var li = document.createElement("li");
                         li.appendChild(document.createTextNode("Acre -  " + $('#lblAcreValues').text()));
                         ul.appendChild(li);
+
+                        var filteredAcre = $('#filteredAcre').val();
+                        if(filteredAcre){
+                            $('#filteredAcre').val($('#filteredAcre').val() + ',' + $('#lblAcreValues').text());
+                        } else {
+                            $('#filteredAcre').val($('#lblAcreValues').text());
+                        }
+
+                        if (!$("#horizontal-data-type option[value='No. of Acres']").length) {
+                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#horizontal-data-type'));
+                        }
+
+                        if (!$("#vertical-data-type option[value='No. of Acres']").length) {
+                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
+                        }
+
+                        if (!$("#horizontal-data-type-line option[value='No. of Acres']").length) {
+                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#horizontal-data-type-line'));
+                        }
+
+                        if (!$("#vertical-data-type-line option[value='No. of Acres']").length) {
+                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type-line'));
+                        }
+
                         $('#lblAcreValues').text("");
                     }
                 });
