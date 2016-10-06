@@ -4,12 +4,24 @@
 
 function generateBarGraph(req, res) {
 
-   /* var title = req.param('title');
-    var xLabel = req.param('xLabel');
-    var yLabel = req.param('yLabel');
-    var xData = req.param('xData');
-    var yData = req.param('yData');*/
-    return res.json({test: 'test'});
+    //TODO: validations
+    var title = req.param('graph-title'); console.log(title);
+    var xLabel = req.param('horizontal-axis-label');
+    var yLabel = req.param('vertical-axis-label');
+    var xDataType = req.param('horizontal-data-type');
+    var xDataValues = req.param('horizontal-data-values');
+    var yDataType = req.param('vertical-data-type');
+    var yDataValues = req.param('vertical-data-values');
+
+    return res.json({
+        title: title,
+        xLabel: xLabel,
+        yLabel: yLabel,
+        xDataType : xDataType,
+        xDataValues : xDataValues,
+        yDataType : yDataType,
+        yDataValues : yDataValues
+    });
 }
 
 function generateLineGraph(req, res) {
