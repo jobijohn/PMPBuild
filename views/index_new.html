@@ -3,333 +3,304 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <!--<link href="/css/style.css" rel="stylesheet">-->
-    <link href="/css/style.css" rel="stylesheet">
-    <script type="text/javascript" src="/js/graph.js"></script>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <!-- bootstrap css --->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+    <!-- bootstrap css -->
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
+<div class="container">
 <header>
     <h1>Project Management Prototype Build</h1>
 </header>
 
+<div class="row box-theme">
+<div class="nav-bar">
+    <div class="col-sm-3">
+        <ul class="tab">
+            <li><a href="#" class="tablinks" onclick="openCity(event, 'Settings')">Settings</a></li>
+            <li><a href="#" class="tablinks" onclick="openCity(event, 'Dashboard')">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="col-sm-9">
+    </div>
+</div>
 
-<ul class="tab">
-    <li><a href="#" class="tablinks" onclick="openCity(event, 'Settings')">Settings</a></li>
-    <li><a href="#" class="tablinks" onclick="openCity(event, 'Dashboard')">Dashboard</a></li>
-</ul>
 
-<div id="Settings" class="tabcontent">
+<div id="Settings" class="tabcontent default-active">
+<div class="col-sm-3 filter-pan">
     <a href="/jira" class="btn-submit">Refresh</a>
-    <table style="width: 100%">
-    <tr>
-    <td style="vertical-align: top">
-        Saved Filters:
-        <select>
-            <option value="">Issue filter 1</option>
-            <option value="">Issue filter 2</option>
-            <option value="">Issue filter 3</option>
-            <option value="">Issue filter 4</option>
+    <br/><br/><br/>
+    <div class="clear"></div>
+    Saved Filters:
+    <select>
+        <option value="">Issue filter 1</option>
+        <option value="">Issue filter 2</option>
+        <option value="">Issue filter 3</option>
+        <option value="">Issue filter 4</option>
+    </select>
+    <br/>
+
+    <div style="height: 10px"></div>
+
+    <div >
+        New Issue Filter
+        <select name="issuetype" class="" id="issuetype" >
+            <option value="">-- Select Issue Type --</option>
+            {{#data}}
+            <option value="{{issuetype}}">{{issuetype}}</option>
+            {{/data}}
         </select>
-        <br/>
+    </div>
+    <div style="height: 10px;"></div>
+    <textarea name="filterText" style="height: 50px; width: 235px; margin-left: 0"></textarea>
+    <br/>
+    <button>Save Filter</button>
+</div>
 
-        <div style="height: 10px"></div>
-
-        <div style="border: 1px solid #ccc; width: 350px">
-            New Issue Filter
-            <select name="issuetype" class="" id="issuetype">
-                <option value="">-- Select Issue Type --</option>
-                {{#data}}
-                    <option value="{{issuetype}}">{{issuetype}}</option>
-                {{/data}}
+<div class="col-sm-9">
+<div class="row">
+<div class="form-group col-sm-12">
+    <div class="col-sm-8">
+        <label for="graph-type" class="control-label col-sm-4">Graph type:</label>
+        <div class="col-sm-8">
+            <select id="graph-type" class="form-control">
+                <option value="bar">Bar</option>
+                <option value="line">Line</option>
+                <option value="pie">Pie</option>
             </select>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
 
-            <div class="filter-modal item1" id="modal">
-                <div class="content">
-                    <h1>Filter Popup</h1>
-                    <div class="close">Close</div>
-                    <ul class="membes-on">
-                        <li class="district">District</li>
-                        <li class="taluk">Taluk</li>
-                        <li class="acres">No. of Acres</li>
-                    </ul>
-                    <div class="sub-filter item2 ">
-                        <div class="content">
-                            <h1>Filter Popup</h1>
-                            <div class="close">back</div>
-                            <select name="district" class="" id="district">
-                                <option value="">-- Select Districts --</option>
-                                {{#data1}}
-                                    <option value="{{districts}}">{{districts}}</option>
-                                {{/data1}}
-                            </select>
-                            <div class="btn-grp">
-                                <div class="next">Add more filter</div>
-                                <div class="add">Add this filter</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="sub-filter-taluk item3">
-                        <div class="content">
-                            <h1>Filter Popup</h1>
-                            <div class="close">back</div>
-                            <select name="taluk" class="" id="taluk">
-                                <option value="">-- Select Taluks --</option>
-                                    {{#data2}}
-                                        <option value="{{taluks}}">{{taluks}}</option>
-                                    {{/data2}}
-                            </select>
-                            <div class="btn-grp">
-                                <div class="next">Add more filter</div>
-                                <div class="add">Add this filter</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="sub-filter-acres item4">
-                        <div class="content">
-                            <h1>Filter Popup</h1>
-                            <div class="close">back</div>
-                            <ul class="Acres" style="padding: 0">
-                                <select>
-                                    <option>&gt;</option>
-                                    <option>&lt;</option>
-                                    <option>=</option>
-                                </select>
-                                <input type="text" value="" name="">
-                                <input type="button" value="add">
-                            </ul>
-                            <div class="btn-grp">
-                                <div class="next">Add more filter</div>
-                                <div class="add">Add this filter</div>
-                            </div>
-                        </div>
-                    </div>
+<div class="col-sm-12">
+    <div class="graph-type-bar graph-container filter-form">
+        <div class="col-sm-6 form-horizontal">
+            <div class="form-group">
+                <label for="graph-title" class="control-label col-sm-4">Graph title:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="graph-title">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="horizontal-axis-label" class="control-label col-sm-4">Horizontal axis label:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="horizontal-axis-label">
                 </div>
             </div>
 
-            <div class="filter-modal item2" id="modal">
-                <div class="content">
-                    <h1>Filter Popup</h1>
-                    <div class="close">Close</div>
-                    <ul class="membes-on">
-                        <li class="">District</li>
-                        <li class="">Taluk</li>
-                        <li class="">No. of Acres</li>
-                    </ul>
+            <div class="form-group">
+                <label for="vertical-axis-label" class="control-label col-sm-4">Vertical axis label:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="vertical-axis-label">
                 </div>
             </div>
 
-
-
-
-
-
-
-            <br/>
-            <br/>
-
-        </div>
-        <div style="height: 10px;"></div>
-        <textarea style="height: 50px; width: 235px; margin-left: 0">Issue Type = Member On-boarding & District = Kurnool,Anantapur & Taluk = Achampeta, Alair & No. of Acres = >50, <100</textarea>
-        <br/>
-        <button>Save Filter</button>
-    </td>
-    <td style="vertical-align: top">
-        <div>
-            <table>
-                <tr>
-                    <td>Graph type:</td>
-                    <td> <select id="graph-type">
-                        <option value="bar">Bar</option>
-                        <option value="line">Line</option>
-                        <option value="pie">Pie</option>
-                    </select></td>
-                </tr>
-            </table>
-            <div style="height: 5px;"></div>
-        </div>
-        <div style="border: 1px solid #ccc; width: 400px" class="graph-type-bar graph-container">
-
-            <form method="post" id="formBarGraph">
-            <table>
-
-                <tr>
-                    <td>Graph title:</td>
-                    <td><input type="text" name="title" id="title"></td>
-                </tr>
-                <tr>
-                    <td>Horizontal axis label:</td>
-                    <td><input type="text" name="xLabel" id="xLabel"></td>
-                </tr>
-                <tr>
-                    <td>Vertical axis label:</td>
-                    <td><input type="text" name="yLabel" id="yLabel"></td>
-                </tr>
-                <tr>
-                    <td>Horizontal data type:</td>
-                    <td>
-                        <select name="xData" id="xData">
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                            <option value="">No. of Acres</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Horizontal data values:</td>
-                    <td>
-                        <textarea name="xDataValues" id="xDataValues" style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Vertical data type:</td>
-                    <td>
-                        <select name="yData" id="yData">
-                            <option value="">No. of Acres</option>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Vertical data values:</td>
-                    <td>
-                        <textarea name="yDataValues" id="yDataValues" style="height: 50px">50&#13;&#10;100&#13;&#10;150
-                        </textarea>
-                    </td>
-                </tr>
-
-            </table>
-                <input type="button" name="btnBarGraph" id="btnBarGraph" value="Create Graph">
-            </form>
+            <div class="form-group">
+                <label for="horizontal-data-type" class="control-label col-sm-4">Horizontal data type:</label>
+                <div class="col-sm-8">
+                    <select id="horizontal-data-type" class="form-control">
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                        <option value="">No. of Acres</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
-        <div style="border: 1px solid #ccc; width: 400px" class="graph-type-line graph-container">
-            <table>
+        <div class="col-sm-6 form-horizontal">
+            <div class="form-group">
+                <label for="horizontal-data-values" class="control-label col-sm-4">Horizontal data values:</label>
+                <div class="col-sm-8">
+                    <textarea style="height: 50px" id="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                </div>
+            </div>
 
-                <tr>
-                    <td>Graph title:</td>
-                    <td><input></td>
-                </tr>
-                <tr>
-                    <td>Horizontal axis label:</td>
-                    <td><input></td>
-                </tr>
-                <tr>
-                    <td>Vertical axis label:</td>
-                    <td><input></td>
-                </tr>
-                <tr>
-                    <td>Horizontal data type:</td>
-                    <td>
-                        <select>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                            <option value="">No. of Acres</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Horizontal data values:</td>
-                    <td>
-                        <textarea style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Vertical data type:</td>
-                    <td>
-                        <select>
-                            <option value="">No. of Acres</option>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Vertical data values:</td>
-                    <td>
-                        <textarea style="height: 50px">50&#13;&#10;100&#13;&#10;150
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Number of Lines</td>
-                    <td>
-                        <select>
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                        </select></td>
-                </tr>
-            </table>
+            <div class="form-group">
+                <label for="vertical-data-type" class="control-label col-sm-4">Vertical data type:</label>
+                <div class="col-sm-8">
+                    <select id="vertical-data-type" class="form-control">
+                        <option value="">No. of Acres</option>
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="vertical-data-values" class="control-label col-sm-4">Vertical data values:</label>
+                <div class="col-sm-8">
+                    <textarea style="height: 50px" id="vertical-data-values" class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="number-of-bars" class="control-label col-sm-4">Number of Bars:</label>
+                <div class="col-sm-8">
+                    <select id="number-of-bars" class="form-control">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                    </select>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
 
-        <div style="border: 1px solid #ccc; width: 400px" class="graph-type-pie graph-container">
-            <table>
+<div class="col-sm-12">
+    <div class="graph-type-line graph-container filter-form">
+        <div class="col-sm-6 form-horizontal">
+            <div class="form-group">
+                <label for="graph-title-line" class="control-label col-sm-4">Graph title:</label>
+                <div class="col-sm-8">
+                    <input id="graph-title-line" type="text" class="form-control">
+                </div>
+            </div>
 
-                <tr>
-                    <td>Graph title:</td>
-                    <td><input></td>
-                </tr>
-                <tr>
+            <div class="form-group">
+                <label for="horizontal-axis-label" class="control-label col-sm-4">Horizontal axis label:</label>
+                <div class="col-sm-8">
+                    <input id="horizontal-axis-label-line" type="text" class="form-control">
+                </div>
+            </div>
 
-                <tr>
-                    <td>Data name:</td>
-                    <td>
-                        <select>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                            <option value="">No. of Acres</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Data names:</td>
-                    <td>
-                        <textarea style="height: 50px">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram
-                        </textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Data value:</td>
-                    <td>
-                        <select>
-                            <option value="">No. of Acres</option>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Data values:</td>
-                    <td>
-                        <textarea style="height: 50px">50&#13;&#10;100&#13;&#10;150
-                        </textarea>
-                    </td>
-                </tr>
+            <div class="form-group">
+                <label for="vertical-axis-label-line" class="control-label col-sm-4">Vertical axis label:</label>
+                <div class="col-sm-8">
+                    <input id="vertical-axis-label-line" type="text" class="form-control">
+                </div>
+            </div>
 
-                <tr>
-                    <td>Slice text</td>
-                    <td>
-                        <select>
-                            <option value="">Percentage</option>
-                            <option value="">Names</option>
-                            <option value="">Values</option>
-                            <option value="">None</option>
-                        </select></td>
-                </tr>
-            </table>
+            <div class="form-group">
+                <label for="horizontal-data-type-line" class="control-label col-sm-4">Horizontal data type:</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="horizontal-data-type-line">
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                        <option value="">No. of Acres</option>
+                    </select>
+                </div>
+            </div>
         </div>
+        <div class="col-sm-6 form-horizontal">
+            <div class="form-group">
+                <label for="horizontal-data-values-line" class="control-label col-sm-4">Horizontal data values:</label>
+                <div class="col-sm-8">
+                    <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                </div>
+            </div>
 
+            <div class="form-group">
+                <label for="vertical-data-type-line" class="control-label col-sm-4">Vertical data type:</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="vertical-data-type-line">
+                        <option value="">No. of Acres</option>
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                    </select>
+                </div>
+            </div>
 
+            <div class="form-group">
+                <label for="vertical-data-values-line" class="control-label col-sm-4">Vertical data values:</label>
+                <div class="col-sm-8">
+                    <textarea style="height: 50px" class="form-control" id="vertical-data-values-line">50&#13;&#10;100&#13;&#10;150</textarea>
+                </div>
+            </div>
 
-    </td>
-    <td style="vertical-align: top">
+            <div class="form-group">
+                <label for="number-of-lines-line" class="control-label col-sm-4">Number of Lines:</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="number-of-lines-line">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="col-sm-12">
+    <div class="graph-type-pie graph-container filter-form">
+        <div class="col-sm-6 form-horizontal">
+            <div class="form-group">
+                <label for="graph-title-pie" class="control-label col-sm-4">Graph title:</label>
+                <div class="col-sm-8">
+                    <input id="graph-title-pie" type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="data-name-pie" class="control-label col-sm-4">Data name:</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="data-name-pie">
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                        <option value="">No. of Acres</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="data-names-pie" class="control-label col-sm-4">Data names:</label>
+                <div class="col-sm-8">
+                    <textarea style="height: 50px" class="form-control" id="data-names-pie">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-6 form-horizontal">
+
+            <div class="form-group">
+                <label for="data-value-pie" class="control-label col-sm-4">Data value:</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="data-value-pie">
+                        <option value="">No. of Acres</option>
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="data-values-pie" class="control-label col-sm-4">Data values:</label>
+                <div class="col-sm-8">
+                    <textarea style="height: 50px" class="form-control" id="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="slice-text-pie" class="control-label col-sm-4">Slice text:</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="slice-text-pie">
+                        <option value="">Percentage</option>
+                        <option value="">Names</option>
+                        <option value="">Values</option>
+                        <option value="">None</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
         <div style="border: 1px solid #ccc; width: 100%">
-            <img src="" style="width:345px" id="imgBarGraph">
-            <div id="chart_div"></div>
+            <img src="{{imageUrl}}" style="width:345px" >
         </div>
-
         <button>Save Graph</button>
-        <br/>
+    </div>
+    <div class="col-sm-6">
         <div style="border: 1px solid #ccc; width: 100%">
             Issues:
             <ul>
@@ -341,10 +312,10 @@
                 <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
             </ul>
         </div>
-    </td>
+    </div>
+</div>
 
-    </tr>
-    </table>
+</div>
 </div>
 
 <div id="Dashboard" class="tabcontent">
@@ -352,7 +323,7 @@
         <tr>
             <td>
                 <div style="border: 1px solid #ccc; width: 100%">
-                    <img src="" style="width:345px" >
+                    <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
                 </div>
             </td>
             <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
@@ -434,282 +405,342 @@
         </tr>
     </table>
 </div>
+</div>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</div>
 
+<!--- modal --->
+<div class="filter-modal item1" id="modal">
+    <div class="content">
+        <h1>Filter Popup</h1>
+        <div class="close">Close</div>
+        <ul class="membes-on">
+            <li class="district">District</li>
+            <li class="taluk">Taluk</li>
+            <li class="acres">No. of Acres</li>
+        </ul>
+        <div class="sub-filter item2">
+            <div class="content">
+                <h1>Filter Popup</h1>
+                <div class="close">back</div>
+                <select name="district" class="" id="district">
+                    <option value="">-- Select Districts --</option>
+                    {{#data1}}
+                    <option value="{{districts}}">{{districts}}</option>
+                    {{/data1}}
+                </select>
+                <div class="btn-grp">
+                    <button type="button" class="next">Add more filter</button>
+                    <button type="button" id="addDistrict">Add this filter</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sub-filter-taluk item3">
+            <div class="content">
+                <h1>Filter Popup</h1>
+                <div class="close">back</div>
+                <select name="taluk" class="" id="taluk">
+                    <option value="">-- Select Taluks --</option>
+                    {{#data2}}
+                    <option value="{{taluks}}">{{taluks}}</option>
+                    {{/data2}}
+                </select>
+                <div class="btn-grp">
+                    <button type="button" class="next">Add more filter</button>
+                    <button type="button" id="addTaluk">Add this filter</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sub-filter-acres item4">
+            <div class="content">
+                <h1>Filter Popup</h1>
+                <div class="close">back</div>
+                <ul class="Acres" style="padding: 0">
+                    <select name="acreSymbol" id="acreSymbol">
+                        <option value=">">&gt;</option>
+                        <option value="<">&lt;</option>
+                        <option value="=">=</option>
+                    </select>
+                    <input type="text" value="" id="acreValue">
+                </ul>
+                <div class="btn-grp">
+                    <button type="button" class="next">Add more filter</button>
+                    <button type="button" id="addAcre">Add this filter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="filter-modal item2" id="modal2">
+    <div class="content">
+        <h1>Filter Popup</h1>
+        <div class="close">Close</div>
+        <ul class="membes-on">
+            <li class="">District</li>
+            <li class="">Taluk</li>
+            <li class="">No. of Acres</li>
+        </ul>
+    </div>
+</div>
+<!-- modal end -->
 </body>
 </html>
 
-        <style>
-            /* Style the list */
-            ul.tab {
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-                overflow: hidden;
-                border: 1px solid #ccc;
-                background-color: #f1f1f1;
-            }
+<style>
+    /* Style the list */
 
-            /* Float the list items side by side */
-            ul.tab li {float: left;}
 
-            /* Style the links inside the list items */
-            ul.tab li a {
-                display: inline-block;
-                color: black;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                transition: 0.3s;
-                font-size: 17px;
-            }
+    /* Float the list items side by side */
+    ul.tab li {float: left;}
 
-            /* Change background color of links on hover */
-            ul.tab li a:hover {background-color: #ddd;}
 
-            /* Create an active/current tablink class */
-            ul.tab li a:focus, .active {background-color: #ccc;}
 
-            /* Style the tab content */
-            .tabcontent {
-                display: none;
-                padding: 6px 12px;
-                border: 1px solid #ccc;
-                border-top: none;
-            }
-            .tree {
-                display: none;
-            }
-            .filter-modal {
-                background-color: rgb(0,0,0); /* Fallback color */
-                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-                position: fixed;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                z-index: 1050;
-                overflow: hidden;
-                -webkit-overflow-scrolling: touch;
-                outline: 0;
-                opacity: 1;
-                display: none;
-            }
-            .filter-modal .content {
-                background-color: #fefefe;
-                margin: auto;
-                padding: 20px;
-                border: 1px solid #888;
-                width: 300px;
-                height: auto;
-                top: 50%;
-                left: 50%;
-                margin-top: -100px;
-                margin-left: -150px;
-                position: fixed;
-                box-shadow: 0px 0px 3px -1px rgb(0, 0, 0);
-            }
-            .filter-modal .content h1 {
-                font-size: 16px;
-                margin: 0;
-                padding: 0 0 5px 0;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-                font-weight: normal;
-            }
-            .filter-modal ul {
-                margin: 5px 0;
-                padding: 0;
-            }
-            .filter-modal ul li {
-                list-style: none;
-                padding: 3px 0;
-            }
-            .enable {
-                display: block !important;
-            }
-            .sub-filter, .sub-filter-taluk, .sub-filter-acres {
-                position: relative;
-                display: none;
-                z-index: 1051;
-            }
-            .btn-grp div {
-                float: left;
-                min-width: 50px;
-                width: auto;
-                background: rgb(204, 204, 204);
-                padding: 2%;
-                border-radius: 5px;
-                text-align: center;
-                margin-right: 10px;
-                cursor: pointer;
-            }
-            .btn-grp div:hover, .close:hover {
-                background: green;
-                color: #fff;
-            }
-            .close {
-                width: 50px;
-                position: absolute;
-                right: 20px;
-                top: 12px;
-                background: rgb(204, 204, 204);
-                padding: 5px;
-                text-align: center;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-            .btn-submit {
-                color: white;
-                background-color: blue;
-                border: none;
-                text-decoration: none;
-                padding: 6px 18px 6px 19px;
-                font-size: 16px;
-                margin: 12px 0px 12px 0px;
-                cursor: pointer;
-                float: left;
-            }
 
-        </style>
+
+    /* Create an active/current tablink class */
+    ul.tab li a:focus, .active {background-color: #ccc;}
+
+
+    .tree {
+        display: none;
+    }
+    .filter-modal {
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1050;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+        outline: 0;
+        opacity: 1;
+        display: none;
+    }
+    .filter-modal .content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 300px;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        margin-top: -100px;
+        margin-left: -150px;
+        position: fixed;
+        box-shadow: 0px 0px 3px -1px rgb(0, 0, 0);
+    }
+    .filter-modal .content h1 {
+        font-size: 16px;
+        margin: 0;
+        padding: 0 0 5px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        font-weight: normal;
+    }
+    .filter-modal ul {
+        margin: 5px 0;
+        padding: 0;
+    }
+    .filter-modal ul li {
+        list-style: none;
+        padding: 3px 0;
+    }
+    .enable {
+        display: block !important;
+    }
+    .sub-filter, .sub-filter-taluk, .sub-filter-acres {
+        position: relative;
+        display: none;
+        z-index: 1051;
+    }
+    .btn-grp div {
+        float: left;
+        min-width: 50px;
+        width: auto;
+        background: rgb(204, 204, 204);
+        padding: 2%;
+        border-radius: 5px;
+        text-align: center;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    .btn-grp div:hover, .close:hover {
+        background: green;
+        color: #fff;
+    }
+    .close {
+        width: 50px;
+        position: absolute;
+        right: 20px;
+        top: 12px;
+        background: rgb(204, 204, 204);
+        padding: 5px;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn-submit {
+        color: white;
+        background-color: orange;
+        border: none;
+        text-decoration: none;
+        padding: 6px 18px 6px 19px;
+        font-size: 16px;
+        margin: 12px 0px 12px 80px;
+        cursor: pointer;
+        float: left;
+    }
+
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-
-        <script>
-            $('#refreshJson').click(function () {
-                alert('button click');
-                $.get('/jira', function (data, status) {
-                    alert("Data: " + data + "\nStatus: " + status);
-                });
+<script>
+    $(document).ready(function () {
+        $('#refreshJson').click(function () {
+            $(this).after("<img src='/ajax-loader.gif' alt='loading' />");
+            $.get('/jira', function () {
             });
-            /*$('.filter-modal').click(function(){
-                $(this).parent().children('ul.tree').toggle(300);
-            });*/
-
-            $('.item1').click(function(){
+        });
+        $('#issuetype').on('change', function() {
+            if(this.value) {
+                var issue1 = 'issueType=' + this.value;
+                //  Issue Type = Member On-boarding & District = Kurnool,Anantapur & Taluk = Achampeta, Alair & No. of Acres = >50, <100
+                $("textarea[name=filterText]").val(issue1);
                 $('.filter-modal.item1').addClass('enable');
-            });
-            $('.seed').click(function(){
-                $('.filter-modal.item2').addClass('enable');
-            });
-
-            $('.district').click(function(){
-                $('.sub-filter').addClass('enable');
-            });
-            $('.taluk').click(function(){
-                $('.sub-filter-taluk').addClass('enable');
-            });
-            $('.acres').click(function(){
-                $('.sub-filter-acres').addClass('enable')
-            });
-
-            var modal = document.getElementById('modal');
-            var modal2 = document.getElementById('modal2');
-
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    console.log(event.target);
-                    $('.filter-modal.item1').removeClass('enable');
-                    $('.sub-filter, .sub-filter-taluk, .sub-filter-acres').removeClass('enable');
-                }
-            };
-
-
-            $('.close').click(function(){
-                $(this).parent().parent().removeClass('enable')
-                return false;
-            });
-
-            $('.next').click(function(){
-                $(this).closest('.enable').removeClass('enable');
-            });
-
-            $('.add').click(function(){
-                $('#modal').removeClass('enable');
-                $(this).closest('.enable').removeClass('enable');
-                return false;
-            });
-
-            $(function() {
-                $('.graph-container').hide();
-                $('.graph-type-bar').show();
-                $('#graph-type').change(function(){
-                    if($('#graph-type').val() == 'bar') {
-                        $('.graph-type-bar').show();
-                        $('.graph-type-pie').hide();
-                        $('.graph-type-line').hide();
-                    } else if($('#graph-type').val() == 'pie') {
-                        $('.graph-type-pie').show();
-                        $('.graph-type-bar').hide();
-                        $('.graph-type-line').hide();
-                    }else if($('#graph-type').val() == 'line'){
-                        $('.graph-type-line').show();
-                        $('.graph-type-bar').hide();
-                        $('.graph-type-pie').hide();
-                    }
-                });
-            });
-
-            function openCity(evt, cityName) {
-                // Declare all variables
-                var i, tabcontent, tablinks;
-
-                // Get all elements with class="tabcontent" and hide them
-                tabcontent = document.getElementsByClassName("tabcontent");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
-                }
-
-                // Get all elements with class="tablinks" and remove the class "active"
-                tablinks = document.getElementsByClassName("tablinks");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" active", "");
-                }
-
-                // Show the current tab, and add an "active" class to the link that opened the tab
-                document.getElementById(cityName).style.display = "block";
-                evt.currentTarget.className += " active";
+            } else {
+                $("textarea[name=filterText]").val("");
             }
+        });
 
-
-            $('#formBarGraph').on('click', '#btnBarGraph',  function (e) {
-                $.post('/graph/bar', $('#formBarGraph').serialize())
-                .done(function (data) {
-                            google.charts.load('current', {packages: ['corechart', 'bar']});
-                            google.charts.setOnLoadCallback(drawBasic);
-
-                            function drawBasic() {
-
-                                var data = google.visualization.arrayToDataTable([
-                                    ['', 'District' ],
-                                    ['Ernakulam', 50],
-                                    ['Idukki', 40],
-                                    ['Apappuzha', 80],
-                                    ['Wayanad', 10],
-                                    ['Kottayam', 25]
-                                ]);
-
-                                var options = {
-                                    title: 'PMP Build Test graph',
-                                    chartArea: {width: '50%'},
-                                    hAxis: {
-                                        title: 'Districts',
-                                        minValue: 0
-                                    },
-                                    vAxis: {
-                                        title: 'No. of Acres'
-                                    }
-                                };
-
-                                var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-
-                                chart.draw(data, options);
-                            }
+        $('#addDistrict').click(function () {
+            var _district = $("#district").val();
+            if(_district) {
+                var oldFilter = $("textarea[name=filterText]").val();
+                $("textarea[name=filterText]").val(oldFilter+' & District='+ _district);
+                $('#district option').prop('selected', function() {
+                    return this.defaultSelected;
                 });
-            });
+            }
+        });
 
-        </script>
+        $('#addTaluk').click(function () {
+            var _taluk = $("#taluk").val();
+            if(_taluk) {
+                var oldFilter = $("textarea[name=filterText]").val();
+                $("textarea[name=filterText]").val(oldFilter+' & Taluk='+ _taluk);
+                $('#taluk option').prop('selected', function() {
+                    return this.defaultSelected;
+                });
+            }
+        });
+
+        $('#addAcre').click(function () {
+            var _acreSymbol = $("#acreSymbol").val();
+            var _acreValue = $("#acreValue").val();
+            var _acre = _acreSymbol + _acreValue;
+            if(_acre) {
+                var oldFilter = $("textarea[name=filterText]").val();
+                $("textarea[name=filterText]").val(oldFilter+' & NoOfAcres='+ _acre);
+                $("#acreValue").val("");
+            }
+        });
+    });
+
+    /*$('.filter-modal').click(function(){
+     $(this).parent().children('ul.tree').toggle(300);
+     });*/
+
+    $('.item1').click(function(){
+        $('.filter-modal.item1').addClass('enable');
+    });
+    $('.seed').click(function(){
+        $('.filter-modal.item2').addClass('enable');
+    });
+
+    $('.district').click(function(){
+        $('.sub-filter').addClass('enable');
+    });
+    $('.taluk').click(function(){
+        $('.sub-filter-taluk').addClass('enable');
+    });
+    $('.acres').click(function(){
+        $('.sub-filter-acres').addClass('enable')
+    });
+
+    var modal = document.getElementById('modal');
+    var modal2 = document.getElementById('modal2');
+
+    // When the user clicks anywhere outside of the modal, close it
+    //            window.onclick = function(event) {
+    //                if (event.target == modal) {
+    //                    console.log(event.target);
+    //                    $('.filter-modal.item1').removeClass('enable');
+    //                    $('.sub-filter, .sub-filter-taluk, .sub-filter-acres').removeClass('enable');
+    //                }
+    //            };
 
 
+    $('.close').click(function(){
+        $(this).parent().parent().removeClass('enable')
+        return false;
+    });
 
+    $('.next').click(function(){
+        $(this).closest('.enable').removeClass('enable');
+    });
+
+    $('.add').click(function(){
+        $('#modal').removeClass('enable');
+        $(this).closest('.enable').removeClass('enable');
+        return false;
+    });
+
+    $(function() {
+        $('.graph-container').hide();
+        $('.graph-type-bar').show();
+        $('#graph-type').change(function(){
+            if($('#graph-type').val() == 'bar') {
+                $('.graph-type-bar').show();
+                $('.graph-type-pie').hide();
+                $('.graph-type-line').hide();
+            } else if($('#graph-type').val() == 'pie') {
+                $('.graph-type-pie').show();
+                $('.graph-type-bar').hide();
+                $('.graph-type-line').hide();
+            }else if($('#graph-type').val() == 'line'){
+                $('.graph-type-line').show();
+                $('.graph-type-bar').hide();
+                $('.graph-type-pie').hide();
+            }
+        });
+    });
+
+    function openCity(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            $('.tabcontent').removeClass('default-active');
+        }
+
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the link that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
