@@ -41,11 +41,17 @@ function launchApp() {
     }));
 
     app.get('/', index.indexPage);
+
     app.get('/jira', index.getOAuth);
     app.get('/jira/callback', index.getOAuthCallback);
     app.get('/projects', index.projects);
-    app.post('/graph/bar', graph.generateBarGraph);
     app.get('/get-json-from-jira', index.getJsonFromJira);
+
+    app.post('/graph/bar', graph.generateBarGraph);
+    app.post('/graph/line', graph.generateLineGraph);
+    app.post('/chart/pie', graph.generatePieChart);
+
+
 
     var port = app.get('port') || 1337;
     app.listen(port);
