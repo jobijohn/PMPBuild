@@ -9,7 +9,6 @@ function generateBarGraph(req, res) {
     var xLabel = req.param('horizontal-axis-label');
     var yLabel = req.param('vertical-axis-label');
     var xDataType = req.param('horizontal-data-type');
-
     var xDataValues = [];
     xDataValues = [
         ['', xLabel, { role: 'style' } ], //District should be xLabel
@@ -19,7 +18,6 @@ function generateBarGraph(req, res) {
         ['Anantapur', 10, '#b87333'],
         ['Chittoor', 25, '#871B47']
     ];
-
     var yDataType = req.param('vertical-data-type');
     var yDataValues = req.param('vertical-data-values');
 
@@ -73,11 +71,19 @@ function generateLineGraph(req, res) {
 
 function generatePieChart(req, res) {
     //TODO: validations
-    var title = req.param('graph-title');
+    var title = req.param('graph-title-pie');
     var xLabel = req.param('horizontal-axis-label');
     var yLabel = req.param('vertical-axis-label');
     var xDataType = req.param('horizontal-data-type');
-    var xDataValues = req.param('horizontal-data-values');
+    var xDataValues = [];
+    xDataValues = [
+        ['District', 'Acres'],
+        ['Godavari', 11],
+        ['Srikakulam', 2],
+        ['Vizianagaram', 2],
+        ['Anantapur', 2],
+        ['Chittoor', 7]
+    ];
     var yDataType = req.param('vertical-data-type');
     var yDataValues = req.param('vertical-data-values');
 

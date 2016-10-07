@@ -921,27 +921,19 @@
 <script>
     $('#formPieChart').on('click', '#btnPieChart',  function (e) {
         $.post('/chart/pie', $('#formPieChart').serialize())
-                .done(function (data) {
-                    google.charts.load('current', {'packages':['corechart']});
-                    google.charts.setOnLoadCallback(drawChart);
-                    function drawChart() {
+                .done(function (result) {
+                    if(result) {
+                        google.charts.load('current', {'packages': ['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+                        function drawChart() {
+                            var data = google.visualization.arrayToDataTable(result.xDataValues);
 
-                        var data = google.visualization.arrayToDataTable([
-                            ['Task', 'Hours per Day'],
-                            ['Work',     11],
-                            ['Eat',      2],
-                            ['Commute',  2],
-                            ['Watch TV', 2],
-                            ['Sleep',    7]
-                        ]);
-
-                        var options = {
-                            title: 'My Daily Activities'
-                        };
-
-                        var chart = new google.visualization.PieChart(document.getElementById('divChart'));
-
-                        chart.draw(data, options);
+                            var options = {
+                                title: result.title
+                            };
+                            var chart = new google.visualization.PieChart(document.getElementById('divChart'));
+                            chart.draw(data, options);
+                        }
                     }
                 });
     });
