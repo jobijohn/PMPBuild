@@ -872,18 +872,18 @@
     $('#formLineGraph').on('click', '#btnLineGraph',  function (e) {
         $.post('/graph/line', $('#formLineGraph').serialize())
                 .done(function (result) {
-                    google.charts.load('current', {'packages':['line']});
-                    google.charts.setOnLoadCallback(drawChart);
+                    if(result) {
+                        alert(result.xLabel);
+                        google.charts.load('current', {'packages': ['line']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-                    function drawChart() {
-
-                        var data = new google.visualization.DataTable();
-                        data.addColumn('number', 'Day');
-                        data.addColumn('number', 'District');
-                        data.addColumn('number', 'Taluk');
-                        data.addColumn('number', 'Area');
-
-                        data.addRows([
+                        function drawChart() {
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('number', result.xLabel);
+                            data.addColumn('number', result.yLabel);
+                            //data.addColumn('number', 'Taluk');
+                            //data.addColumn('number', 'Area');
+                            /*data.addRows([
                             [1,  37.8, 80.8, 41.8],
                             [2,  30.9, 69.5, 32.4],
                             [3,  25.4,   57, 25.7],
@@ -898,19 +898,20 @@
                             [12,  6.6,  8.4,  5.2],
                             [13,  4.8,  6.3,  3.6],
                             [14,  4.2,  6.2,  3.4]
-                        ]);
-
+                        ]);*/
+                        data.addRows(
+                                result.xDataValues);
                         var options = {
                             chart: {
-                                title: 'Test title'/*,
-                                subtitle: 'in millions of dollars (USD)'*/
+                                title: result.title
+                                //subtitle: 'in millions of dollars (USD)'
                             },
                             width: 500,
                             height: 300
                         };
-
                         var chart = new google.charts.Line(document.getElementById('divChart'));
                         chart.draw(data, options);
+                        }
                     }
                 });
     });
