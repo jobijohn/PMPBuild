@@ -121,7 +121,7 @@
                                             <label for="horizontal-data-type" class="control-label col-sm-4">x Data:</label>
                                             <div class="col-sm-8">
                                                 <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
-
+                                                    <option value="">Select</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -132,7 +132,7 @@
                                         <div class="form-group">
                                             <label for="horizontal-data-values" class="control-label col-sm-4">x Values:</label>
                                             <div class="col-sm-8">
-                                                <textarea style="height: 50px" id="horizontal-data-values" name="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                                                <textarea style="height: 50px" id="horizontal-data-values" name="horizontal-data-values" class="form-control"></textarea>
                                             </div>
                                         </div>
 
@@ -140,7 +140,7 @@
                                             <label for="vertical-data-type" class="control-label col-sm-4">v Data:</label>
                                             <div class="col-sm-8">
                                                 <select id="vertical-data-type" name="vertical-data-type" class="form-control">
-
+                                                    <option value="">Select</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -148,7 +148,7 @@
                                         <div class="form-group">
                                             <label for="vertical-data-values" class="control-label col-sm-4">v Values:</label>
                                             <div class="col-sm-8">
-                                                <textarea style="height: 50px" id="vertical-data-values" name="vertical-data-values" class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
+                                                <textarea style="height: 50px" id="vertical-data-values" name="vertical-data-values" class="form-control"></textarea>
                                             </div>
                                         </div>
 
@@ -189,7 +189,7 @@
                                             <label for="horizontal-data-type-line" class="control-label col-sm-4">x Data:</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control" id="horizontal-data-type-line" name="horizontal-data-type-line">
-
+                                                    <option value="">Select</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -198,7 +198,7 @@
                                         <div class="form-group">
                                             <label for="horizontal-data-values-line" class="control-label col-sm-4">x Values:</label>
                                             <div class="col-sm-8">
-                                                <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line" name="horizontal-data-values-line">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                                                <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line" name="horizontal-data-values-line"></textarea>
                                             </div>
                                         </div>
 
@@ -206,7 +206,7 @@
                                             <label for="vertical-data-type-line" class="control-label col-sm-4">v Data:</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control" id="vertical-data-type-line" name="vertical-data-type-line">
-
+                                                    <option value="">Select</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -214,7 +214,7 @@
                                         <div class="form-group">
                                             <label for="vertical-data-values-line" class="control-label col-sm-4">v Values:</label>
                                             <div class="col-sm-8">
-                                                <textarea style="height: 50px" class="form-control" id="vertical-data-values-line" name="vertical-data-values-line">50&#13;&#10;100&#13;&#10;150</textarea>
+                                                <textarea style="height: 50px" class="form-control" id="vertical-data-values-line" name="vertical-data-values-line"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -241,9 +241,7 @@
                                             <label for="data-name-pie" class="control-label col-sm-4">Data name:</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control" id="data-name-pie" name="data-name-pie">
-                                                    <option value="">District</option>
-                                                    <option value="">Taluk</option>
-                                                    <option value="">No. of Acres</option>
+                                                    <option value="">Select</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -251,7 +249,7 @@
                                         <div class="form-group">
                                             <label for="data-names-pie" class="control-label col-sm-4">Data Names:</label>
                                             <div class="col-sm-8">
-                                                <textarea style="height: 50px" class="form-control" id="data-names-pie" name="data-names-pie"> Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                                                <textarea style="height: 50px" class="form-control" id="data-names-pie" name="data-names-pie"></textarea>
                                             </div>
                                         </div>
 
@@ -262,9 +260,7 @@
                                             <label for="data-value-pie" class="control-label col-sm-4">Data Value:</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control" id="data-value-pie" name="data-value-pie">
-                                                    <option value="">No. of Acres</option>
-                                                    <option value="">District</option>
-                                                    <option value="">Taluk</option>
+                                                    <option value="">Select</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -272,7 +268,7 @@
                                         <div class="form-group">
                                             <label for="data-values-pie" class="control-label col-sm-4">Data Values:</label>
                                             <div class="col-sm-8">
-                                                <textarea style="height: 50px" class="form-control" id="data-values-pie" name="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
+                                                <textarea style="height: 50px" class="form-control" id="data-values-pie" name="data-values-pie"></textarea>
                                             </div>
                                         </div>
 
@@ -641,7 +637,7 @@
                             $('#filteredDistrict').val(_district);
                         }
 
-
+                        //Adding Graph X-Data headings - Bar
                         if (!$("#horizontal-data-type option[value='District']").length) {
                             $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
                         }
@@ -650,7 +646,7 @@
                             $('<option>').val('District').text('District').appendTo($('#vertical-data-type'));
                         }
 
-
+                        //Adding Graph Y-Data headings - Line
                         if (!$("#horizontal-data-type-line option[value='District']").length) {
                             $('<option>').val('District').text('District').appendTo($('#horizontal-data-type-line'));
                         }
@@ -658,6 +654,17 @@
                         if (!$("#vertical-data-type-line option[value='District']").length) {
                             $('<option>').val('District').text('District').appendTo($('#vertical-data-type-line'));
                         }
+
+                        //Adding Graph Y-Data headings - Pie
+                        if (!$("#data-name-pie option[value='District']").length) {
+                            $('<option>').val('District').text('District').appendTo($('#data-name-pie'));
+                        }
+
+                        if (!$("#data-value-pie option[value='District']").length) {
+                            $('<option>').val('District').text('District').appendTo($('#data-value-pie'));
+                        }
+
+
 //                      $(".chosen-select").val('').trigger("chosen:updated");
                     }
                 });
@@ -675,7 +682,7 @@
                         } else {
                             $('#filteredTaluk').val(_taluk);
                         }
-
+                        //Adding Graph X-Data headings - Bar
                         if (!$("#horizontal-data-type option[value='Taluk']").length) {
                             $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
                         }
@@ -683,13 +690,22 @@
                         if (!$("#vertical-data-type option[value='Taluk']").length) {
                             $('<option>').val('Taluk').text('Taluk').appendTo($('#vertical-data-type'));
                         }
-
+                        //Adding Graph Y-Data headings - Line
                         if (!$("#horizontal-data-type-line option[value='Taluk']").length) {
                             $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type-line'));
                         }
 
                         if (!$("#vertical-data-type-line option[value='Taluk']").length) {
                             $('<option>').val('Taluk').text('Taluk').appendTo($('#vertical-data-type-line'));
+                        }
+
+                        //Adding Graph Y-Data headings - Pie
+                        if (!$("#data-name-pie option[value='Taluk']").length) {
+                            $('<option>').val('Taluk').text('Taluk').appendTo($('#data-name-pie'));
+                        }
+
+                        if (!$("#data-value-pie option[value='Taluk']").length) {
+                            $('<option>').val('Taluk').text('Taluk').appendTo($('#data-value-pie'));
                         }
 //                        $(".chosen-select").val('').trigger("chosen:updated");
                     }
@@ -721,7 +737,7 @@
                         } else {
                             $('#filteredAcre').val($('#lblAcreValues').text());
                         }
-
+                        //Adding Graph X-Data headings
                         if (!$("#horizontal-data-type option[value='No. of Acres']").length) {
                             $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#horizontal-data-type'));
                         }
@@ -730,6 +746,7 @@
                             $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
                         }
 
+                        //Adding Graph Y-Data headings
                         if (!$("#horizontal-data-type-line option[value='No. of Acres']").length) {
                             $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#horizontal-data-type-line'));
                         }
@@ -738,8 +755,158 @@
                             $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type-line'));
                         }
 
+                        //Adding Graph Y-Data headings - Pie
+                        if (!$("#data-name-pie option[value='No. of Acres']").length) {
+                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#data-name-pie'));
+                        }
+
+                        if (!$("#data-value-pie option[value='No. of Acres']").length) {
+                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#data-value-pie'));
+                        }
+
                         $('#lblAcreValues').text("");
                     }
+                });
+                $('#horizontal-data-type').on('change', function () {
+                    var selectVal = $("#horizontal-data-type option:selected").val();
+                    if(selectVal) {
+                        if (selectVal == 'District') {
+                            $('#horizontal-data-values').val("");
+                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                                $('#horizontal-data-values').val($('#horizontal-data-values').val() + value + "\n");
+                            });
+
+                        } else if (selectVal == 'Taluk') {
+                            $('#horizontal-data-values').val("");
+                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                                $('#horizontal-data-values').val($('#horizontal-data-values').val() + value + "\n");
+                            });
+                        } else if (selectVal == 'No. of Acres'){
+                            $('#horizontal-data-values').val("");
+                            $.each($('#filteredAcre').val().split(','), function(key, value) {
+                                $('#horizontal-data-values').val($('#horizontal-data-values').val() + value + "\n");
+                            });
+                        }
+                    }
+
+                });
+                $('#vertical-data-type').on('change', function () {
+                    var selectVal = $("#vertical-data-type option:selected").val();
+                    if(selectVal) {
+                        if (selectVal == 'District') {
+                            $('#vertical-data-values').val("");
+                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                                $('#vertical-data-values').val($('#vertical-data-values').val() + value + "\n");
+                            });
+
+                        } else if (selectVal == 'Taluk') {
+                            $('#vertical-data-values').val("");
+                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                                $('#vertical-data-values').val($('#vertical-data-values').val() + value + "\n");
+                            });
+                        } else if (selectVal == 'No. of Acres'){
+                            $('#vertical-data-values').val("");
+                            $.each($('#filteredAcre').val().split(','), function(key, value) {
+                                $('#vertical-data-values').val($('#vertical-data-values').val() + value + "\n");
+                            });
+                        }
+                    }
+
+                });
+
+                $('#horizontal-data-type-line').on('change', function () {
+                    var selectVal = $("#horizontal-data-type-line option:selected").val();
+                    if(selectVal) {
+                        if (selectVal == 'District') {
+                            $('#horizontal-data-values-line').val("");
+                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                                $('#horizontal-data-values-line').val($('#horizontal-data-values-line').val() + value + "\n");
+                            });
+
+                        } else if (selectVal == 'Taluk') {
+                            $('#horizontal-data-values-line').val("");
+                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                                $('#horizontal-data-values-line').val($('#horizontal-data-values-line').val() + value + "\n");
+                            });
+                        } else if (selectVal == 'No. of Acres'){
+                            $('#horizontal-data-values-line').val("");
+                            $.each($('#filteredAcre').val().split(','), function(key, value) {
+                                $('#horizontal-data-values-line').val($('#horizontal-data-values-line').val() + value + "\n");
+                            });
+                        }
+                    }
+
+                });
+                $('#vertical-data-type-line').on('change', function () {
+                    var selectVal = $("#vertical-data-type-line option:selected").val();
+                    if(selectVal) {
+                        if (selectVal == 'District') {
+                            $('#vertical-data-values-line').val("");
+                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                                $('#vertical-data-values-line').val($('#vertical-data-values-line').val() + value + "\n");
+                            });
+
+                        } else if (selectVal == 'Taluk') {
+                            $('#vertical-data-values-line').val("");
+                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                                $('#vertical-data-values-line').val($('#vertical-data-values-line').val() + value + "\n");
+                            });
+                        } else if (selectVal == 'No. of Acres'){
+                            $('#vertical-data-values-line').val("");
+                            $.each($('#filteredAcre').val().split(','), function(key, value) {
+                                $('#vertical-data-values-line').val($('#vertical-data-values-line').val() + value + "\n");
+                            });
+                        }
+                    }
+
+                });
+
+                $('#data-name-pie').on('change', function () {
+                    var selectVal = $("#data-name-pie option:selected").val();
+                    if(selectVal) {
+                        if (selectVal == 'District') {
+                            $('#data-names-pie').val("");
+                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                                $('#data-names-pie').val($('#data-names-pie').val() + value + "\n");
+                            });
+
+                        } else if (selectVal == 'Taluk') {
+                            $('#data-names-pie').val("");
+                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                                $('#data-names-pie').val($('#data-names-pie').val() + value + "\n");
+                            });
+                        } else if (selectVal == 'No. of Acres'){
+                            $('#data-names-pie').val("");
+                            $.each($('#filteredAcre').val().split(','), function(key, value) {
+                                $('#data-names-pie').val($('#data-names-pie').val() + value + "\n");
+                            });
+                        }
+                    }
+
+                });
+
+                $('#data-value-pie').on('change', function () {
+                    var selectVal = $("#data-value-pie option:selected").val();
+                    if(selectVal) {
+                        if (selectVal == 'District') {
+                            $('#data-values-pie').val("");
+                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                                $('#data-values-pie').val($('#data-values-pie').val() + value + "\n");
+                            });
+
+                        } else if (selectVal == 'Taluk') {
+                            $('#data-values-pie').val("");
+                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                                $('#data-values-pie').val($('#data-values-pie').val() + value + "\n");
+                            });
+                        } else if (selectVal == 'No. of Acres'){
+                            $('#data-values-pie').val("");
+                            $.each($('#filteredAcre').val().split(','), function(key, value) {
+                                $('#data-values-pie').val($('#data-values-pie').val() + value + "\n");
+                            });
+                        }
+                    }
+
                 });
             });
 
