@@ -145,3 +145,12 @@ ul.tab li a:hover {background-color: #006baa;}
 .add-filter-btn:hover {
     background: #0093c1;
 }
+
+.filter-List-ul {
+
+}
+
+.filter-List-ul li {
+    color: #ffffff;
+    list-style: none;
+}
