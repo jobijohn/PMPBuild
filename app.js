@@ -3,7 +3,8 @@ var express = require('express'),
     index = require('./index'),
     session = require('express-session'),
     graph = require('./graph'),
-    jiraIssue = require('./jiraIssue');
+    jiraIssue = require('./jiraIssue'),
+    saveXml = require('./saveXml');
 
 
 function launchApp() {
@@ -53,8 +54,8 @@ function launchApp() {
     app.post('/chart/pie', graph.generatePieChart);
 
     app.get('/jira/issue/create', jiraIssue.createJiraIssue);
-
-
+    app.post('/save/xml', saveXml.saveToXml);
+    app.get('/getCharts', saveXml.getCharts);
 
     var port = app.get('port') || 1337;
     app.listen(port);

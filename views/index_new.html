@@ -30,7 +30,7 @@
                 <div class="col-sm-3">
                     <ul class="tab">
                         <li><a href="#" class="tablinks" onclick="openCity(event, 'Settings')">Settings</a></li>
-                        <li><a href="#" class="tablinks" onclick="openCity(event, 'Dashboard')">Dashboard</a></li>
+                        <li><a href="#" class="tablinks" id="dashboard" onclick="openCity(event, 'Dashboard')">Dashboard</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-9">
@@ -328,28 +328,6 @@
             </div>
 
             <div id="Dashboard" class="tabcontent">
-                <table>
-                    <tr>
-                        <td>
-                    All Issues from JIRA:
-                    <ul>
-                        <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                        <li><a href=""> This is an example issue for jira-connector</a></li>
-                        <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                        <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                        <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                        <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-
-                    </ul>
-                        </td>
-                    </tr>
-                </table>
-
                 <table>
                     <tr>
                         <td>
@@ -1144,23 +1122,49 @@
 </script>
 
         <script>
-            $('#addToDashboard').click(function() {alert(111)
-                /*xmlData=new ActiveXObject("Microsoft.XMLDOM");
-                xmlData.async="false";
-                xmlData.loadXML("db.xml");
+            $('#addToDashboard').click(function() {
+                var packages = $("#packages").val();
+                var data = $("#data").val();
+                var options = $("#options").val();
 
-                var strRte = "DenverToAtlanta";
-                var strMi = "1408";
+                $.post('/save/xml', { packages: packages, data: data, options: options })
+                .done(function (result) {
 
-                var newRoute = xmlData.documentElement.createElement("Routes");
-                var nameNode = xmlData.documentElement.createElement("RouteName");
-                var nameText =xmlData.documentElement.createTextNode(strRte);
-                nameNode.appendChild(nameText)
-                var milesNode = xmlData.documentElement.createElement("Miles");
-                var milesText = xmlData.documentElement.createTextNode(strMi);
-                milesNode.appendChild(milesText);
-                newRoute.appendChild(nameNode);
-                newRoute.appendChild(milesNode);
-                xmlData.appendChild(newRoute);*/
+                });
             });
         </script>
+
+<script>
+    $('#dashboard').click(function() {
+        $.get('/getCharts', function (result) {
+            if(result){
+               parser = new DOMParser();
+                var xmlDoc = parser.parseFromString(result,"text/xml");
+                alert(xmlDoc);
+                /*var x = xmlDoc.documentElement.childNodes['charts'];
+                var y = x.childNodes;
+                alert(y);
+                for (i = 0; i < x.length ;i++) {
+                    var txt = x[i].nodeName + ": " + x[i].childNodes[0].nodeValue;
+                    alert(txt);
+                }*/
+
+                var charts = xmlDoc.getElementsByTagName("charts"); //outputs array of charts
+                alert(charts);
+
+                for (var chartsIndex = 0; chartsIndex  < charts.length; chartsIndex++) {
+                    var chartsDetails = charts[chartsIndex].children; //outputs array of details
+
+                    for (var detailIndex = 0; detailIndex < chartsDetails.length; detailIndex++) {alert(detailIndex);
+                        //document.write(employees[employeeIndex].childNodes[detailIndex].nodeValue);
+                        alert(charts[chartsIndex].childNodes[detailIndex].nodeValue);
+                    }
+
+                    //document.write("<br>");
+                }
+
+                //document.getElementById("demo").innerHTML = txt;
+            }
+        });
+    });
+</script>
