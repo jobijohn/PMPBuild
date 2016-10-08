@@ -1157,23 +1157,37 @@ function openCity(evt, cityName) {
 </script>
 
 <script>
-    $('#addToDashboard').click(function() {alert(111)
-        /*xmlData=new ActiveXObject("Microsoft.XMLDOM");
-         xmlData.async="false";
-         xmlData.loadXML("db.xml");
+    $('#addToDashboard').click(function() {
+        var packages = $("#packages").val();
+        var data = $("#data").val();
+        var options = $("#options").val();
 
-         var strRte = "DenverToAtlanta";
-         var strMi = "1408";
+        $.post('/save/xml', { packages: packages, data: data, options: options })
+            .done(function (result) {
+        });
+    });
+</script>
 
-         var newRoute = xmlData.documentElement.createElement("Routes");
-         var nameNode = xmlData.documentElement.createElement("RouteName");
-         var nameText =xmlData.documentElement.createTextNode(strRte);
-         nameNode.appendChild(nameText)
-         var milesNode = xmlData.documentElement.createElement("Miles");
-         var milesText = xmlData.documentElement.createTextNode(strMi);
-         milesNode.appendChild(milesText);
-         newRoute.appendChild(nameNode);
-         newRoute.appendChild(milesNode);
-         xmlData.appendChild(newRoute);*/
+<script>
+    $('#dashboard').click(function() {
+        $.get('/getCharts', function (result) {
+            if(result){
+                parser = new DOMParser();
+                var xmlDoc = parser.parseFromString(result,"text/xml");
+                alert(xmlDoc);
+
+                var charts = xmlDoc.getElementsByTagName("charts"); //outputs array of charts
+                alert(charts);
+
+                for (var chartsIndex = 0; chartsIndex  < charts.length; chartsIndex++) {
+                    var chartsDetails = charts[chartsIndex].children; //outputs array of details
+
+                    for (var detailIndex = 0; detailIndex < chartsDetails.length; detailIndex++) {alert(detailIndex);
+                        //document.write(employees[employeeIndex].childNodes[detailIndex].nodeValue);
+                        alert(charts[chartsIndex].childNodes[detailIndex].nodeValue);
+                    }
+                }
+            }
+        });
     });
 </script>
