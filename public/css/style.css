@@ -4,29 +4,40 @@ body {
     margin: 0 auto;
     padding: 0;
     text-align: center;
-    background:url('/img/body-bg.png') repeat-x #1ac9a4;
+    /*background:url('/img/body-bg.jpg') repeat-x #1ac9a4;*/
+    background: rgb(101, 74, 45);
+    background-size: cover;
 }
 h1 {
     text-align: left;
     color: #fff;
 }
 .box-theme {
-    background: #efefef;
+/*    background: #efefef;*/
+    margin-top: 20px;
     margin-bottom: 40px;
 }
 .default-active {
     display: block !important;
 }
 .nav-bar {
-    background: #005485;
+    background: linear-gradient(rgb(227, 60, 8), rgb(199, 32, 16));
     float: left;
     width: 100%;
+    border-radius: 10px 10px 0 0;
+}
+.nav-bar h1{
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 36px;
 }
 ul.tab {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
+    float: right;
 }
 /* Style the links inside the list items */
 ul.tab li a {
@@ -39,17 +50,17 @@ ul.tab li a {
     font-size: 14px;
 }
 /* Change background color of links on hover */
-ul.tab li a:hover {background-color: #006baa;}
+ul.tab li a:hover {background-color: #c61e13;}
 /* Style the tab content */
 .tabcontent {
     display: none;
 }
 .filter-pan {
-    background: #0093c1;
-    background: -webkit-linear-gradient(top, #006baa, #0093c1); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(top, #006baa, #0093c1); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(top, #006baa, #0093c1); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(top, #006baa, #0093c1); /* Standard syntax */
+    background: linear-gradient(to right, rgb(242, 207, 160), rgb(243, 229, 182));
+    height: 780px;
+}
+.main-content {
+    background: linear-gradient(to right, rgb(242, 207, 160), rgb(243, 229, 182));
     height: 780px;
 }
 .filter-form, .entries {
@@ -57,6 +68,17 @@ ul.tab li a:hover {background-color: #006baa;}
     float: left;
     padding: 2% 0;
     width: 100%;
+}
+.entries h2 {
+    background: #c61e13;
+    color: #fff;
+    padding: 5px 0;
+    margin: 0;
+    font-size: 14px;
+}
+.filter-form {
+    background: linear-gradient(to left, rgb(242, 207, 160), rgb(243, 229, 182));
+    box-shadow: none!important;
 }
 .mT15 {
     margin-top: 15px;
@@ -86,32 +108,33 @@ ul.tab li a:hover {background-color: #006baa;}
 .filter-btn {
     width: 100%;
     margin: 0;
-    border-top: 1px solid #005485;
-    border-bottom: 1px solid #005485;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
     transition: background 0.3s;
     transition: border 0.5s;
     text-align: right;
+    color: #000;
 }
 .filter-btn:hover {
-    background: #005485;
+    background: #c61e13;
     color: #fff;
     text-decoration: none;
-    border-top: 1px solid #006baa;
-    border-bottom: 1px solid #0093c1;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 .custom-select {
     overflow: hidden;
 }
 .custom-select select {
-    padding: 10px 4px;
+    padding: 5px 4px;
     width: 100%;
     border: none;
     box-shadow: none;
-    background: #005485;
+    background: #fff;
     background-image: none;
    /* -webkit-appearance: none;*/
     border-radius: 5px;
-    color: #fff;
+    color: #000;
 }
 
 .custom-select select:focus {
@@ -129,27 +152,87 @@ ul.tab li a:hover {background-color: #006baa;}
 }
 /* box shadow */
 .filter-form, .entries, .box-theme {
-    box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.3);
 }
 /* box shadow */
 
 .add-filter-btn {
     overflow: auto;
-    padding: 9px;
+    padding: 4px;
     border-radius: 5px;
-    background: #005485;
+    background: #c61e13;
     color: #fff;
     transition: background 0.3s;
     cursor: pointer;
 }
 .add-filter-btn:hover {
-    background: #0093c1;
+    background: darkorange;
+}
+.form-group label {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    text-align: left;
+}
+#formBarGraph label, #formLineGraph label, #formPieChart label {
+    height: 25px;
+    border-radius: 2px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 25px;
+    padding: 0;
+    margin: 0;
+}
+#formBarGraph .form-horizontal .control-label, #formBarGraph .form-group, #formBarGraph label,
+#formLineGraph .form-horizontal .control-label, #formLineGraph .form-group, #formLineGraph label,
+#formPieChart .form-horizontal .control-label, #formPieChart .form-group, #formPieChart label{
+    text-align: left!important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+.table-form input, .table-form textarea, .table-form select {
+    border-radius: 2px !important;
+    box-shadow: none;
+    height: 25px;
+    padding: 0 5px;
 }
 
+.table-form .form-group {
+    margin-bottom: 8px;
+}
+.custom-width {
+    width: 68px !important;
+}
+.add-filter-btn input {
+    background: none;
+    border: none;
+    width: 100%;
+    padding: 0;
+}
+.table-form .add-filter-btn {
+    padding: 5px;
+}
+.add-filter-btn.save-graph-btn {
+    padding: 5px;
+}
+.save-graph-btn button {
+    background: none;
+    border: none;
+    padding: 2px;
+}
+.form-control {
+    height: 25px !important;
+    padding: 2px 12px !important;
+}
+.form-horizontal .control-label {
+    padding-top: 0;
+}
 .filter-List-ul {
 
 }
-
 .filter-List-ul li {
     color: #ffffff;
     list-style: none;

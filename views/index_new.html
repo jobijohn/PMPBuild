@@ -11,933 +11,924 @@
     <!-- bootstrap css -->
     <link href="/css/style.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- google font --->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+    <!-- google font end -->
 
 </head>
 <body>
-    <input type="hidden" name="filteredDistrict" id="filteredDistrict">
-    <input type="hidden" name="filteredTaluk" id="filteredTaluk">
-    <input type="hidden" name="filteredAcre" id="filteredAcre">
-    <input type="hidden" name="packages" id="packages">
-    <input type="hidden" name="data" id="data">
-    <input type="hidden" name="options" id="options">
-    <div class="container">
-        <header>
-            <h1>Project Management Prototype Build</h1>
-        </header>
 
-        <div class="row box-theme">
-            <div class="nav-bar">
-                <div class="col-sm-3">
-                    <ul class="tab">
-                        <li><a href="#" class="tablinks" onclick="openCity(event, 'Settings')">Settings</a></li>
-                        <li><a href="#" class="tablinks" id="dashboard" onclick="openCity(event, 'Dashboard')">Dashboard</a></li>
-                    </ul>
+<input type="hidden" name="filteredDistrict" id="filteredDistrict">
+<input type="hidden" name="filteredTaluk" id="filteredTaluk">
+<input type="hidden" name="filteredAcre" id="filteredAcre">
+<input type="hidden" name="packages" id="packages">
+<input type="hidden" name="data" id="data">
+<input type="hidden" name="options" id="options">
+<div class="container">
+<header>
+</header>
+
+<div class="row box-theme">
+<div class="nav-bar">
+    <div class="col-sm-9 text-left">
+        <h1>Project Management Prototype Build</h1>
+    </div>
+    <div class="col-sm-3">
+
+        <ul class="tab">
+            <li><a href="#" class="tablinks" onclick="openCity(event, 'Settings')">Settings</a></li>
+            <li><a href="#" class="tablinks" onclick="openCity(event, 'Dashboard')">Dashboard</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<div id="Settings" class="tabcontent default-active">
+<div class="col-sm-3 filter-pan p0">
+    <div class="form-group">
+        <a href="/jira" class="btn-submit filter-btn">Refresh</a>
+    </div>
+    <div class="form-group">
+        <label for="savedFilter" class="control-label col-sm-12 text-left">Saved Filters:</label>
+        <div class="col-sm-12 text-left custom-select">
+            <select id="savedFilter" class="">
+                <option value="">Issue filter 1</option>
+                <option value="">Issue filter 2</option>
+                <option value="">Issue filter 3</option>
+                <option value="">Issue filter 4</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="issuetype" class="control-label col-sm-12 text-left">New Issue Filter :</label>
+        <div class="col-sm-8 text-left custom-select">
+            <select name="issuetype" class="" id="issuetype" >
+                <option value="">-- Select Issue Type --</option>
+                {{#data}}
+                <option value="{{issuetype}}">{{issuetype}}</option>
+                {{/data}}
+            </select>
+        </div>
+        <div class="col-sm-4 pl0">
+            <div class="add-filter-btn p0">
+                <buton id="filter-Add" class="">Add Filter</buton>
+            </div>
+
+        </div>
+    </div>
+
+    <ul id="filterList" class="filter-List-ul">
+    </ul>
+
+
+    <button>Save Filter</button>
+</div>
+
+<div class="main-content col-sm-9">
+<div class="col-sm-12">
+<div class="row form-horizontal">
+<div class="form-group col-sm-12 mT15">
+    <div class="col-sm-8">
+        <label for="graph-type" class="control-label col-sm-3 text-left">Graph type:</label>
+        <div class="col-sm-3">
+            <select id="graph-type" class="form-control">
+                <option value="bar">Bar</option>
+                <option value="line">Line</option>
+                <option value="pie">Pie</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+
+<div class="col-sm-12">
+    <div class="graph-type-bar graph-container filter-form">
+        <form method="post" id="formBarGraph" class="table-form">
+            <div class="col-sm-12">
+                <label for="graph-title" class="control-label col-sm-2 custom-width">Title:</label>
+                <div class="col-sm-5 p0">
+                    <input type="text" class="form-control" id="graph-title">
                 </div>
-                <div class="col-sm-9">
+            </div>
+            <div style="height: 8px" class="col-sm-12"></div>
+            <div style="height: 1px" class="col-sm-12"></div>
+            <div class="col-sm-6 form-horizontal pR0">
+
+                <div class="form-group">
+                    <label for="horizontal-axis-label" class="control-label col-sm-2">x Label:</label>
+                    <div class="col-sm-10 p0">
+                        <input type="text" class="form-control" id="horizontal-axis-label">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="horizontal-data-values" class="control-label col-sm-2">x Values:</label>
+                    <div class="col-sm-10 p0">
+                        <textarea style="height: 50px" id="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="horizontal-data-type" class="control-label col-sm-2">x Data:</label>
+                    <div class="col-sm-10 p0">
+                        <select id="horizontal-data-type" class="form-control">
+                            <option value="">District</option>
+                            <option value="">Taluk</option>
+                            <option value="">No. of Acres</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
 
-            <div id="Settings" class="tabcontent default-active">
-                <div class="col-sm-3 filter-pan p0">
-                    <div class="form-group">
-                        <a href="/jira" class="btn-submit filter-btn">Refresh</a>
+            <div class="col-sm-6 form-horizontal">
+
+
+                <div class="form-group">
+                    <label for="vertical-data-type" class="control-label col-sm-2">v Data:</label>
+                    <div class="col-sm-10 p0">
+                        <select id="vertical-data-type" class="form-control">
+                            <option value="">No. of Acres</option>
+                            <option value="">District</option>
+                            <option value="">Taluk</option>
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <label for="savedFilter" class="control-label col-sm-12 text-left">Saved Filters:</label>
-                        <div class="col-sm-12 text-left custom-select">
-                            <select id="savedFilter" class="">
-                                <option value="">Issue filter 1</option>
-                                <option value="">Issue filter 2</option>
-                                <option value="">Issue filter 3</option>
-                                <option value="">Issue filter 4</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="issuetype" class="control-label col-sm-12 text-left">New Issue Filter :</label>
-                        <div class="col-sm-8 text-left custom-select">
-                            <select name="issuetype" class="" id="issuetype" >
-                                <option value="">-- Select Issue Type --</option>
-                                {{#data}}
-                                <option value="{{issuetype}}">{{issuetype}}</option>
-                                {{/data}}
-                            </select>
-                        </div>
-                        <div class="col-sm-4 pl0">
-                            <div class="add-filter-btn p0">
-                                <buton id="filter-Add" class="">Add Filter</buton>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <ul id="filterList" class="filter-List-ul">
-                    </ul>
-
-
-                    <button>Save Filter</button>
                 </div>
 
-                <div class="col-sm-9">
-                    <div class="row">
-                        <div class="form-group col-sm-12">
-                            <div class="col-sm-8">
-                                <label for="graph-type" class="control-label col-sm-4">Graph type:</label>
-                                <div class="col-sm-8">
-                                    <select id="graph-type" class="form-control">
-                                        <option value="bar">Bar</option>
-                                        <option value="line">Line</option>
-                                        <option value="pie">Pie</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-
-                        <div class="col-sm-12">
-                            <div class="graph-type-bar graph-container filter-form">
-                                <form method="post" id="formBarGraph">
-                                    <div class="col-sm-6 form-horizontal">
-                                        <div class="form-group">
-                                            <label for="graph-title" class="control-label col-sm-4">Title:</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="graph-title" name="graph-title">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="horizontal-axis-label" class="control-label col-sm-4">x Label:</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="horizontal-axis-label" name="horizontal-axis-label">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="vertical-axis-label" class="control-label col-sm-4">y Label:</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="vertical-axis-label" name="vertical-axis-label">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="horizontal-data-type" class="control-label col-sm-4">x Data:</label>
-                                            <div class="col-sm-8">
-                                                <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
-                                                    <option value="">Select</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-sm-6 form-horizontal">
-                                        <div class="form-group">
-                                            <label for="horizontal-data-values" class="control-label col-sm-4">x Values:</label>
-                                            <div class="col-sm-8">
-                                                <textarea style="height: 50px" id="horizontal-data-values" name="horizontal-data-values" class="form-control"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="vertical-data-type" class="control-label col-sm-4">v Data:</label>
-                                            <div class="col-sm-8">
-                                                <select id="vertical-data-type" name="vertical-data-type" class="form-control">
-                                                    <option value="">Select</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="vertical-data-values" class="control-label col-sm-4">v Values:</label>
-                                            <div class="col-sm-8">
-                                                <textarea style="height: 50px" id="vertical-data-values" name="vertical-data-values" class="form-control"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <input type="button" name="btnBarGraph" id="btnBarGraph" value="Create Bar Graph">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <form method="post" id="formLineGraph">
-                            <div class="col-sm-12">
-                                <div class="graph-type-line graph-container filter-form">
-                                    <div class="col-sm-6 form-horizontal">
-                                        <div class="form-group">
-                                            <label for="graph-title-line" class="control-label col-sm-4">Title:</label>
-                                            <div class="col-sm-8">
-                                                <input id="graph-title-line" name="graph-title-line" type="text" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="horizontal-axis-label" class="control-label col-sm-4">x Label:</label>
-                                            <div class="col-sm-8">
-                                                <input id="horizontal-axis-label-line" name="horizontal-axis-label-line" type="text" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="vertical-axis-label-line" class="control-label col-sm-4">y Label:</label>
-                                            <div class="col-sm-8">
-                                                <input id="vertical-axis-label-line" name="vertical-axis-label-line" type="text" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="horizontal-data-type-line" class="control-label col-sm-4">x Data:</label>
-                                            <div class="col-sm-8">
-                                                <select class="form-control" id="horizontal-data-type-line" name="horizontal-data-type-line">
-                                                    <option value="">Select</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 form-horizontal">
-                                        <div class="form-group">
-                                            <label for="horizontal-data-values-line" class="control-label col-sm-4">x Values:</label>
-                                            <div class="col-sm-8">
-                                                <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line" name="horizontal-data-values-line"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="vertical-data-type-line" class="control-label col-sm-4">v Data:</label>
-                                            <div class="col-sm-8">
-                                                <select class="form-control" id="vertical-data-type-line" name="vertical-data-type-line">
-                                                    <option value="">Select</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="vertical-data-values-line" class="control-label col-sm-4">v Values:</label>
-                                            <div class="col-sm-8">
-                                                <textarea style="height: 50px" class="form-control" id="vertical-data-values-line" name="vertical-data-values-line"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="button" name="btnLineGraph" id="btnLineGraph" value="Create Line Graph">
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </form>
-
-                        <form method="post" id="formPieChart">
-                            <div class="col-sm-12">
-                                <div class="graph-type-pie graph-container filter-form">
-                                    <div class="col-sm-6 form-horizontal">
-                                        <div class="form-group">
-                                            <label for="graph-title-pie" class="control-label col-sm-4">Title:</label>
-                                            <div class="col-sm-8">
-                                                <input id="graph-title-pie" name="graph-title-pie" type="text" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="data-name-pie" class="control-label col-sm-4">Data name:</label>
-                                            <div class="col-sm-8">
-                                                <select class="form-control" id="data-name-pie" name="data-name-pie">
-                                                    <option value="">Select</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="data-names-pie" class="control-label col-sm-4">Data Names:</label>
-                                            <div class="col-sm-8">
-                                                <textarea style="height: 50px" class="form-control" id="data-names-pie" name="data-names-pie"></textarea>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-sm-6 form-horizontal">
-
-                                        <div class="form-group">
-                                            <label for="data-value-pie" class="control-label col-sm-4">Data Value:</label>
-                                            <div class="col-sm-8">
-                                                <select class="form-control" id="data-value-pie" name="data-value-pie">
-                                                    <option value="">Select</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="data-values-pie" class="control-label col-sm-4">Data Values:</label>
-                                            <div class="col-sm-8">
-                                                <textarea style="height: 50px" class="form-control" id="data-values-pie" name="data-values-pie"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="slice-text-pie" class="control-label col-sm-4">Slice Text:</label>
-                                            <div class="col-sm-8">
-                                                <select class="form-control" id="slice-text-pie" name="slice-text-pie">
-                                                    <option value="">Percentage</option>
-                                                    <option value="">Names</option>
-                                                    <option value="">Values</option>
-                                                    <option value="">None</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <input type="button" name="btnPieChart" id="btnPieChart" value="Create Pie Chart">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                <div class="form-group">
+                    <label for="vertical-data-values" class="control-label col-sm-2">v Values:</label>
+                    <div class="col-sm-10 p0">
+                        <textarea style="height: 50px" id="vertical-data-values" class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
                     </div>
-                    </div>
+                </div>
 
-                    <div class="row mT15">
-                        <div class="col-sm-6 pR0">
-                            <div class="entries graph-box">
-                                <div>
-                                    <!--<img src="{{imageUrl}}" style="width:345px" >-->
-                                    <div id="divChart"></div>
-                                </div>
-                                <input type="button" name="addToDashboard" id="addToDashboard" value="Add to Dashboard">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="entries">
-                                <div>
-                                    Issues:
-                                    <ul>
-                                        <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                                        <li><a href=""> This is an example issue for jira-connector</a></li>
-                                        <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                        <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                <div class="form-group">
+                    <label for="vertical-axis-label" class="control-label col-sm-2">y Label:</label>
+                    <div class="col-sm-10 p0">
+                        <input type="text" class="form-control" id="vertical-axis-label">
                     </div>
+                </div>
 
+                <div class="form-group add-filter-btn col-sm-5 pull-right">
+                    <input type="button" name="btnBarGraph" id="btnBarGraph" value="Create Bar Graph">
                 </div>
             </div>
+        </form>
+    </div>
+</div>
 
-            <div id="Dashboard" class="tabcontent">
-                <table>
-                    <tr>
-                        <td>
-                            <div style="border: 1px solid #ccc; width: 100%">
-                                <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
-                            </div>
-                        </td>
-                        <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
-                            Issues:
-                            <ul>
-                                <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                                <li><a href=""> This is an example issue for jira-connector</a></li>
-                                <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
 
-                            </ul>
-                        </div></td>
+<div class="col-sm-12">
+    <div class="graph-type-line graph-container filter-form">
+        <form method="post" id="formLineGraph" class="table-form">
+            <div class="col-sm-12">
+                <label for="graph-title-line" class="control-label col-sm-2 custom-width">Title:</label>
+                <div class="col-sm-5 p0">
+                    <input id="graph-title-line" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-12" style="height: 8px;"></div>
+            <div class="col-sm-6 form-horizontal pR0">
+                <div class="form-group">
+                    <label for="horizontal-axis-label" class="control-label col-sm-2">x Label:</label>
+                    <div class="col-sm-10 p0">
+                        <input id="horizontal-axis-label-line" type="text" class="form-control">
+                    </div>
+                </div>
 
-                        <td rowspan="3" style="vertical-align: top">
-                            <div style="border: 1px solid #ccc; width: 100%; vertical-align: top; height: 780px; padding: 10px; font-size: 20px">
-                                After click on a particular issue, <br/>
-                                then the corresponding JIRA Issue page <br/>
-                                will be displayed in this pane...
-                            </div>
-                        </td>
+                <div class="form-group">
+                    <label for="vertical-axis-label-line" class="control-label col-sm-2">y Label:</label>
+                    <div class="col-sm-10 p0">
+                        <input id="vertical-axis-label-line" type="text" class="form-control">
+                    </div>
+                </div>
 
-                    </tr>
-                    <tr>
-                        <td>
-                            <div style="border: 1px solid #ccc; width: 100%">
-                                <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
-                            </div>
-                        </td>
-                        <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
-                            Issues:
-                            <ul>
-                                <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                                <li><a href=""> This is an example issue for jira-connector</a></li>
-                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                            </ul>
-                        </div></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div style="border: 1px solid #ccc; width: 100%">
-                                <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
-                            </div>
-                        </td>
-                        <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
-                            Issues:
-                            <ul>
-                                <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                                <li><a href=""> This is an example issue for jira-connector</a></li>
-                                <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                                <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                                <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                            </ul>
-                        </div></td>
-                        <td style="vertical-align: top">
+                <div class="form-group">
+                    <label for="horizontal-data-type-line" class="control-label col-sm-2">x Data:</label>
+                    <div class="col-sm-10 p0">
+                        <select class="form-control" id="horizontal-data-type-line">
+                            <option value="">District</option>
+                            <option value="">Taluk</option>
+                            <option value="">No. of Acres</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 form-horizontal">
+                <div class="form-group">
+                    <label for="horizontal-data-values-line" class="control-label col-sm-2">x Values:</label>
+                    <div class="col-sm-10 p0">
+                        <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                    </div>
+                </div>
 
-                        </td>
-                    </tr>
-                </table>
+                <div class="form-group">
+                    <label for="vertical-data-type-line" class="control-label col-sm-2">v Data:</label>
+                    <div class="col-sm-10 p0">
+                        <select class="form-control" id="vertical-data-type-line">
+                            <option value="">No. of Acres</option>
+                            <option value="">District</option>
+                            <option value="">Taluk</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="vertical-data-values-line" class="control-label col-sm-2">v Values:</label>
+                    <div class="col-sm-10 p0">
+                        <textarea style="height: 50px" class="form-control" id="vertical-data-values-line">50&#13;&#10;100&#13;&#10;150</textarea>
+                    </div>
+                </div>
+                <div class="form-group add-filter-btn col-sm-5 pull-right">
+                    <input type="button" name="btnLineGraph" id="btnLineGraph" value="Create Line Graph">
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+
+</div>
+
+<div class="col-sm-12 p0 mT15">
+    <div class="col-sm-6 pR0">
+
+        <div class="entries graph-box p0">
+            <div>
+                <h2>Graphs:</h2>
+                <!--<img src="{{imageUrl}}" style="width:345px" >-->
+                <div id="divChart"></div>
+            </div>
+            <div class="col-sm-12 text-center mT15">
+                <div class="form-group add-filter-btn col-sm-4 save-graph-btn pull-right">
+                    <button name="addToDashboard" id="addToDashboard">Save Graph</button>
+                </div>
             </div>
         </div>
-
     </div>
+    <div class="col-sm-6">
+        <div class="entries p0">
+            <div>
+                <h2>Issues:</h2>
+
+                <ul>
+                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                    <li><a href=""> This is an example issue for jira-connector</a></li>
+                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+<div id="Dashboard" class="tabcontent">
+    <table>
+        <tr>
+            <td>
+                All Issues from JIRA:
+                <ul>
+                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                    <li><a href=""> This is an example issue for jira-connector</a></li>
+                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td>
+                <div style="border: 1px solid #ccc; width: 100%">
+                    <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
+                </div>
+            </td>
+            <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
+                Issues:
+                <ul>
+                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                    <li><a href=""> This is an example issue for jira-connector</a></li>
+                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+
+                </ul>
+            </div></td>
+
+            <td rowspan="3" style="vertical-align: top">
+                <div style="border: 1px solid #ccc; width: 100%; vertical-align: top; height: 780px; padding: 10px; font-size: 20px">
+                    After click on a particular issue, <br/>
+                    then the corresponding JIRA Issue page <br/>
+                    will be displayed in this pane...
+                </div>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <div style="border: 1px solid #ccc; width: 100%">
+                    <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
+                </div>
+            </td>
+            <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
+                Issues:
+                <ul>
+                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                    <li><a href=""> This is an example issue for jira-connector</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                </ul>
+            </div></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <div style="border: 1px solid #ccc; width: 100%">
+                    <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
+                </div>
+            </td>
+            <td style="vertical-align: top"><div style="border: 1px solid #ccc; width: 100%; vertical-align: top">
+                Issues:
+                <ul>
+                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                    <li><a href=""> This is an example issue for jira-connector</a></li>
+                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                </ul>
+            </div></td>
+            <td style="vertical-align: top">
+
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
+
+</div>
 
 <!--- modal --->
-    <div class="filter-modal item1" id="modal">
-        <div class="content">
-            <h1>Filter Popup</h1>
-            <div class="close">Close</div>
-            <ul class="membes-on">
-                <li class="district">District</li>
-                <li class="taluk">Taluk</li>
-                <li class="acres">No. of Acres</li>
-            </ul>
-            <div class="sub-filter item2">
-                <div class="content">
-                    <h1>Filter Popup</h1>
-                    <div class="close">back</div>
-                    <div class="col-sm-12">
-                        <select data-placeholder="Select Districts" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
-                            <option value=""></option>
-                            {{#data1}}
-                            <option value="{{districts}}">{{districts}}</option>
-                            {{/data1}}
-                        </select>
-                    </div>
-
-                    <div class="btn-grp">
-                        <button type="button" id="addDistrict">Add this filter</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sub-filter-taluk item3">
-                <div class="content">
-                    <h1>Filter Popup</h1>
-                    <div class="close">back</div>
-                    <select data-placeholder="Select Taluks" name="taluk" class="chosen-select" multiple style="width: 100px;" id="taluk">
+<div class="filter-modal item1" id="modal">
+    <div class="content">
+        <h1>Filter Popup</h1>
+        <div class="close">Close</div>
+        <ul class="membes-on">
+            <li class="district">District</li>
+            <li class="taluk">Taluk</li>
+            <li class="acres">No. of Acres</li>
+        </ul>
+        <div class="sub-filter item2">
+            <div class="content">
+                <h1>Filter Popup</h1>
+                <div class="close">back</div>
+                <div class="col-sm-12">
+                    <select data-placeholder="Select Districts" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
                         <option value=""></option>
-                        {{#data2}}
-                        <option value="{{taluks}}">{{taluks}}</option>
-                        {{/data2}}
+                        {{#data1}}
+                        <option value="{{districts}}">{{districts}}</option>
+                        {{/data1}}
                     </select>
-                    <div class="btn-grp">
-                        <button type="button" id="addTaluk">Add this filter</button>
-                    </div>
+                </div>
+
+                <div class="btn-grp">
+                    <button type="button" id="addDistrict">Add this filter</button>
                 </div>
             </div>
+        </div>
 
-            <div class="sub-filter-acres item4">
-                <div class="content">
-                    <h1>Filter Popup</h1>
-                    <div class="close">back</div>
-                    <ul class="Acres" style="padding: 0">
-                        <select name="acreSymbol" id="acreSymbol">
-                            <option value=">">&gt;</option>
-                            <option value="<">&lt;</option>
-                            <option value="=">=</option>
-                        </select>
-                        <input type="text" value="" id="acreValue">
-                        <button id="addAcreSingle">Add</button>
-                        <label id="lblAcreValues"></label>
-                    </ul>
-                    <div class="btn-grp">
-                        <button type="button" id="addAcre">Add this filter</button>
-                    </div>
+        <div class="sub-filter-taluk item3">
+            <div class="content">
+                <h1>Filter Popup</h1>
+                <div class="close">back</div>
+                <select data-placeholder="Select Taluks" name="taluk" class="chosen-select" multiple style="width: 100px;" id="taluk">
+                    <option value=""></option>
+                    {{#data2}}
+                    <option value="{{taluks}}">{{taluks}}</option>
+                    {{/data2}}
+                </select>
+                <div class="btn-grp">
+                    <button type="button" id="addTaluk">Add this filter</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sub-filter-acres item4">
+            <div class="content">
+                <h1>Filter Popup</h1>
+                <div class="close">back</div>
+                <ul class="Acres" style="padding: 0">
+                    <select name="acreSymbol" id="acreSymbol">
+                        <option value=">">&gt;</option>
+                        <option value="<">&lt;</option>
+                        <option value="=">=</option>
+                    </select>
+                    <input type="text" value="" id="acreValue">
+                    <button id="addAcreSingle">Add</button>
+                    <label id="lblAcreValues"></label>
+                </ul>
+                <div class="btn-grp">
+                    <button type="button" id="addAcre">Add this filter</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="filter-modal item2" id="modal2">
-        <div class="content">
-            <h1>Filter Popup</h1>
-            <div class="close">Close</div>
-            <ul class="membes-on">
-                <li class="">District</li>
-                <li class="">Taluk</li>
-                <li class="">No. of Acres</li>
-            </ul>
-        </div>
+<div class="filter-modal item2" id="modal2">
+    <div class="content">
+        <h1>Filter Popup</h1>
+        <div class="close">Close</div>
+        <ul class="membes-on">
+            <li class="">District</li>
+            <li class="">Taluk</li>
+            <li class="">No. of Acres</li>
+        </ul>
     </div>
+</div>
 <!-- modal end -->
 </body>
 </html>
 
-        <style>
-            /* Style the list */
+<style>
+    /* Style the list */
 
 
-            /* Float the list items side by side */
-            ul.tab li {float: left;}
+    /* Float the list items side by side */
+    ul.tab li {float: left;}
 
 
 
 
 
-            /* Create an active/current tablink class */
-            ul.tab li a:focus, .active {background-color: #ccc;}
+    /* Create an active/current tablink class */
+    ul.tab li a:focus, .active {background-color: #c61e13;}
 
 
-            .tree {
-                display: none;
-            }
-            .filter-modal {
-                background-color: rgb(0,0,0); /* Fallback color */
-                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-                position: fixed;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                z-index: 1050;
-                overflow: hidden;
-                -webkit-overflow-scrolling: touch;
-                outline: 0;
-                opacity: 1;
-                display: none;
-            }
-            .filter-modal .content {
-                background-color: #fefefe;
-                margin: auto;
-                padding: 20px;
-                border: 1px solid #888;
-                width: 300px;
-                height: auto;
-                top: 50%;
-                left: 50%;
-                margin-top: -100px;
-                margin-left: -150px;
-                position: fixed;
-                box-shadow: 0px 0px 3px -1px rgb(0, 0, 0);
-            }
-            .filter-modal .content h1 {
-                font-size: 16px;
-                margin: 0;
-                padding: 0 0 5px 0;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-                font-weight: normal;
-            }
-            .filter-modal ul {
-                margin: 5px 0;
-                padding: 0;
-            }
-            .filter-modal ul li {
-                list-style: none;
-                padding: 3px 0;
-            }
-            .enable {
-                display: block !important;
-            }
-            .sub-filter, .sub-filter-taluk, .sub-filter-acres {
-                position: relative;
-                display: none;
-                z-index: 1051;
-            }
-            .btn-grp div {
-                float: left;
-                min-width: 50px;
-                width: auto;
-                background: rgb(204, 204, 204);
-                padding: 2%;
-                border-radius: 5px;
-                text-align: center;
-                margin-right: 10px;
-                cursor: pointer;
-            }
-            .btn-grp div:hover, .close:hover {
-                background: green;
-                color: #fff;
-            }
-            .close {
-                width: 50px;
-                position: absolute;
-                right: 20px;
-                top: 12px;
-                background: rgb(204, 204, 204);
-                padding: 5px;
-                text-align: center;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-            .btn-submit {
-                color: white;
-                text-decoration: none;
-                padding: 8px 18px 8px 18px;
-                font-size: 16px;
-                cursor: pointer;
-                float: left;
-            }
+    .tree {
+        display: none;
+    }
+    .filter-modal {
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1050;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+        outline: 0;
+        opacity: 1;
+        display: none;
+    }
+    .filter-modal .content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 300px;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        margin-top: -100px;
+        margin-left: -150px;
+        position: fixed;
+        box-shadow: 0px 0px 3px -1px rgb(0, 0, 0);
+    }
+    .filter-modal .content h1 {
+        font-size: 16px;
+        margin: 0;
+        padding: 0 0 5px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        font-weight: normal;
+    }
+    .filter-modal ul {
+        margin: 5px 0;
+        padding: 0;
+    }
+    .filter-modal ul li {
+        list-style: none;
+        padding: 3px 0;
+    }
+    .enable {
+        display: block !important;
+    }
+    .sub-filter, .sub-filter-taluk, .sub-filter-acres {
+        position: relative;
+        display: none;
+        z-index: 1051;
+    }
+    .btn-grp div {
+        float: left;
+        min-width: 50px;
+        width: auto;
+        background: rgb(204, 204, 204);
+        padding: 2%;
+        border-radius: 5px;
+        text-align: center;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    .btn-grp div:hover, .close:hover {
+        background: green;
+        color: #fff;
+    }
+    .close {
+        width: 50px;
+        position: absolute;
+        right: 20px;
+        top: 12px;
+        background: rgb(204, 204, 204);
+        padding: 5px;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn-submit {
 
-        </style>
+        text-decoration: none;
+        padding: 8px 18px 8px 18px;
+        font-size: 16px;
+        cursor: pointer;
+        float: left;
+    }
+
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <link rel="stylesheet" href="/css/chosen.min.css">
 <script src="/js/chosen.jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 </script>
-        <script>
-            $(document).ready(function () {
+<script>
+$(document).ready(function () {
 
-                $(".chosen-select").chosen({width: "100%"});
+    $(".chosen-select").chosen({width: "100%"});
 
-                $('#refreshJson').click(function () {
-                    $(this).after("<img src='/ajax-loader.gif' alt='loading' />");
-                    $.get('/jira', function () {
-                    });
-                });
+    $('#refreshJson').click(function () {
+        $(this).after("<img src='/ajax-loader.gif' alt='loading' />");
+        $.get('/jira', function () {
+        });
+    });
 
-                $('#filter-Add').click(function () {
-                    $('.filter-modal.item1').addClass('enable');
-                });
+    $('#filter-Add').click(function () {
+        $('.filter-modal.item1').addClass('enable');
+    });
 
-                $('#addDistrict').click(function () {
-                    var _district = $("#district").val();
-                    if(_district) {
-                        var ul = document.getElementById("filterList");
-                        var li = document.createElement("li");
-                        li.appendChild(document.createTextNode("District -  " + _district));
-                        ul.appendChild(li);
-                        var filteredDistrict = $('#filteredDistrict').val();
-                        if(filteredDistrict){
-                            $('#filteredDistrict').val($('#filteredDistrict').val() + ',' + _district);
-                        } else {
-                            $('#filteredDistrict').val(_district);
-                        }
+    $('#addDistrict').click(function () {
+        var _district = $("#district").val();
+        if(_district) {
+            var ul = document.getElementById("filterList");
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode("District -  " + _district));
+            ul.appendChild(li);
+            var filteredDistrict = $('#filteredDistrict').val();
+            if(filteredDistrict){
+                $('#filteredDistrict').val($('#filteredDistrict').val() + ',' + _district);
+            } else {
+                $('#filteredDistrict').val(_district);
+            }
 
-                        //Adding Graph X-Data headings - Bar
-                        if (!$("#horizontal-data-type option[value='District']").length) {
-                            $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
-                        }
+            //Adding Graph X-Data headings - Bar
+            if (!$("#horizontal-data-type option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
+            }
 
-                        if (!$("#vertical-data-type option[value='District']").length) {
-                            $('<option>').val('District').text('District').appendTo($('#vertical-data-type'));
-                        }
+            if (!$("#vertical-data-type option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#vertical-data-type'));
+            }
 
-                        //Adding Graph Y-Data headings - Line
-                        if (!$("#horizontal-data-type-line option[value='District']").length) {
-                            $('<option>').val('District').text('District').appendTo($('#horizontal-data-type-line'));
-                        }
+            //Adding Graph Y-Data headings - Line
+            if (!$("#horizontal-data-type-line option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type-line'));
+            }
 
-                        if (!$("#vertical-data-type-line option[value='District']").length) {
-                            $('<option>').val('District').text('District').appendTo($('#vertical-data-type-line'));
-                        }
+            if (!$("#vertical-data-type-line option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#vertical-data-type-line'));
+            }
 
-                        //Adding Graph Y-Data headings - Pie
-                        if (!$("#data-name-pie option[value='District']").length) {
-                            $('<option>').val('District').text('District').appendTo($('#data-name-pie'));
-                        }
+            //Adding Graph Y-Data headings - Pie
+            if (!$("#data-name-pie option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#data-name-pie'));
+            }
 
-                        if (!$("#data-value-pie option[value='District']").length) {
-                            $('<option>').val('District').text('District').appendTo($('#data-value-pie'));
-                        }
+            if (!$("#data-value-pie option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#data-value-pie'));
+            }
 
 
 //                      $(".chosen-select").val('').trigger("chosen:updated");
-                    }
-                });
+        }
+    });
 
-                $('#addTaluk').click(function () {
-                    var _taluk = $("#taluk").val();
-                    if(_taluk) {
-                        var ul = document.getElementById("filterList");
-                        var li = document.createElement("li");
-                        li.appendChild(document.createTextNode("Taluk - " + _taluk));
-                        ul.appendChild(li);
-                        var filteredTaluk = $('#filteredTaluk').val();
-                        if(filteredTaluk){
-                            $('#filteredTaluk').val($('#filteredTaluk').val() + ',' + _taluk);
-                        } else {
-                            $('#filteredTaluk').val(_taluk);
-                        }
-                        //Adding Graph X-Data headings - Bar
-                        if (!$("#horizontal-data-type option[value='Taluk']").length) {
-                            $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
-                        }
+    $('#addTaluk').click(function () {
+        var _taluk = $("#taluk").val();
+        if(_taluk) {
+            var ul = document.getElementById("filterList");
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode("Taluk - " + _taluk));
+            ul.appendChild(li);
+            var filteredTaluk = $('#filteredTaluk').val();
+            if(filteredTaluk){
+                $('#filteredTaluk').val($('#filteredTaluk').val() + ',' + _taluk);
+            } else {
+                $('#filteredTaluk').val(_taluk);
+            }
+            //Adding Graph X-Data headings - Bar
+            if (!$("#horizontal-data-type option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
+            }
 
-                        if (!$("#vertical-data-type option[value='Taluk']").length) {
-                            $('<option>').val('Taluk').text('Taluk').appendTo($('#vertical-data-type'));
-                        }
-                        //Adding Graph Y-Data headings - Line
-                        if (!$("#horizontal-data-type-line option[value='Taluk']").length) {
-                            $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type-line'));
-                        }
+            if (!$("#vertical-data-type option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#vertical-data-type'));
+            }
+            //Adding Graph Y-Data headings - Line
+            if (!$("#horizontal-data-type-line option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type-line'));
+            }
 
-                        if (!$("#vertical-data-type-line option[value='Taluk']").length) {
-                            $('<option>').val('Taluk').text('Taluk').appendTo($('#vertical-data-type-line'));
-                        }
+            if (!$("#vertical-data-type-line option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#vertical-data-type-line'));
+            }
 
-                        //Adding Graph Y-Data headings - Pie
-                        if (!$("#data-name-pie option[value='Taluk']").length) {
-                            $('<option>').val('Taluk').text('Taluk').appendTo($('#data-name-pie'));
-                        }
+            //Adding Graph Y-Data headings - Pie
+            if (!$("#data-name-pie option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#data-name-pie'));
+            }
 
-                        if (!$("#data-value-pie option[value='Taluk']").length) {
-                            $('<option>').val('Taluk').text('Taluk').appendTo($('#data-value-pie'));
-                        }
+            if (!$("#data-value-pie option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#data-value-pie'));
+            }
 //                        $(".chosen-select").val('').trigger("chosen:updated");
-                    }
+        }
+    });
+
+    $('#addAcreSingle').click(function () {
+        var _acreSymbol = $("#acreSymbol").val();
+        var _acreValue = $("#acreValue").val();
+        var _acre = _acreSymbol + _acreValue;
+        var lblAcreValuesOld = $('#lblAcreValues').text();
+        if(lblAcreValuesOld) {
+            $('#lblAcreValues').text(lblAcreValuesOld + ',' + _acre);
+        } else {
+            $('#lblAcreValues').text(_acre);
+        }
+        $("#acreValue").val("");
+    });
+
+    $('#addAcre').click(function () {
+        if($('#lblAcreValues').text()) {
+            var ul = document.getElementById("filterList");
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode("Acre -  " + $('#lblAcreValues').text()));
+            ul.appendChild(li);
+
+            var filteredAcre = $('#filteredAcre').val();
+            if(filteredAcre){
+                $('#filteredAcre').val($('#filteredAcre').val() + ',' + $('#lblAcreValues').text());
+            } else {
+                $('#filteredAcre').val($('#lblAcreValues').text());
+            }
+            //Adding Graph X-Data headings
+            if (!$("#horizontal-data-type option[value='No. of Acres']").length) {
+                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#horizontal-data-type'));
+            }
+
+            if (!$("#vertical-data-type option[value='No. of Acres']").length) {
+                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
+            }
+
+            //Adding Graph Y-Data headings
+            if (!$("#horizontal-data-type-line option[value='No. of Acres']").length) {
+                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#horizontal-data-type-line'));
+            }
+
+            if (!$("#vertical-data-type-line option[value='No. of Acres']").length) {
+                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type-line'));
+            }
+
+            //Adding Graph Y-Data headings - Pie
+            if (!$("#data-name-pie option[value='No. of Acres']").length) {
+                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#data-name-pie'));
+            }
+
+            if (!$("#data-value-pie option[value='No. of Acres']").length) {
+                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#data-value-pie'));
+            }
+
+            $('#lblAcreValues').text("");
+        }
+    });
+    $('#horizontal-data-type').on('change', function () {
+        var selectVal = $("#horizontal-data-type option:selected").val();
+        if(selectVal) {
+            if (selectVal == 'District') {
+                $('#horizontal-data-values').val("");
+                $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                    $('#horizontal-data-values').val($('#horizontal-data-values').val() + value + "\n");
                 });
 
-                $('#addAcreSingle').click(function () {
-                    var _acreSymbol = $("#acreSymbol").val();
-                    var _acreValue = $("#acreValue").val();
-                    var _acre = _acreSymbol + _acreValue;
-                    var lblAcreValuesOld = $('#lblAcreValues').text();
-                    if(lblAcreValuesOld) {
-                        $('#lblAcreValues').text(lblAcreValuesOld + ',' + _acre);
-                    } else {
-                        $('#lblAcreValues').text(_acre);
-                    }
-                    $("#acreValue").val("");
+            } else if (selectVal == 'Taluk') {
+                $('#horizontal-data-values').val("");
+                $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                    $('#horizontal-data-values').val($('#horizontal-data-values').val() + value + "\n");
+                });
+            } else if (selectVal == 'No. of Acres'){
+                $('#horizontal-data-values').val("");
+                $.each($('#filteredAcre').val().split(','), function(key, value) {
+                    $('#horizontal-data-values').val($('#horizontal-data-values').val() + value + "\n");
+                });
+            }
+        }
+
+    });
+    $('#vertical-data-type').on('change', function () {
+        var selectVal = $("#vertical-data-type option:selected").val();
+        if(selectVal) {
+            if (selectVal == 'District') {
+                $('#vertical-data-values').val("");
+                $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                    $('#vertical-data-values').val($('#vertical-data-values').val() + value + "\n");
                 });
 
-                $('#addAcre').click(function () {
-                    if($('#lblAcreValues').text()) {
-                        var ul = document.getElementById("filterList");
-                        var li = document.createElement("li");
-                        li.appendChild(document.createTextNode("Acre -  " + $('#lblAcreValues').text()));
-                        ul.appendChild(li);
-
-                        var filteredAcre = $('#filteredAcre').val();
-                        if(filteredAcre){
-                            $('#filteredAcre').val($('#filteredAcre').val() + ',' + $('#lblAcreValues').text());
-                        } else {
-                            $('#filteredAcre').val($('#lblAcreValues').text());
-                        }
-                        //Adding Graph X-Data headings
-                        if (!$("#horizontal-data-type option[value='No. of Acres']").length) {
-                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#horizontal-data-type'));
-                        }
-
-                        if (!$("#vertical-data-type option[value='No. of Acres']").length) {
-                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
-                        }
-
-                        //Adding Graph Y-Data headings
-                        if (!$("#horizontal-data-type-line option[value='No. of Acres']").length) {
-                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#horizontal-data-type-line'));
-                        }
-
-                        if (!$("#vertical-data-type-line option[value='No. of Acres']").length) {
-                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type-line'));
-                        }
-
-                        //Adding Graph Y-Data headings - Pie
-                        if (!$("#data-name-pie option[value='No. of Acres']").length) {
-                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#data-name-pie'));
-                        }
-
-                        if (!$("#data-value-pie option[value='No. of Acres']").length) {
-                            $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#data-value-pie'));
-                        }
-
-                        $('#lblAcreValues').text("");
-                    }
+            } else if (selectVal == 'Taluk') {
+                $('#vertical-data-values').val("");
+                $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                    $('#vertical-data-values').val($('#vertical-data-values').val() + value + "\n");
                 });
-                $('#horizontal-data-type').on('change', function () {
-                    var selectVal = $("#horizontal-data-type option:selected").val();
-                    if(selectVal) {
-                        if (selectVal == 'District') {
-                            $('#horizontal-data-values').val("");
-                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
-                                $('#horizontal-data-values').val($('#horizontal-data-values').val() + value + "\n");
-                            });
-
-                        } else if (selectVal == 'Taluk') {
-                            $('#horizontal-data-values').val("");
-                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
-                                $('#horizontal-data-values').val($('#horizontal-data-values').val() + value + "\n");
-                            });
-                        } else if (selectVal == 'No. of Acres'){
-                            $('#horizontal-data-values').val("");
-                            $.each($('#filteredAcre').val().split(','), function(key, value) {
-                                $('#horizontal-data-values').val($('#horizontal-data-values').val() + value + "\n");
-                            });
-                        }
-                    }
-
+            } else if (selectVal == 'No. of Acres'){
+                $('#vertical-data-values').val("");
+                $.each($('#filteredAcre').val().split(','), function(key, value) {
+                    $('#vertical-data-values').val($('#vertical-data-values').val() + value + "\n");
                 });
-                $('#vertical-data-type').on('change', function () {
-                    var selectVal = $("#vertical-data-type option:selected").val();
-                    if(selectVal) {
-                        if (selectVal == 'District') {
-                            $('#vertical-data-values').val("");
-                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
-                                $('#vertical-data-values').val($('#vertical-data-values').val() + value + "\n");
-                            });
+            }
+        }
 
-                        } else if (selectVal == 'Taluk') {
-                            $('#vertical-data-values').val("");
-                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
-                                $('#vertical-data-values').val($('#vertical-data-values').val() + value + "\n");
-                            });
-                        } else if (selectVal == 'No. of Acres'){
-                            $('#vertical-data-values').val("");
-                            $.each($('#filteredAcre').val().split(','), function(key, value) {
-                                $('#vertical-data-values').val($('#vertical-data-values').val() + value + "\n");
-                            });
-                        }
-                    }
+    });
 
+    $('#horizontal-data-type-line').on('change', function () {
+        var selectVal = $("#horizontal-data-type-line option:selected").val();
+        if(selectVal) {
+            if (selectVal == 'District') {
+                $('#horizontal-data-values-line').val("");
+                $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                    $('#horizontal-data-values-line').val($('#horizontal-data-values-line').val() + value + "\n");
                 });
 
-                $('#horizontal-data-type-line').on('change', function () {
-                    var selectVal = $("#horizontal-data-type-line option:selected").val();
-                    if(selectVal) {
-                        if (selectVal == 'District') {
-                            $('#horizontal-data-values-line').val("");
-                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
-                                $('#horizontal-data-values-line').val($('#horizontal-data-values-line').val() + value + "\n");
-                            });
-
-                        } else if (selectVal == 'Taluk') {
-                            $('#horizontal-data-values-line').val("");
-                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
-                                $('#horizontal-data-values-line').val($('#horizontal-data-values-line').val() + value + "\n");
-                            });
-                        } else if (selectVal == 'No. of Acres'){
-                            $('#horizontal-data-values-line').val("");
-                            $.each($('#filteredAcre').val().split(','), function(key, value) {
-                                $('#horizontal-data-values-line').val($('#horizontal-data-values-line').val() + value + "\n");
-                            });
-                        }
-                    }
-
+            } else if (selectVal == 'Taluk') {
+                $('#horizontal-data-values-line').val("");
+                $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                    $('#horizontal-data-values-line').val($('#horizontal-data-values-line').val() + value + "\n");
                 });
-                $('#vertical-data-type-line').on('change', function () {
-                    var selectVal = $("#vertical-data-type-line option:selected").val();
-                    if(selectVal) {
-                        if (selectVal == 'District') {
-                            $('#vertical-data-values-line').val("");
-                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
-                                $('#vertical-data-values-line').val($('#vertical-data-values-line').val() + value + "\n");
-                            });
+            } else if (selectVal == 'No. of Acres'){
+                $('#horizontal-data-values-line').val("");
+                $.each($('#filteredAcre').val().split(','), function(key, value) {
+                    $('#horizontal-data-values-line').val($('#horizontal-data-values-line').val() + value + "\n");
+                });
+            }
+        }
 
-                        } else if (selectVal == 'Taluk') {
-                            $('#vertical-data-values-line').val("");
-                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
-                                $('#vertical-data-values-line').val($('#vertical-data-values-line').val() + value + "\n");
-                            });
-                        } else if (selectVal == 'No. of Acres'){
-                            $('#vertical-data-values-line').val("");
-                            $.each($('#filteredAcre').val().split(','), function(key, value) {
-                                $('#vertical-data-values-line').val($('#vertical-data-values-line').val() + value + "\n");
-                            });
-                        }
-                    }
-
+    });
+    $('#vertical-data-type-line').on('change', function () {
+        var selectVal = $("#vertical-data-type-line option:selected").val();
+        if(selectVal) {
+            if (selectVal == 'District') {
+                $('#vertical-data-values-line').val("");
+                $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                    $('#vertical-data-values-line').val($('#vertical-data-values-line').val() + value + "\n");
                 });
 
-                $('#data-name-pie').on('change', function () {
-                    var selectVal = $("#data-name-pie option:selected").val();
-                    if(selectVal) {
-                        if (selectVal == 'District') {
-                            $('#data-names-pie').val("");
-                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
-                                $('#data-names-pie').val($('#data-names-pie').val() + value + "\n");
-                            });
+            } else if (selectVal == 'Taluk') {
+                $('#vertical-data-values-line').val("");
+                $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                    $('#vertical-data-values-line').val($('#vertical-data-values-line').val() + value + "\n");
+                });
+            } else if (selectVal == 'No. of Acres'){
+                $('#vertical-data-values-line').val("");
+                $.each($('#filteredAcre').val().split(','), function(key, value) {
+                    $('#vertical-data-values-line').val($('#vertical-data-values-line').val() + value + "\n");
+                });
+            }
+        }
 
-                        } else if (selectVal == 'Taluk') {
-                            $('#data-names-pie').val("");
-                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
-                                $('#data-names-pie').val($('#data-names-pie').val() + value + "\n");
-                            });
-                        } else if (selectVal == 'No. of Acres'){
-                            $('#data-names-pie').val("");
-                            $.each($('#filteredAcre').val().split(','), function(key, value) {
-                                $('#data-names-pie').val($('#data-names-pie').val() + value + "\n");
-                            });
-                        }
-                    }
+    });
 
+    $('#data-name-pie').on('change', function () {
+        var selectVal = $("#data-name-pie option:selected").val();
+        if(selectVal) {
+            if (selectVal == 'District') {
+                $('#data-names-pie').val("");
+                $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                    $('#data-names-pie').val($('#data-names-pie').val() + value + "\n");
                 });
 
-                $('#data-value-pie').on('change', function () {
-                    var selectVal = $("#data-value-pie option:selected").val();
-                    if(selectVal) {
-                        if (selectVal == 'District') {
-                            $('#data-values-pie').val("");
-                            $.each($('#filteredDistrict').val().split(','), function(key, value) {
-                                $('#data-values-pie').val($('#data-values-pie').val() + value + "\n");
-                            });
-
-                        } else if (selectVal == 'Taluk') {
-                            $('#data-values-pie').val("");
-                            $.each($('#filteredTaluk').val().split(','), function(key, value) {
-                                $('#data-values-pie').val($('#data-values-pie').val() + value + "\n");
-                            });
-                        } else if (selectVal == 'No. of Acres'){
-                            $('#data-values-pie').val("");
-                            $.each($('#filteredAcre').val().split(','), function(key, value) {
-                                $('#data-values-pie').val($('#data-values-pie').val() + value + "\n");
-                            });
-                        }
-                    }
-
+            } else if (selectVal == 'Taluk') {
+                $('#data-names-pie').val("");
+                $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                    $('#data-names-pie').val($('#data-names-pie').val() + value + "\n");
                 });
-            });
+            } else if (selectVal == 'No. of Acres'){
+                $('#data-names-pie').val("");
+                $.each($('#filteredAcre').val().split(','), function(key, value) {
+                    $('#data-names-pie').val($('#data-names-pie').val() + value + "\n");
+                });
+            }
+        }
 
-            /*$('.filter-modal').click(function(){
-                $(this).parent().children('ul.tree').toggle(300);
-            });*/
+    });
 
-            $('.item1').click(function(){
-                $('.filter-modal.item1').addClass('enable');
-            });
-            $('.seed').click(function(){
-                $('.filter-modal.item2').addClass('enable');
-            });
+    $('#data-value-pie').on('change', function () {
+        var selectVal = $("#data-value-pie option:selected").val();
+        if(selectVal) {
+            if (selectVal == 'District') {
+                $('#data-values-pie').val("");
+                $.each($('#filteredDistrict').val().split(','), function(key, value) {
+                    $('#data-values-pie').val($('#data-values-pie').val() + value + "\n");
+                });
 
-            $('.district').click(function(){
-                $('.sub-filter').addClass('enable');
-            });
-            $('.taluk').click(function(){
-                $('.sub-filter-taluk').addClass('enable');
-            });
-            $('.acres').click(function(){
-                $('.sub-filter-acres').addClass('enable')
-            });
+            } else if (selectVal == 'Taluk') {
+                $('#data-values-pie').val("");
+                $.each($('#filteredTaluk').val().split(','), function(key, value) {
+                    $('#data-values-pie').val($('#data-values-pie').val() + value + "\n");
+                });
+            } else if (selectVal == 'No. of Acres'){
+                $('#data-values-pie').val("");
+                $.each($('#filteredAcre').val().split(','), function(key, value) {
+                    $('#data-values-pie').val($('#data-values-pie').val() + value + "\n");
+                });
+            }
+        }
 
-            var modal = document.getElementById('modal');
-            var modal2 = document.getElementById('modal2');
+    });
+});
 
-            // When the user clicks anywhere outside of the modal, close it
+/*$('.filter-modal').click(function(){
+ $(this).parent().children('ul.tree').toggle(300);
+ });*/
+
+$('.item1').click(function(){
+    $('.filter-modal.item1').addClass('enable');
+});
+$('.seed').click(function(){
+    $('.filter-modal.item2').addClass('enable');
+});
+
+$('.district').click(function(){
+    $('.sub-filter').addClass('enable');
+});
+$('.taluk').click(function(){
+    $('.sub-filter-taluk').addClass('enable');
+});
+$('.acres').click(function(){
+    $('.sub-filter-acres').addClass('enable')
+});
+
+var modal = document.getElementById('modal');
+var modal2 = document.getElementById('modal2');
+
+// When the user clicks anywhere outside of the modal, close it
 //            window.onclick = function(event) {
 //                if (event.target == modal) {
 //                    console.log(event.target);
@@ -947,64 +938,64 @@
 //            };
 
 
-            $('.close').click(function(){
-                $(this).parent().parent().removeClass('enable')
-                return false;
-            });
+$('.close').click(function(){
+    $(this).parent().parent().removeClass('enable')
+    return false;
+});
 
-            $('.next').click(function(){
-                $(this).closest('.enable').removeClass('enable');
-            });
+$('.next').click(function(){
+    $(this).closest('.enable').removeClass('enable');
+});
 
-            $('.add').click(function(){
-                $('#modal').removeClass('enable');
-                $(this).closest('.enable').removeClass('enable');
-                return false;
-            });
+$('.add').click(function(){
+    $('#modal').removeClass('enable');
+    $(this).closest('.enable').removeClass('enable');
+    return false;
+});
 
-            $(function() {
-                $('.graph-container').hide();
-                $('.graph-type-bar').show();
-                $('#graph-type').change(function(){
-                    if($('#graph-type').val() == 'bar') {
-                        $('.graph-type-bar').show();
-                        $('.graph-type-pie').hide();
-                        $('.graph-type-line').hide();
-                    } else if($('#graph-type').val() == 'pie') {
-                        $('.graph-type-pie').show();
-                        $('.graph-type-bar').hide();
-                        $('.graph-type-line').hide();
-                    }else if($('#graph-type').val() == 'line'){
-                        $('.graph-type-line').show();
-                        $('.graph-type-bar').hide();
-                        $('.graph-type-pie').hide();
-                    }
-                });
-            });
+$(function() {
+    $('.graph-container').hide();
+    $('.graph-type-bar').show();
+    $('#graph-type').change(function(){
+        if($('#graph-type').val() == 'bar') {
+            $('.graph-type-bar').show();
+            $('.graph-type-pie').hide();
+            $('.graph-type-line').hide();
+        } else if($('#graph-type').val() == 'pie') {
+            $('.graph-type-pie').show();
+            $('.graph-type-bar').hide();
+            $('.graph-type-line').hide();
+        }else if($('#graph-type').val() == 'line'){
+            $('.graph-type-line').show();
+            $('.graph-type-bar').hide();
+            $('.graph-type-pie').hide();
+        }
+    });
+});
 
-            function openCity(evt, cityName) {
-                // Declare all variables
-                var i, tabcontent, tablinks;
+function openCity(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
 
-                // Get all elements with class="tabcontent" and hide them
-                tabcontent = document.getElementsByClassName("tabcontent");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
-                    $('.tabcontent').removeClass('default-active');
-                }
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+        $('.tabcontent').removeClass('default-active');
+    }
 
 
-                // Get all elements with class="tablinks" and remove the class "active"
-                tablinks = document.getElementsByClassName("tablinks");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" active", "");
-                }
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
 
-                // Show the current tab, and add an "active" class to the link that opened the tab
-                document.getElementById(cityName).style.display = "block";
-                evt.currentTarget.className += " active";
-            }
-        </script>
+    // Show the current tab, and add an "active" class to the link that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
 
 
 <script>
@@ -1018,7 +1009,7 @@
                             var data = google.visualization.arrayToDataTable(result.xDataValues);
                             var options = {
                                 title: result.title/*,
-                                chartArea: {width: '60%'}*/,
+                                 chartArea: {width: '60%'}*/,
                                 hAxis: {
                                     title: result.xLabel,
                                     minValue: 0
@@ -1058,21 +1049,21 @@
                             //data.addColumn('number', 'Taluk');
                             //data.addColumn('number', 'Area');
                             /*data.addRows([
-                            [1,  37.8, 80.8, 41.8],
-                            [2,  30.9, 69.5, 32.4],
-                            [3,  25.4,   57, 25.7],
-                            [4,  11.7, 18.8, 10.5],
-                            [5,  11.9, 17.6, 10.4],
-                            [6,   8.8, 13.6,  7.7],
-                            [7,   7.6, 12.3,  9.6],
-                            [8,  12.3, 29.2, 10.6],
-                            [9,  16.9, 42.9, 14.8],
-                            [10, 12.8, 30.9, 11.6],
-                            [11,  5.3,  7.9,  4.7],
-                            [12,  6.6,  8.4,  5.2],
-                            [13,  4.8,  6.3,  3.6],
-                            [14,  4.2,  6.2,  3.4]
-                            ]);*/
+                             [1,  37.8, 80.8, 41.8],
+                             [2,  30.9, 69.5, 32.4],
+                             [3,  25.4,   57, 25.7],
+                             [4,  11.7, 18.8, 10.5],
+                             [5,  11.9, 17.6, 10.4],
+                             [6,   8.8, 13.6,  7.7],
+                             [7,   7.6, 12.3,  9.6],
+                             [8,  12.3, 29.2, 10.6],
+                             [9,  16.9, 42.9, 14.8],
+                             [10, 12.8, 30.9, 11.6],
+                             [11,  5.3,  7.9,  4.7],
+                             [12,  6.6,  8.4,  5.2],
+                             [13,  4.8,  6.3,  3.6],
+                             [14,  4.2,  6.2,  3.4]
+                             ]);*/
                             data.addRows(
                                     result.xDataValues);
                             var options = {
@@ -1109,7 +1100,9 @@
                             var options = {
                                 title: result.title
                             };
+
                             var chart = new google.visualization.PieChart(document.getElementById('divChart'));
+
                             chart.draw(data, options);
 
                             $("#packages").val(JSON.stringify("['corechart']"));
@@ -1120,6 +1113,7 @@
                 });
     });
 </script>
+
 
         <script>
             $('#addToDashboard').click(function() {
@@ -1168,3 +1162,26 @@
         });
     });
 </script>
+
+<script>
+    $('#addToDashboard').click(function() {alert('dashboard click')
+        /*xmlData=new ActiveXObject("Microsoft.XMLDOM");
+         xmlData.async="false";
+         xmlData.loadXML("db.xml");
+
+         var strRte = "DenverToAtlanta";
+         var strMi = "1408";
+
+         var newRoute = xmlData.documentElement.createElement("Routes");
+         var nameNode = xmlData.documentElement.createElement("RouteName");
+         var nameText =xmlData.documentElement.createTextNode(strRte);
+         nameNode.appendChild(nameText)
+         var milesNode = xmlData.documentElement.createElement("Miles");
+         var milesText = xmlData.documentElement.createTextNode(strMi);
+         milesNode.appendChild(milesText);
+         newRoute.appendChild(nameNode);
+         newRoute.appendChild(milesNode);
+         xmlData.appendChild(newRoute);*/
+    });
+</script>
+
