@@ -17,7 +17,6 @@
 
 </head>
 <body>
-
 <input type="hidden" name="filteredDistrict" id="filteredDistrict">
 <input type="hidden" name="filteredTaluk" id="filteredTaluk">
 <input type="hidden" name="filteredAcre" id="filteredAcre">
@@ -133,7 +132,6 @@
                     <div class="col-sm-10 p0">
                         <textarea style="height: 50px" id="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
                     </div>
-
                 </div>
 
 
@@ -260,6 +258,78 @@
 
 
 
+<div class="col-sm-12">
+    <div class="graph-type-pie graph-container filter-form">
+        <form method="post" id="formPieChart" class="table-form">
+            <div class="col-sm-12">
+                <label for="graph-title-pie" class="control-label col-sm-2 custom-width">Title:</label>
+                <div class="col-sm-5 p0">
+                    <input id="graph-title-pie" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-12" style="height: 8px"></div>
+            <div class="col-sm-6 form-horizontal pR0">
+
+
+                <div class="form-group">
+                    <label for="data-name-pie" class="control-label col-sm-2">Data name:</label>
+                    <div class="col-sm-10 p0">
+                        <select class="form-control" id="data-name-pie">
+                            <option value="">District</option>
+                            <option value="">Taluk</option>
+                            <option value="">No. of Acres</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="data-names-pie" class="control-label col-sm-2">Data Names:</label>
+                    <div class="col-sm-10 p0">
+                        <textarea style="height: 50px" class="form-control" id="data-names-pie">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-6 form-horizontal">
+
+                <div class="form-group">
+                    <label for="data-value-pie" class="control-label col-sm-2">Data Value:</label>
+                    <div class="col-sm-10 p0">
+                        <select class="form-control" id="data-value-pie">
+                            <option value="">No. of Acres</option>
+                            <option value="">District</option>
+                            <option value="">Taluk</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="data-values-pie" class="control-label col-sm-2">Data Values:</label>
+                    <div class="col-sm-10 p0">
+                        <textarea style="height: 50px" class="form-control" id="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="slice-text-pie" class="control-label col-sm-2">Slice Text:</label>
+                    <div class="col-sm-10 p0">
+                        <select class="form-control" id="slice-text-pie">
+                            <option value="">Percentage</option>
+                            <option value="">Names</option>
+                            <option value="">Values</option>
+                            <option value="">None</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group add-filter-btn col-sm-5 pull-right">
+                    <input type="button" name="btnPieChart" id="btnPieChart" value="Create Pie Chart">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
 </div>
 
 <div class="col-sm-12 p0 mT15">
@@ -1141,34 +1211,25 @@ function openCity(evt, cityName) {
     });
 </script>
 
+<script>
+    $('#addToDashboard').click(function() {
+        var packages = $("#packages").val();
+        var data = $("#data").val();
+        var options = $("#options").val();
 
-        <script>
-            $('#addToDashboard').click(function() {
-                var packages = $("#packages").val();
-                var data = $("#data").val();
-                var options = $("#options").val();
-
-                $.post('/save/xml', { packages: packages, data: data, options: options })
-                .done(function (result) {
-
-                });
-            });
-        </script>
+        $.post('/save/xml', { packages: packages, data: data, options: options })
+            .done(function (result) {
+        });
+    });
+</script>
 
 <script>
     $('#dashboard').click(function() {
         $.get('/getCharts', function (result) {
             if(result){
-               parser = new DOMParser();
+                parser = new DOMParser();
                 var xmlDoc = parser.parseFromString(result,"text/xml");
                 alert(xmlDoc);
-                /*var x = xmlDoc.documentElement.childNodes['charts'];
-                var y = x.childNodes;
-                alert(y);
-                for (i = 0; i < x.length ;i++) {
-                    var txt = x[i].nodeName + ": " + x[i].childNodes[0].nodeValue;
-                    alert(txt);
-                }*/
 
                 var charts = xmlDoc.getElementsByTagName("charts"); //outputs array of charts
                 alert(charts);
@@ -1180,35 +1241,8 @@ function openCity(evt, cityName) {
                         //document.write(employees[employeeIndex].childNodes[detailIndex].nodeValue);
                         alert(charts[chartsIndex].childNodes[detailIndex].nodeValue);
                     }
-
-                    //document.write("<br>");
                 }
-
-                //document.getElementById("demo").innerHTML = txt;
             }
         });
     });
 </script>
-
-<script>
-    $('#addToDashboard').click(function() {alert('dashboard click')
-        /*xmlData=new ActiveXObject("Microsoft.XMLDOM");
-         xmlData.async="false";
-         xmlData.loadXML("db.xml");
-
-         var strRte = "DenverToAtlanta";
-         var strMi = "1408";
-
-         var newRoute = xmlData.documentElement.createElement("Routes");
-         var nameNode = xmlData.documentElement.createElement("RouteName");
-         var nameText =xmlData.documentElement.createTextNode(strRte);
-         nameNode.appendChild(nameText)
-         var milesNode = xmlData.documentElement.createElement("Miles");
-         var milesText = xmlData.documentElement.createTextNode(strMi);
-         milesNode.appendChild(milesText);
-         newRoute.appendChild(nameNode);
-         newRoute.appendChild(milesNode);
-         xmlData.appendChild(newRoute);*/
-    });
-</script>
-
