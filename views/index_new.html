@@ -47,17 +47,6 @@
     <div class="form-group">
         <a href="/jira" class="btn-submit filter-btn">Refresh</a>
     </div>
-    <div class="form-group">
-        <label for="savedFilter" class="control-label col-sm-12 text-left">Saved Filters:</label>
-        <div class="col-sm-12 text-left custom-select">
-            <select id="savedFilter" class="">
-                <option value="">Issue filter 1</option>
-                <option value="">Issue filter 2</option>
-                <option value="">Issue filter 3</option>
-                <option value="">Issue filter 4</option>
-            </select>
-        </div>
-    </div>
 
     <div class="form-group">
         <label for="issuetype" class="control-label col-sm-12 text-left">New Issue Filter :</label>
@@ -77,11 +66,28 @@
         </div>
     </div>
 
-    <ul id="filterList" class="filter-List-ul">
-    </ul>
+    <div class="form-group">
+        <label for="savedFilter" class="control-label col-sm-12 text-left">Saved Filters:</label>
+        <div class="col-sm-12 text-left custom-select">
+            <select id="savedFilter" class="">
+                <option value="">Issue filter 1</option>
+                <option value="">Issue filter 2</option>
+                <option value="">Issue filter 3</option>
+                <option value="">Issue filter 4</option>
+            </select>
+        </div>
+    </div>
+
+    <ol id="filterList" class="filter-List-ul">
+    </ol>
+
+    <div class="col-sm-12 mT15">
+        <div class=" col-sm-12 add-filter-btn">
+            <button>Save Filter</button>
+        </div>
+    </div>
 
 
-    <button>Save Filter</button>
 </div>
 
 <div class="main-content col-sm-9">
@@ -493,7 +499,7 @@
             <div class="content">
                 <h1>Filter Popup</h1>
                 <div class="close">back</div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 mT15">
                     <select data-placeholder="Select Districts" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
                         <option value=""></option>
                         {{#data1}}
@@ -501,10 +507,12 @@
                         {{/data1}}
                     </select>
                 </div>
-
-                <div class="btn-grp">
-                    <button type="button" id="addDistrict">Add this filter</button>
+                <div class="col-sm-12">
+                    <div class="add-filter-btn p0 col-sm-5 pull-right pR0 mT15">
+                        <button type="button" id="addDistrict">Add this filter</button>
+                    </div>
                 </div>
+
             </div>
         </div>
 
@@ -512,15 +520,21 @@
             <div class="content">
                 <h1>Filter Popup</h1>
                 <div class="close">back</div>
-                <select data-placeholder="Select Taluks" name="taluk" class="chosen-select" multiple style="width: 100px;" id="taluk">
-                    <option value=""></option>
-                    {{#data2}}
-                    <option value="{{taluks}}">{{taluks}}</option>
-                    {{/data2}}
-                </select>
-                <div class="btn-grp">
-                    <button type="button" id="addTaluk">Add this filter</button>
+                <div class="col-sm-12 mT15">
+                    <select data-placeholder="Select Taluks" name="taluk" class="chosen-select" multiple style="width: 100px;" id="taluk">
+                        <option value=""></option>
+                        {{#data2}}
+                        <option value="{{taluks}}">{{taluks}}</option>
+                        {{/data2}}
+                    </select>
                 </div>
+
+                <div class="col-sm-12">
+                    <div class="add-filter-btn p0 col-sm-5 pull-right pR0 mT15">
+                        <button type="button" id="addTaluk">Add this filter</button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -528,19 +542,25 @@
             <div class="content">
                 <h1>Filter Popup</h1>
                 <div class="close">back</div>
-                <ul class="Acres" style="padding: 0">
-                    <select name="acreSymbol" id="acreSymbol">
-                        <option value=">">&gt;</option>
-                        <option value="<">&lt;</option>
-                        <option value="=">=</option>
-                    </select>
-                    <input type="text" value="" id="acreValue">
-                    <button id="addAcreSingle">Add</button>
-                    <label id="lblAcreValues"></label>
-                </ul>
-                <div class="btn-grp">
-                    <button type="button" id="addAcre">Add this filter</button>
+                <div class="col-sm-12 mT15">
+                    <ul class="Acres " style="padding: 0">
+                        <select name="acreSymbol" id="acreSymbol">
+                            <option value=">">&gt;</option>
+                            <option value="<">&lt;</option>
+                            <option value="=">=</option>
+                        </select>
+                        <input type="text" value="" id="acreValue">
+                        <button id="addAcreSingle">Add</button>
+                        <label id="lblAcreValues"></label>
+                    </ul>
                 </div>
+
+                <div class="col-sm-12">
+                    <div class="add-filter-btn p0 col-sm-5 pull-right pR0 mT15">
+                        <button type="button" id="addAcre">Add this filter</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -599,7 +619,7 @@
         margin: auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 300px;
+        width: 350px;
         height: auto;
         top: 50%;
         left: 50%;
@@ -614,6 +634,7 @@
         padding: 0 0 5px 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.3);
         font-weight: normal;
+        color: #000;
     }
     .filter-modal ul {
         margin: 5px 0;
@@ -643,19 +664,25 @@
         cursor: pointer;
     }
     .btn-grp div:hover, .close:hover {
-        background: green;
+        background: red;
         color: #fff;
+        opacity: 10;
     }
     .close {
         width: 50px;
         position: absolute;
         right: 20px;
         top: 12px;
-        background: rgb(204, 204, 204);
         padding: 5px;
         text-align: center;
         border-radius: 5px;
         cursor: pointer;
+        opacity: 10;
+        text-shadow: none;
+        font-size: 12px;
+        background: #c61e13;
+        font-weight: normal;
+        tansition: background 0.3s;
     }
     .btn-submit {
 
