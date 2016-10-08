@@ -304,7 +304,7 @@
                                     <!--<img src="{{imageUrl}}" style="width:345px" >-->
                                     <div id="divChart"></div>
                                 </div>
-                                <button>Save Graph</button>
+                                <input type="button" name="addToDashboard" id="addToDashboard" value="Add to Dashboard">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -328,6 +328,28 @@
             </div>
 
             <div id="Dashboard" class="tabcontent">
+                <table>
+                    <tr>
+                        <td>
+                    All Issues from JIRA:
+                    <ul>
+                        <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                        <li><a href=""> This is an example issue for jira-connector</a></li>
+                        <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                        <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                        <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                        <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                        <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+
+                    </ul>
+                        </td>
+                    </tr>
+                </table>
+
                 <table>
                     <tr>
                         <td>
@@ -1122,20 +1144,23 @@
 </script>
 
         <script>
-            /*$('#contactSeller').click(function() {
-                $('#status').text("").css('color', 'red');
-                $('#contactSellerModal').modal('show');
+            $('#addToDashboard').click(function() {alert(111)
+                /*xmlData=new ActiveXObject("Microsoft.XMLDOM");
+                xmlData.async="false";
+                xmlData.loadXML("db.xml");
 
-                addConversionCode();
-                var contentId = $('#contentId').val();
-                var price = $('#price').val();
-                fbq('track', 'Purchase', {
-                    content_ids: [contentId],
-                    content_type: 'product',
-                    value: price,
-                    currency: 'INR'
-                });
-                var event = 'purchase';
-                addGoogleRemarketingCode(contentId, event, price);
-            });*/
+                var strRte = "DenverToAtlanta";
+                var strMi = "1408";
+
+                var newRoute = xmlData.documentElement.createElement("Routes");
+                var nameNode = xmlData.documentElement.createElement("RouteName");
+                var nameText =xmlData.documentElement.createTextNode(strRte);
+                nameNode.appendChild(nameText)
+                var milesNode = xmlData.documentElement.createElement("Miles");
+                var milesText = xmlData.documentElement.createTextNode(strMi);
+                milesNode.appendChild(milesText);
+                newRoute.appendChild(nameNode);
+                newRoute.appendChild(milesNode);
+                xmlData.appendChild(newRoute);*/
+            });
         </script>
