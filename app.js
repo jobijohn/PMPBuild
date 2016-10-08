@@ -2,7 +2,8 @@ var express = require('express'),
     consolidate = require('consolidate'),
     index = require('./index'),
     session = require('express-session'),
-    graph = require('./graph');
+    graph = require('./graph'),
+    jiraIssue = require('./jiraIssue');
 
 
 function launchApp() {
@@ -50,6 +51,8 @@ function launchApp() {
     app.post('/graph/bar', graph.generateBarGraph);
     app.post('/graph/line', graph.generateLineGraph);
     app.post('/chart/pie', graph.generatePieChart);
+
+    app.get('/jira/issue/create', jiraIssue.createJiraIssue);
 
 
 

@@ -230,3 +230,10 @@ ul.tab li a:hover {background-color: #c61e13;}
 .form-horizontal .control-label {
     padding-top: 0;
 }
+.filter-List-ul {
+
+}
+.filter-List-ul li {
+    color: #ffffff;
+    list-style: none;
+}

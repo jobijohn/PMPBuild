@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+    <filters>
+    <filter>
+        <name>filter1</name>
+        <item>district=chittoor,godawary&No. of Acres=50</item>
+    </filter>
+    <filter>
+        <name>filter2</name>
+        <item>district=chittoor,godawary&No. of Acres=50</item>
+    </filter>
+    <filter>
+        <name>filter3</name>
+        <item>district=chittoor,godawary&No. of Acres=50</item>
+    </filter>
+    </filters>
+    <charts>
+        <chart>
+            <package></package>
+            <data></data>
+            <options></options>
+            <issues></issues>
+        </chart>
+        <chart>
+            <package></package>
+            <data></data>
+            <options></options>
+            <issues></issues>
+        </chart>
+    </charts>
+</data>
