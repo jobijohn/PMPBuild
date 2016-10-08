@@ -5,7 +5,7 @@
 
 function generateBarGraph(req, res) {
     //TODO: validations
-    var title = req.param('graph-title-line');
+    var title = req.param('graph-title');
     var xLabel = req.param('horizontal-axis-label');
     var yLabel = req.param('vertical-axis-label');
     var xDataType = req.param('horizontal-data-type');

@@ -17,6 +17,9 @@
     <input type="hidden" name="filteredDistrict" id="filteredDistrict">
     <input type="hidden" name="filteredTaluk" id="filteredTaluk">
     <input type="hidden" name="filteredAcre" id="filteredAcre">
+    <input type="hidden" name="packages" id="packages">
+    <input type="hidden" name="data" id="data">
+    <input type="hidden" name="options" id="options">
     <div class="container">
         <header>
             <h1>Project Management Prototype Build</h1>
@@ -1028,6 +1031,10 @@
                             };
                             var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
                             chart.draw(data, options);
+
+                            $("#packages").val(JSON.stringify("['corechart', 'bar']"));
+                            $("#data").val(JSON.stringify(data));
+                            $("#options").val(JSON.stringify(options));
                         }
                     }
                 });
@@ -1065,19 +1072,23 @@
                             [12,  6.6,  8.4,  5.2],
                             [13,  4.8,  6.3,  3.6],
                             [14,  4.2,  6.2,  3.4]
-                        ]);*/
-                        data.addRows(
-                                result.xDataValues);
-                        var options = {
-                            chart: {
-                                title: result.title
-                                //subtitle: 'in millions of dollars (USD)'
-                            },
-                            width: 500,
-                            height: 300
-                        };
-                        var chart = new google.charts.Line(document.getElementById('divChart'));
-                        chart.draw(data, options);
+                            ]);*/
+                            data.addRows(
+                                    result.xDataValues);
+                            var options = {
+                                chart: {
+                                    title: result.title
+                                    //subtitle: 'in millions of dollars (USD)'
+                                },
+                                width: 500,
+                                height: 300
+                            };
+                            var chart = new google.charts.Line(document.getElementById('divChart'));
+                            chart.draw(data, options);
+
+                            $("#packages").val(JSON.stringify("['line']"));
+                            $("#data").val(JSON.stringify(data));
+                            $("#options").val(JSON.stringify(options));
                         }
                     }
                 });
@@ -1100,8 +1111,31 @@
                             };
                             var chart = new google.visualization.PieChart(document.getElementById('divChart'));
                             chart.draw(data, options);
+
+                            $("#packages").val(JSON.stringify("['corechart']"));
+                            $("#data").val(JSON.stringify(data));
+                            $("#options").val(JSON.stringify(options));
                         }
                     }
                 });
     });
 </script>
+
+        <script>
+            /*$('#contactSeller').click(function() {
+                $('#status').text("").css('color', 'red');
+                $('#contactSellerModal').modal('show');
+
+                addConversionCode();
+                var contentId = $('#contentId').val();
+                var price = $('#price').val();
+                fbq('track', 'Purchase', {
+                    content_ids: [contentId],
+                    content_type: 'product',
+                    value: price,
+                    currency: 'INR'
+                });
+                var event = 'purchase';
+                addGoogleRemarketingCode(contentId, event, price);
+            });*/
+        </script>
