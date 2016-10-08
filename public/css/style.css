@@ -237,3 +237,29 @@ ul.tab li a:hover {background-color: #c61e13;}
     color: #ffffff;
     list-style: none;
 }
+.sub-filter .content, .sub-filter-taluk .content, .sub-filter-acres .content {
+    min-height: 160px;
+    box-shadow: none !important;
+    border: none !important;
+}
+.add-filter-btn button {
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+.add-filter-btn button:focus, .add-filter-btn input:active {
+    border: none!important;
+    box-shadow: none!important;
+}
+.filter-List-ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.filter-List-ul li {
+    color: #000;
+    text-align: left;
+    padding: 0 15px;
+    list-style-type:decimal;;
+    list-style-position:inside;
+}
