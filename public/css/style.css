@@ -61,7 +61,8 @@ ul.tab li a:hover {background-color: #c61e13;}
 }
 .main-content {
     background: linear-gradient(to right, rgb(242, 207, 160), rgb(243, 229, 182));
-    height: 780px;
+    min-height: 780px;
+    height: auto;
 }
 .filter-form, .entries {
     background: #fff;
@@ -262,4 +263,18 @@ ul.tab li a:hover {background-color: #c61e13;}
     padding: 0 15px;
     list-style-type:decimal;;
     list-style-position:inside;
+}
+#Dashboard .entries h1 {
+    color: #000;
+    font-size: 14px;
+    margin: 0;
+    padding:0 15px;
+}
+#Dashboard .entries ul {
+    margin: 0px;
+    padding: 0;
+}
+#Dashboard .entries ul li {
+    margin: 0;
+    padding: 2px 0;
 }
