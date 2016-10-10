@@ -30,7 +30,7 @@
 <div class="row box-theme">
 <div class="nav-bar">
     <div class="col-sm-9 text-left">
-        <h1>Project Management Prototype Build</h1>
+        <h1>WASSAN Project Management</h1>
     </div>
     <div class="col-sm-3">
 
@@ -42,7 +42,7 @@
 </div>
 
 
-<div id="Settings" class="tabcontent default-active">
+<div id="Settings" class="tabcontent ">
 <div class="col-sm-3 filter-pan p0">
     <div class="form-group">
         <a href="/jira" class="btn-submit filter-btn">Refresh</a>
@@ -371,31 +371,12 @@
 
 </div>
 
-<div id="Dashboard" class="tabcontent">
+<div id="Dashboard" class="tabcontent default-active">
     <div class="col-sm-12 main-content">
-        <div class="col-sm-12 entries mT15">
-            <h1> All Issues from JIRA:</h1>
-            <div class="col-sm-6">
-                <ul>
-                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                    <li><a href=""> This is an example issue for jira-connector</a></li>
-                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-
-                </ul>
-            </div>
-        </div>
 
         <div class="col-sm-12 entries mT15">
             <div class="col-sm-4">
-                <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
+                <div id="divChartDash"></div>
             </div>
             <div class="col-sm-5">
                 <ul>
@@ -414,11 +395,39 @@
                 </ul>
             </div>
             <div class="col-sm-3">
-                After click on a particular issue, <br/>
-                then the corresponding JIRA Issue page <br/>
-                will be displayed in this pane...
+               <button>Back to Settings...</button>
             </div>
         </div>
+
+        <div>
+            <button>Add New Graph...</button>
+        </div>
+
+        <div class="col-sm-12 entries mT15">
+            <h1> All Issues from JIRA:</h1>
+            Sort: Created Date <select name="" id="">
+                                <option value=">"</option>
+                                <option value="<">&lt;</option>
+                                <option value="=">=</option>
+                            </select>
+            <div class="col-sm-6">
+                <ul>
+                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                    <li><a href=""> This is an example issue for jira-connector</a></li>
+                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+
+                </ul>
+            </div>
+        </div>
+
     </div>
 
 
@@ -1063,7 +1072,9 @@ function openCity(evt, cityName) {
                                 height: 300
                             };
                             var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+                            var chartDash = new google.visualization.ColumnChart(document.getElementById('divChartDash'));
                             chart.draw(data, options);
+                            chartDash.draw(data, options);
 
                             $("#packages").val(JSON.stringify("['corechart', 'bar']"));
                             $("#data").val(JSON.stringify(data));
