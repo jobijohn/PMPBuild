@@ -1061,9 +1061,7 @@
                             },
                             vAxis: {
                                 title: result.yLabel
-                            },
-                            width: 500,
-                            height: 300
+                            }
                         };
                         var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
                         chart.draw(data, options);
@@ -1079,7 +1077,6 @@
         $.post('/graph/line', $('#formLineGraph').serialize())
                 .done(function (result) {
                     if(result) {
-                        alert(result.xLabel);
                         google.charts.load('current', {'packages': ['line']});
                         google.charts.setOnLoadCallback(drawChart);
 
@@ -1111,9 +1108,7 @@
                                 chart: {
                                     title: result.title
                                     //subtitle: 'in millions of dollars (USD)'
-                                },
-                                width: 500,
-                                height: 300
+                                }
                             };
                             var chart = new google.charts.Line(document.getElementById('divChart'));
                             chart.draw(data, options);
