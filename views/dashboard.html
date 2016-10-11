@@ -186,6 +186,7 @@
                 <input type="text" placeholder="Y label">
             </div>
         </li>
+            <input type="button" name="btnBarGraph" id="btnBarGraph" class="btn btn-info btn-fill pull-right" value="Create Bar Graph">
     </ul>
 
     <div class="col-sm-3 addFilter">
@@ -661,11 +662,15 @@
 
 
                 <div class="row">
+                    <div class="col-sm-12" style="margin-bottom: 10px">
+                        <input type="text" class="col-sm-12" placeholder="Filters">
+                    </div>
+
                     <div class="col-md-6">
                         <div class="card ">
                             <div class="header">
                                 <h4 class="title">2014 Sales</h4>
-                                <p class="category">All products including Taxes</p>
+                                <!--<p class="category">All products including Taxes</p>-->
                             </div>
                             <div class="content">
                                 <div id="chartActivity" class="ct-chart"></div>
@@ -687,8 +692,8 @@
                     <div class="col-md-6">
                         <div class="card ">
                             <div class="header">
-                                <h4 class="title">Tasks</h4>
-                                <p class="category">Backend development</p>
+                                <h4 class="title">Tasks / Issues</h4>
+                                <!--<p class="category">Backend development</p>-->
                             </div>
                             <div class="content">
                                 <div class="table-full-width">
@@ -802,6 +807,14 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-8">
+                            <input type="text" style="width: 100%">
+                        </div>
+                        <div class="col-sm-4">
+                            <button class="btn btn-info btn-fill pull-right"> Save to Dashboard</button>
                         </div>
                     </div>
                 </div>
