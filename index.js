@@ -115,7 +115,15 @@ function getJsonFromJira(req, res) {
         callback);
 }
 
+function test (req, res){
+    var tst = req.param('test'); console.log('tst');
+    return res.json({
+        success : 'success'
+    });
+}
+
 exports.indexPage = indexPage;
 exports.getOAuth = getOAuth;
 exports.getOAuthCallback = getOAuthCallback;
 exports.getJsonFromJira = getJsonFromJira;
+exports.test = test;

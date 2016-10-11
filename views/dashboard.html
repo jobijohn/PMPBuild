@@ -702,7 +702,8 @@
 
                 <div class="row">
                     <div class="col-sm-12" style="margin-bottom: 10px">
-                        <input type="text" class="col-sm-12" placeholder="Filters">
+                        <input id="filters" name="filters" type="text" class="col-sm-12" placeholder="Filters">
+                        <button id="test-button">Test</button>
                     </div>
 
                     <div class="col-md-6">
@@ -916,7 +917,7 @@
    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<script src="/assets/js/light-bootstrap-dashboard.js"></script>
+	<!--<script src="/assets/js/light-bootstrap-dashboard.js"></script>-->
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<!--<script src="/assets/js/demo.js"></script>-->
@@ -1150,6 +1151,17 @@
                             $("#options").val(JSON.stringify(options));
                         }
                     }
+                });
+    });
+</script>
+
+<script>
+    $('#test-button').click(function() {
+        var test = $("#filters").val();alert(test);
+
+        $.post('/test123', { test: test })
+                .done(function (result) {
+                    alert('ok')
                 });
     });
 </script>
