@@ -30,6 +30,8 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 <body>
 
@@ -136,28 +138,29 @@
     </div>
 
     <ul class="filterOption">
+        <form method="post" id="formBarGraph" class="table-form">
         <a class="close">x</a>
         <li>
             <div class="form-group">
-                <input type="text" placeholder="Tittle">
+                <input type="text" class="form-control" id="graph-title" name="graph-title">
             </div>
         </li>
 
         <li>
             <div class="form-group">
-                <input type="text" placeholder="X Label">
+                <input type="text" class="form-control" id="horizontal-axis-label" name="horizontal-axis-label">
             </div>
         </li>
 
         <li>
             <div class="form-group">
-                <textarea type="text" placeholder="X Values"></textarea>
+                <textarea style="height: 50px" id="horizontal-data-values" name="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
             </div>
         </li>
 
         <li>
             <div class="form-group">
-                <select>
+                <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
                     <option value="">District</option>
                     <option value="">Taluk</option>
                     <option value="">No. of Acres</option>
@@ -167,7 +170,7 @@
 
         <li>
             <div class="form-group">
-                <select>
+                <select id="vertical-data-type" name="vertical-data-type" class="form-control">
                     <option value="">No. of Acres</option>
                     <option value="">District</option>
                     <option value="">Taluk</option>
@@ -177,16 +180,17 @@
 
         <li>
             <div class="form-group">
-                <textarea type="text" placeholder="V Values"></textarea>
+                <textarea style="height: 50px" id="vertical-data-values" name="vertical-data-values"  class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
             </div>
         </li>
 
         <li>
             <div class="form-group">
-                <input type="text" placeholder="Y label">
+                <input type="text" class="form-control" id="vertical-axis-label" name="vertical-axis-label">
             </div>
         </li>
-            <input type="button" name="btnBarGraph" id="btnBarGraph" class="btn btn-info btn-fill pull-right" value="Create Bar Graph">
+        <input type="button" name="btnBarGraph" id="btnBarGraph" class="btn btn-info btn-fill pull-right" value="Create Bar Graph">
+        </form>
     </ul>
 
     <div class="col-sm-3 addFilter">
@@ -673,7 +677,7 @@
                                 <!--<p class="category">All products including Taxes</p>-->
                             </div>
                             <div class="content">
-                                <div id="chartActivity" class="ct-chart"></div>
+                                <div id="divChart" class="ct-chart"></div>
 
                                 <div class="footer">
                                     <div class="legend">
@@ -868,27 +872,28 @@
 	<script src="/assets/js/bootstrap-checkbox-radio-switch.js"></script>
 
 	<!--  Charts Plugin -->
-	<script src="/assets/js/chartist.min.js"></script>
+	<!--<script src="/assets/js/chartist.min.js"></script>-->
 
     <!--  Notifications Plugin    -->
     <script src="/assets/js/bootstrap-notify.js"></script>
 
     <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+   <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="/assets/js/light-bootstrap-dashboard.js"></script>
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-	<script src="/assets/js/demo.js"></script>
+	<!--<script src="/assets/js/demo.js"></script>-->
 
 <link rel="stylesheet" href="/css/chosen.min.css">
 <script src="/js/chosen.jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 	<script type="text/javascript">
     	$(document).ready(function(){
 
-        	demo.initChartist();
+        	/*demo.initChartist();*/
 
         	/*$.notify({
             	icon: 'pe-7s-gift',
@@ -958,5 +963,36 @@
             });
     	});
 	</script>
+
+
+<script>
+    $('#formBarGraph').on('click', '#btnBarGraph',  function (e) {
+        $.post('/graph/bar', $('#formBarGraph').serialize())
+            .done(function (result) {
+                if(result) {
+                    google.charts.load('current', {packages: ['corechart', 'bar']});
+                    google.charts.setOnLoadCallback(drawBasic);
+                    function drawBasic(){
+                        var data = google.visualization.arrayToDataTable(result.xDataValues);
+                        var options = {
+                            title: result.title/*,
+                             chartArea: {width: '60%'}*/,
+                            hAxis: {
+                                title: result.xLabel,
+                                minValue: 0
+                            },
+                            vAxis: {
+                                title: result.yLabel
+                            },
+                            width: 500,
+                            height: 300
+                        };
+                        var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+                        chart.draw(data, options);
+                    }
+                }
+            });
+    });
+</script>
 
 </html>
