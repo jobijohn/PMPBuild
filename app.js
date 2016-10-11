@@ -59,6 +59,8 @@ function launchApp() {
     app.post('/save/xml', saveXml.saveToXml);
     app.get('/getCharts', saveXml.getCharts);
 
+    app.post('/test123', index.test);
+
     var port = app.get('port') || 1337;
     app.listen(port);
 }
