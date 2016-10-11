@@ -12,6 +12,8 @@ function createJiraIssue(req, res) {
     var taluk = req.param('ap-taluk');
     var taluk = req.param('no-of-acres');*/
 
+    var request = require('request');
+
     var Client = require('node-rest-client').Client;
     var client = new Client();
 
@@ -35,8 +37,6 @@ function createJiraIssue(req, res) {
                     "Content-Type": "application/json"
                 },
                 data: {
-                    // Provide additional data for the JIRA search. You can modify the JQL to search for whatever you want.
-                    //jql: "type=Bug AND status=Closed"
                     fields: {
                         "project":
                         {
@@ -58,7 +58,7 @@ function createJiraIssue(req, res) {
             });
         }
         else {
-            throw "Login failed :(";
+            //throw "Login failed :(";
         }
     });
 
