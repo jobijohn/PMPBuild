@@ -454,18 +454,18 @@
                     <div class="card ">
                         <div class="header">
                             <h4 class="title">Wassan Graph</h4>
-                            <p class="category">All products including Taxes</p>
+                           <!-- <p class="category">All products including Taxes</p>-->
                         </div>
                         <div class="content">
-                            <div id="chartActivity2" class="ct-chart"></div>
+                            <div id="dash-chart" class="ct-chart"></div>
 
 
                         </div>
 
                         <div class="footer">
                             <div class="legend">
-                               <!-- <i class="fa fa-circle text-info"></i> Tesla Model S
-                                <i class="fa fa-circle text-danger"></i> BMW 5 Series-->
+                               <i class="fa fa-circle text-info"></i> Issues / Tasks
+                               <!--  <i class="fa fa-circle text-danger"></i> BMW 5 Series-->
                             </div>
                             <div class="stats">
                                 <div class="">
@@ -542,18 +542,16 @@
                     <div class="card ">
                         <div class="header">
                             <h4 class="title">Wassan Graph</h4>
-                            <p class="category">All products including Taxes</p>
+                            <!--<p class="category">All products including Taxes</p>-->
                         </div>
                         <div class="content">
-                            <div id="chartActivity3" class="ct-chart"></div>
-
-
+                            <div id="dash-chart" class="ct-chart"></div>
                         </div>
 
                         <div class="footer">
                             <div class="legend">
-                               <!-- <i class="fa fa-circle text-info"></i> Tesla Model S
-                                <i class="fa fa-circle text-danger"></i> BMW 5 Series-->
+                                <i class="fa fa-circle text-info"></i> Issues / Tasks
+                               <!-- <i class="fa fa-circle text-danger"></i> BMW 5 Series-->
                             </div>
                             <div class="stats">
                                 <div class="">
@@ -1065,6 +1063,7 @@
                         };
                         var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
                         chart.draw(data, options);
+
                     }
                 }
             });
@@ -1112,10 +1111,6 @@
                             };
                             var chart = new google.charts.Line(document.getElementById('divChart'));
                             chart.draw(data, options);
-
-                            $("#packages").val(JSON.stringify("['line']"));
-                            $("#data").val(JSON.stringify(data));
-                            $("#options").val(JSON.stringify(options));
                         }
                     }
                 });
@@ -1138,12 +1133,7 @@
                             };
 
                             var chart = new google.visualization.PieChart(document.getElementById('divChart'));
-
                             chart.draw(data, options);
-
-                            $("#packages").val(JSON.stringify("['corechart']"));
-                            $("#data").val(JSON.stringify(data));
-                            $("#options").val(JSON.stringify(options));
                         }
                     }
                 });
