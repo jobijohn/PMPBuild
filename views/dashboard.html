@@ -144,13 +144,19 @@
         <form method="post" id="formBarGraph" class="table-form disable">
             <li>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="graph-title" name="graph-title" placeholder="Tittle">
+                    <input type="text" class="form-control" id="graph-title" name="graph-title" placeholder="Enter Tittle">
                 </div>
             </li>
 
             <li>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="horizontal-axis-label" name="horizontal-axis-label" placeholder="X Label">
+                    <input type="text" class="form-control" id="horizontal-axis-label" name="horizontal-axis-label" placeholder="Enter X Label">
+                </div>
+            </li>
+
+            <li>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="vertical-axis-label" name="vertical-axis-label" placeholder="Select Y Label">
                 </div>
             </li>
 
@@ -163,6 +169,7 @@
             <li>
                 <div class="form-group">
                     <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
+                        <option value="">Select X Data</option>
                         <option value="">District</option>
                         <option value="">Taluk</option>
                         <option value="">No. of Acres</option>
@@ -173,6 +180,7 @@
             <li>
                 <div class="form-group">
                     <select id="vertical-data-type" name="vertical-data-type" class="form-control">
+                        <option value="">Select Y Data</option>
                         <option value="">No. of Acres</option>
                         <option value="">District</option>
                         <option value="">Taluk</option>
@@ -186,11 +194,7 @@
                 </div>
             </li>-->
 
-            <li>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="vertical-axis-label" name="vertical-axis-label" placeholder="Y Label">
-                </div>
-            </li>
+
             <input type="button" name="btnBarGraph" id="btnBarGraph" class="btn btn-info btn-fill pull-right createGraphBtn" value="Create Bar Graph">
         </form>
 
@@ -199,12 +203,13 @@
         <form method="post" id="formPieChart" class="table-form disable">
             <li>
                 <div class="form-group">
-                    <input id="graph-title-pie" type="text" class="form-control" placeholder="Tittle">
+                    <input id="graph-title-pie" type="text" class="form-control" placeholder="Enter Tittle">
                 </div>
             </li>
             <li>
                 <div class="form-group">
                     <select class="form-control" id="data-name-pie">
+                        <option value="">Select Data</option>
                         <option value="">District</option>
                         <option value="">Taluk</option>
                         <option value="">No. of Acres</option>
@@ -216,21 +221,22 @@
                     <textarea style="height: 50px" class="form-control" id="data-names-pie">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
                 </div>
             </li>-->
-            <li>
+           <!-- <li>
                 <div class="form-group">
                     <select class="form-control" id="data-value-pie">
+                        <option value="">Select Value</option>
                         <option value="">No. of Acres</option>
                         <option value="">District</option>
                         <option value="">Taluk</option>
                     </select>
                 </div>
-            </li>
+            </li>-->
             <!--<li>
                 <div class="form-group">
                     <textarea style="height: 50px" class="form-control" id="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
                 </div>
             </li>-->
-            <li>
+            <!--<li>
                 <div class="form-group">
                     <select class="form-control" id="slice-text-pie">
                         <option value="">Percentage</option>
@@ -239,7 +245,7 @@
                         <option value="">None</option>
                     </select>
                 </div>
-            </li>
+            </li>-->
             <input type="button" class="btn btn-info btn-fill pull-right createGraphBtn" name="btnPieChart" id="btnPieChart" value="Create Pie Chart">
 
         </form>
@@ -247,22 +253,23 @@
         <form method="post" id="formLineGraph" class="table-form disable">
             <li>
                 <div class="form-group">
-                    <input id="graph-title-line" type="text" class="form-control" placeholder="Tittle">
+                    <input id="graph-title-line" type="text" class="form-control" placeholder="Enter Tittle">
                 </div>
             </li>
             <li>
                 <div class="form-group">
-                    <input id="horizontal-axis-label-line" type="text" class="form-control" placeholder="X Label">
+                    <input id="horizontal-axis-label-line" type="text" class="form-control" placeholder="Enter X Label">
                 </div>
             </li>
             <li>
                 <div class="form-group">
-                    <input id="vertical-axis-label-line" type="text" class="form-control" placeholder="Y Label">
+                    <input id="vertical-axis-label-line" type="text" class="form-control" placeholder="Enter Y Label">
                 </div>
             </li>
             <li>
                 <div class="form-group">
                     <select class="form-control" id="horizontal-data-type-line">
+                        <option value="">Select X Data</option>
                         <option value="">District</option>
                         <option value="">Taluk</option>
                         <option value="">No. of Acres</option>
@@ -277,6 +284,7 @@
             <li>
                 <div class="form-group">
                     <select class="form-control" id="vertical-data-type-line">
+                        <option value="">Select Y Data</option>
                         <option value="">No. of Acres</option>
                         <option value="">District</option>
                         <option value="">Taluk</option>
