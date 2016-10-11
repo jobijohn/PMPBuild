@@ -19,11 +19,18 @@ var consumer = new OAuth(
 
 function indexPage(req, res) {
     var issueJsonFile = 'jiraissues.json';
+    var indexData = {};
     common.readJsonFile(issueJsonFile, function (err, issueData) {
         common.getAllUniqueIssueTypes(issueData, function (err, issueTypes) {
+            indexData.issueTypes = issueTypes;
             common.getAllUniqueDistricts(issueData, function (err, districts) {
+                indexData.districts = districts;
                 common.getAllUniqueTaluks(issueData, function (err, taluks) {
-                    res.render('dashboard', {data:issueTypes, data1:districts, data2:taluks});
+                    indexData.taluks = taluks;
+                    common.getAllIssues(issueData, function (err, allIssues) {
+                        indexData.allIssues = allIssues;
+                        res.render('dashboard', {indexData:indexData});
+                    });
                 });
             });
         });

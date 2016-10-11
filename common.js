@@ -100,7 +100,53 @@ function getAllUniqueTaluks(jsonJiraProject, callback) {
     }
     callback(null, uniqueTaluks);
 }
+
+/**
+ * Function to get all jira issues
+ * @param jsonJiraProject
+ * @param callback
+ */
+function getAllIssues(jsonJiraProject, callback) {
+    var totalJiraIssues = jsonJiraProject.total;
+    var issuesselectedFields = [];
+    for(var i=0 ; i<totalJiraIssues ; i++){
+        var issue = {};
+        issue.issueType = jsonJiraProject.issues[i].fields.issuetype.name;
+        issue.summary = jsonJiraProject.issues[i].fields.summary;
+        issue.created = jsonJiraProject.issues[i].fields.created;
+        if(jsonJiraProject.issues[i].fields.customfield_10400) {
+            issue.district = jsonJiraProject.issues[i].fields.customfield_10400.value;
+        } else {
+            issue.district = "";
+        }
+        if(jsonJiraProject.issues[i].fields.customfield_10401) {
+            issue.taluk = jsonJiraProject.issues[i].fields.customfield_10401.value;
+        } else {
+            issue.taluk = "";
+        }
+        issue.status = jsonJiraProject.issues[i].fields.status.name;
+        if(jsonJiraProject.issues[i].fields.customfield_10404) {
+            issue.seedName = jsonJiraProject.issues[i].fields.customfield_10404.value
+            ;
+        } else {
+            issue.seedName = "";
+        }
+        if(jsonJiraProject.issues[i].fields.customfield_10405) {
+            issue.seedquantity = jsonJiraProject.issues[i].fields.customfield_10405;
+        } else {
+            issue.seedQuantity = 0;
+        }
+        if(jsonJiraProject.issues[i].fields.customfield_10402) {
+            issue.customer = jsonJiraProject.issues[i].fields.customfield_10402;
+        } else {
+            issue.customer=""
+        }
+        issuesselectedFields.push(issue);
+    }
+    callback(null, issuesselectedFields);
+}
 exports.readJsonFile = readJsonFile;
 exports.getAllUniqueIssueTypes = getAllUniqueIssueTypes;
 exports.getAllUniqueDistricts = getAllUniqueDistricts;
 exports.getAllUniqueTaluks = getAllUniqueTaluks;
+exports.getAllIssues = getAllIssues;
