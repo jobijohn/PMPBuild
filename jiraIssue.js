@@ -38,11 +38,11 @@ function createJiraIssue(req, res) {
                 },
                 data: {
                     fields: {
-                        "project":
+                        project:
                         {
                             "id": "10000"
                         },
-                        "Summary": "Chittoor",
+                        summary: "Chittoor",
 
                         "issuetype": {
                             "id": "10002"
@@ -61,6 +61,35 @@ function createJiraIssue(req, res) {
             //throw "Login failed :(";
         }
     });
+/*
+
+    var jira = require('jira-api');
+
+    var options = {
+        config: {
+            "username": "jobikjohn",
+            "passowrd": "jkjjkj",
+            "host": "https://swarmact.atlassian.net/rest/api/2/issue"
+        },
+        data: {
+            fields: {
+                project: {
+                    id: "10000"
+                },
+                summary: "A short summary of the issue",
+                description: "A more elaborate decription of the issue",
+                issuetype: {
+                    id: "10002"
+                }
+            }
+        }
+    };
+
+    jira.issue.post(options, function(response) {
+        console.log(JSON.stringify(response, null, 4));
+    });
+*/
+
 
     return res.json({
         success : 'success'
