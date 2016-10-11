@@ -3629,8 +3629,11 @@ ul.filterOption li select option {
     outline: 0;
     box-shadow: none;
 }
+.sidebar .logo {
+    padding: 6px 15px;
+}
 .sidebar .logo .simple-text {
-    font-size: 34px;
+    font-size: 24px;
     padding: 0;
     line-height: 16px;
     font-weight: 700;
@@ -3647,12 +3650,28 @@ ul.filterOption li select option {
 .settings-panel .card .ct-chart {
     height: 160px;
 }
+.navbar>.container-fluid .navbar-brand {
+    margin-left:-15;
+    margin-right: 15px;
+}
 .navbar .navbar-brand {
     font-size: 16px;
     margin: 0;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
-.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
-    background: deepskyblue;
+.navbar-default, .navbar-default  {
+    background: #fff;
+}
+.navbar-brand:focus {
+    background: deepskyblue !important;
+    color: #fff !important;
+}
+.navbar-brand:hover {
+    background: lightskyblue !important;
 }
 .navbar-brand {
     padding: 0;
@@ -3662,6 +3681,7 @@ ul.filterOption li select option {
 }
 .navbar-brand.selected {
     background: deepskyblue;
+    color: #fff;
 }
 
 /* scroll bar */
@@ -3689,5 +3709,54 @@ ul.filterOption li select option {
 .dataTable {
     font-size: 12px;
 }
+
+/* custom select box */
+
+/* custom select box end */
+.pT0 {
+    padding-top: 0 !important;;
+}
+.full-color-heder {
+    background: rgb(29, 199, 234);
+    margin-bottom: 10px;
+    color: #000;
+}
+.full-color-heder h4 {
+    color: #fff !important;
+    font-weight: 400 !important;;
+    font-size: 18px !important;;
+    line-height: 14px !important;;
+}
+.newGraphBtn {
+    padding: 0;
+    margin: 0;
+}
+.newGraphBtn .btn-info.btn-fill {
+    border: 0;
+    background: none;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+.newGraphBtn .btn-info.btn-fill:hover {
+    color: deepskyblue;
+}
+.p0 {
+    padding: 0 !important;
+}
+.m0 {
+    margin: 0 !important;
+}
+.pL0 {
+    padding-left: 0;
+}
+.saveDashboardInput input {
+    padding: 9px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+
+}
+
+
 
 
