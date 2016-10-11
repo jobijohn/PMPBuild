@@ -116,7 +116,7 @@ function getJsonFromJira(req, res) {
 }
 
 function test (req, res){
-    var tst = req.param('test'); console.log('tst');
+    var tst = req.param('test'); console.log(tst);
     return res.json({
         success : 'success'
     });
