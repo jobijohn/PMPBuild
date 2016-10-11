@@ -82,7 +82,7 @@
                 <li>
                     <div class="form-group">
                         <select id="graph-type">
-                            <option value="bar">- Select Graph Type -</option>
+                            <option value="">- Select Graph Type -</option>
                             <option value="bar">Bar Graph</option>
                             <option value="line">Line Graph</option>
                             <option value="pie">Pie Chart</option>
@@ -144,21 +144,21 @@
         <form method="post" id="formBarGraph" class="table-form disable">
             <li>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="graph-title" name="graph-title">
+                    <input type="text" class="form-control" id="graph-title" name="graph-title" placeholder="Tittle">
                 </div>
             </li>
 
             <li>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="horizontal-axis-label" name="horizontal-axis-label">
+                    <input type="text" class="form-control" id="horizontal-axis-label" name="horizontal-axis-label" placeholder="X Label">
                 </div>
             </li>
 
-            <li>
+            <!--<li>
                 <div class="form-group">
                     <textarea style="height: 50px" id="horizontal-data-values" name="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
                 </div>
-            </li>
+            </li>-->
 
             <li>
                 <div class="form-group">
@@ -180,18 +180,18 @@
                 </div>
             </li>
 
-            <li>
+            <!--<li>
                 <div class="form-group">
                     <textarea style="height: 50px" id="vertical-data-values" name="vertical-data-values"  class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
                 </div>
-            </li>
+            </li>-->
 
             <li>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="vertical-axis-label" name="vertical-axis-label">
+                    <input type="text" class="form-control" id="vertical-axis-label" name="vertical-axis-label" placeholder="Y Label">
                 </div>
             </li>
-            <input type="button" name="btnBarGraph" id="btnBarGraph" class="btn btn-info btn-fill pull-right" value="Create Bar Graph">
+            <input type="button" name="btnBarGraph" id="btnBarGraph" class="btn btn-info btn-fill pull-right createGraphBtn" value="Create Bar Graph">
         </form>
 
 
@@ -199,7 +199,7 @@
         <form method="post" id="formPieChart" class="table-form disable">
             <li>
                 <div class="form-group">
-                    <input id="graph-title-pie" type="text" class="form-control">
+                    <input id="graph-title-pie" type="text" class="form-control" placeholder="Tittle">
                 </div>
             </li>
             <li>
@@ -211,11 +211,11 @@
                     </select>
                 </div>
             </li>
-            <li>
+            <!--<li>
                 <div class="form-group">
                     <textarea style="height: 50px" class="form-control" id="data-names-pie">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
                 </div>
-            </li>
+            </li>-->
             <li>
                 <div class="form-group">
                     <select class="form-control" id="data-value-pie">
@@ -225,11 +225,11 @@
                     </select>
                 </div>
             </li>
-            <li>
+            <!--<li>
                 <div class="form-group">
                     <textarea style="height: 50px" class="form-control" id="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
                 </div>
-            </li>
+            </li>-->
             <li>
                 <div class="form-group">
                     <select class="form-control" id="slice-text-pie">
@@ -240,24 +240,24 @@
                     </select>
                 </div>
             </li>
-            <input type="button" class="btn btn-info btn-fill pull-right" name="btnPieChart" id="btnPieChart" value="Create Pie Chart">
+            <input type="button" class="btn btn-info btn-fill pull-right createGraphBtn" name="btnPieChart" id="btnPieChart" value="Create Pie Chart">
 
         </form>
 
         <form method="post" id="formLineGraph" class="table-form disable">
             <li>
                 <div class="form-group">
-                    <input id="graph-title-line" type="text" class="form-control">
+                    <input id="graph-title-line" type="text" class="form-control" placeholder="Tittle">
                 </div>
             </li>
             <li>
                 <div class="form-group">
-                    <input id="horizontal-axis-label-line" type="text" class="form-control">
+                    <input id="horizontal-axis-label-line" type="text" class="form-control" placeholder="X Label">
                 </div>
             </li>
             <li>
                 <div class="form-group">
-                    <input id="vertical-axis-label-line" type="text" class="form-control">
+                    <input id="vertical-axis-label-line" type="text" class="form-control" placeholder="Y Label">
                 </div>
             </li>
             <li>
@@ -269,11 +269,11 @@
                     </select>
                 </div>
             </li>
-            <li>
+            <!--<li>
                 <div class="form-group">
                     <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
                 </div>
-            </li>
+            </li>-->
             <li>
                 <div class="form-group">
                     <select class="form-control" id="vertical-data-type-line">
@@ -283,12 +283,12 @@
                     </select>
                 </div>
             </li>
-            <li>
+            <!--<li>
                 <div class="form-group">
                     <textarea style="height: 50px" class="form-control" id="vertical-data-values-line">50&#13;&#10;100&#13;&#10;150</textarea>
                 </div>
-            </li>
-            <input type="button" class="btn btn-info btn-fill pull-right" name="btnLineGraph" id="btnLineGraph" value="Create Line Graph">
+            </li>-->
+            <input type="button" class="btn btn-info btn-fill pull-right createGraphBtn" name="btnLineGraph" id="btnLineGraph" value="Create Line Graph">
         </form>
     </ul>
 
@@ -982,7 +982,11 @@
                     $('#formLineGraph').removeClass('disable');
                     $('#formBarGraph').addClass('disable');
                     $('#formPieChart').addClass('disable');
-                } else {
+                }else if(value === ''){
+                    $('.filterOption').removeClass('visible');
+                    return false;
+                }
+                else {
                     $('#formPieChart').removeClass('disable');
                     $('#formLineGraph').addClass('disable');
                     $('#formBarGraph').addClass('disable');
@@ -990,6 +994,9 @@
                 $('.filterOption').addClass('visible');
             });
             $('.close').on('click', function(){
+                $('.filterOption').removeClass('visible');
+            });
+            $('.createGraphBtn').click(function(){
                 $('.filterOption').removeClass('visible');
             });
 
