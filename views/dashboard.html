@@ -138,192 +138,156 @@
     </div>
 
     <ul class="filterOption">
-        <form method="post" id="formBarGraph" class="table-form">
+
         <a class="close">x</a>
-        <li>
-            <div class="form-group">
-                <input type="text" class="form-control" id="graph-title" name="graph-title">
-            </div>
-        </li>
+        <form method="post" id="formBarGraph" class="table-form disable">
+            <li>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="graph-title" name="graph-title">
+                </div>
+            </li>
 
-        <li>
-            <div class="form-group">
-                <input type="text" class="form-control" id="horizontal-axis-label" name="horizontal-axis-label">
-            </div>
-        </li>
+            <li>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="horizontal-axis-label" name="horizontal-axis-label">
+                </div>
+            </li>
 
-        <li>
-            <div class="form-group">
-                <textarea style="height: 50px" id="horizontal-data-values" name="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
-            </div>
-        </li>
+            <li>
+                <div class="form-group">
+                    <textarea style="height: 50px" id="horizontal-data-values" name="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                </div>
+            </li>
 
-        <li>
-            <div class="form-group">
-                <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
-                    <option value="">District</option>
-                    <option value="">Taluk</option>
-                    <option value="">No. of Acres</option>
-                </select>
-            </div>
-        </li>
+            <li>
+                <div class="form-group">
+                    <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                        <option value="">No. of Acres</option>
+                    </select>
+                </div>
+            </li>
 
-        <li>
-            <div class="form-group">
-                <select id="vertical-data-type" name="vertical-data-type" class="form-control">
-                    <option value="">No. of Acres</option>
-                    <option value="">District</option>
-                    <option value="">Taluk</option>
-                </select>
-            </div>
-        </li>
+            <li>
+                <div class="form-group">
+                    <select id="vertical-data-type" name="vertical-data-type" class="form-control">
+                        <option value="">No. of Acres</option>
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                    </select>
+                </div>
+            </li>
 
-        <li>
-            <div class="form-group">
-                <textarea style="height: 50px" id="vertical-data-values" name="vertical-data-values"  class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
-            </div>
-        </li>
+            <li>
+                <div class="form-group">
+                    <textarea style="height: 50px" id="vertical-data-values" name="vertical-data-values"  class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
+                </div>
+            </li>
 
-        <li>
-            <div class="form-group">
-                <input type="text" class="form-control" id="vertical-axis-label" name="vertical-axis-label">
-            </div>
-        </li>
-        <input type="button" name="btnBarGraph" id="btnBarGraph" class="btn btn-info btn-fill pull-right" value="Create Bar Graph">
+            <li>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="vertical-axis-label" name="vertical-axis-label">
+                </div>
+            </li>
+            <input type="button" name="btnBarGraph" id="btnBarGraph" class="btn btn-info btn-fill pull-right" value="Create Bar Graph">
         </form>
 
-        <form method="post" id="formLineGraph" class="table-form">
 
-            <form method="post" id="formPieChart" class="table-form">
-                <div class="col-sm-12">
-                    <label for="graph-title-pie" class="control-label col-sm-2 custom-width">Title:</label>
-                    <div class="col-sm-5 p0">
-                        <input id="graph-title-pie" type="text" class="form-control">
-                    </div>
+
+        <form method="post" id="formPieChart" class="table-form disable">
+            <li>
+                <div class="form-group">
+                    <input id="graph-title-pie" type="text" class="form-control">
                 </div>
-                <div class="col-sm-12" style="height: 8px"></div>
-                <div class="col-sm-6 form-horizontal pR0">
-
-
-                    <div class="form-group">
-                        <label for="data-name-pie" class="control-label col-sm-2">Data name:</label>
-                        <div class="col-sm-10 p0">
-                            <select class="form-control" id="data-name-pie">
-                                <option value="">District</option>
-                                <option value="">Taluk</option>
-                                <option value="">No. of Acres</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="data-names-pie" class="control-label col-sm-2">Data Names:</label>
-                        <div class="col-sm-10 p0">
-                            <textarea style="height: 50px" class="form-control" id="data-names-pie">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
-                        </div>
-                    </div>
-
+            </li>
+            <li>
+                <div class="form-group">
+                    <select class="form-control" id="data-name-pie">
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                        <option value="">No. of Acres</option>
+                    </select>
                 </div>
-                <div class="col-sm-6 form-horizontal">
-
-                    <div class="form-group">
-                        <label for="data-value-pie" class="control-label col-sm-2">Data Value:</label>
-                        <div class="col-sm-10 p0">
-                            <select class="form-control" id="data-value-pie">
-                                <option value="">No. of Acres</option>
-                                <option value="">District</option>
-                                <option value="">Taluk</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="data-values-pie" class="control-label col-sm-2">Data Values:</label>
-                        <div class="col-sm-10 p0">
-                            <textarea style="height: 50px" class="form-control" id="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="slice-text-pie" class="control-label col-sm-2">Slice Text:</label>
-                        <div class="col-sm-10 p0">
-                            <select class="form-control" id="slice-text-pie">
-                                <option value="">Percentage</option>
-                                <option value="">Names</option>
-                                <option value="">Values</option>
-                                <option value="">None</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group add-filter-btn col-sm-5 pull-right">
-                        <input type="button" name="btnPieChart" id="btnPieChart" value="Create Pie Chart">
-                    </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <textarea style="height: 50px" class="form-control" id="data-names-pie">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
                 </div>
-            </form>
+            </li>
+            <li>
+                <div class="form-group">
+                    <select class="form-control" id="data-value-pie">
+                        <option value="">No. of Acres</option>
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                    </select>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <textarea style="height: 50px" class="form-control" id="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <select class="form-control" id="slice-text-pie">
+                        <option value="">Percentage</option>
+                        <option value="">Names</option>
+                        <option value="">Values</option>
+                        <option value="">None</option>
+                    </select>
+                </div>
+            </li>
+            <input type="button" class="btn btn-info btn-fill pull-right" name="btnPieChart" id="btnPieChart" value="Create Pie Chart">
 
-            <div class="col-sm-12">
-                <label for="graph-title-line" class="control-label col-sm-2 custom-width">Title:</label>
-                <div class="col-sm-5 p0">
+        </form>
+
+        <form method="post" id="formLineGraph" class="table-form disable">
+            <li>
+                <div class="form-group">
                     <input id="graph-title-line" type="text" class="form-control">
                 </div>
-            </div>
-            <div class="col-sm-12" style="height: 8px;"></div>
-            <div class="col-sm-6 form-horizontal pR0">
+            </li>
+            <li>
                 <div class="form-group">
-                    <label for="horizontal-axis-label" class="control-label col-sm-2">x Label:</label>
-                    <div class="col-sm-10 p0">
-                        <input id="horizontal-axis-label-line" type="text" class="form-control">
-                    </div>
+                    <input id="horizontal-axis-label-line" type="text" class="form-control">
                 </div>
-
+            </li>
+            <li>
                 <div class="form-group">
-                    <label for="vertical-axis-label-line" class="control-label col-sm-2">y Label:</label>
-                    <div class="col-sm-10 p0">
-                        <input id="vertical-axis-label-line" type="text" class="form-control">
-                    </div>
+                    <input id="vertical-axis-label-line" type="text" class="form-control">
                 </div>
-
+            </li>
+            <li>
                 <div class="form-group">
-                    <label for="horizontal-data-type-line" class="control-label col-sm-2">x Data:</label>
-                    <div class="col-sm-10 p0">
-                        <select class="form-control" id="horizontal-data-type-line">
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                            <option value="">No. of Acres</option>
-                        </select>
-                    </div>
+                    <select class="form-control" id="horizontal-data-type-line">
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                        <option value="">No. of Acres</option>
+                    </select>
                 </div>
-            </div>
-            <div class="col-sm-6 form-horizontal">
+            </li>
+            <li>
                 <div class="form-group">
-                    <label for="horizontal-data-values-line" class="control-label col-sm-2">x Values:</label>
-                    <div class="col-sm-10 p0">
-                        <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
-                    </div>
+                    <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
                 </div>
-
+            </li>
+            <li>
                 <div class="form-group">
-                    <label for="vertical-data-type-line" class="control-label col-sm-2">v Data:</label>
-                    <div class="col-sm-10 p0">
-                        <select class="form-control" id="vertical-data-type-line">
-                            <option value="">No. of Acres</option>
-                            <option value="">District</option>
-                            <option value="">Taluk</option>
-                        </select>
-                    </div>
+                    <select class="form-control" id="vertical-data-type-line">
+                        <option value="">No. of Acres</option>
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                    </select>
                 </div>
-
+            </li>
+            <li>
                 <div class="form-group">
-                    <label for="vertical-data-values-line" class="control-label col-sm-2">v Values:</label>
-                    <div class="col-sm-10 p0">
-                        <textarea style="height: 50px" class="form-control" id="vertical-data-values-line">50&#13;&#10;100&#13;&#10;150</textarea>
-                    </div>
+                    <textarea style="height: 50px" class="form-control" id="vertical-data-values-line">50&#13;&#10;100&#13;&#10;150</textarea>
                 </div>
-                <div class="form-group add-filter-btn col-sm-5 pull-right">
-                    <input type="button" name="btnLineGraph" id="btnLineGraph" value="Create Line Graph">
-                </div>
-            </div>
+            </li>
+            <input type="button" class="btn btn-info btn-fill pull-right" name="btnLineGraph" id="btnLineGraph" value="Create Line Graph">
         </form>
     </ul>
 
@@ -1002,6 +966,26 @@
             });
 
             $('#graph-type').on('change', function(){
+                var value = $(this).val();
+                if($('.table-form').hasClass('disable')){
+                    //do nothing
+                } else {
+                    $('.table-form').addClass('disable');
+                }
+
+                if(value === 'bar') {
+                    $('#formBarGraph').removeClass('disable');
+                    $('#formLineGraph').addClass('disable');
+                    $('#formPieChart').addClass('disable');
+                } else if(value === 'line') {
+                    $('#formLineGraph').removeClass('disable');
+                    $('#formBarGraph').addClass('disable');
+                    $('#formPieChart').addClass('disable');
+                } else {
+                    $('#formPieChart').removeClass('disable');
+                    $('#formLineGraph').addClass('disable');
+                    $('#formBarGraph').addClass('disable');
+                }
                 $('.filterOption').addClass('visible');
             });
             $('.close').on('click', function(){
