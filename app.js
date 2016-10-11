@@ -59,7 +59,7 @@ function launchApp() {
     app.post('/save/xml', saveXml.saveToXml);
     app.get('/getCharts', saveXml.getCharts);
 
-    app.post('/test123', index.test);
+    app.post('/filter-issues', index.filterIssues);
 
     var port = app.get('port') || 1337;
     app.listen(port);

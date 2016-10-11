@@ -115,10 +115,63 @@ function getJsonFromJira(req, res) {
         callback);
 }
 
-function test (req, res){
-    var tst = req.param('test'); console.log(tst);
-    return res.json({
-        success : 'success'
+function filterIssues (req, res){
+    var district = req.param('district');
+    console.log('New Districts',district);
+    var taluk = req.param('taluk');
+    var issuetype = req.param('issuetype');
+    var acres = req.param('acres');
+    //-------------------------------
+    var districtFilter = "(e.fields.customfield_10400 != null)&&(";
+    for(i=0;i<district.length;i++) {
+        if (i != district.length - 1) {
+            districtFilter += 'e.fields.customfield_10400.value == "'+ district[i] + '"||';
+        } else {
+            districtFilter += 'e.fields.customfield_10400.value == "'+ district[i] + '")';
+        }
+    }
+    //--------------------------------
+    console.log('district filter', districtFilter);
+    //--------------------------------
+    var talukFilter = "(e.fields.customfield_10401 != null &&  (";
+    for(i=0;i<taluk.length;i++) {
+        if (i != taluk.length - 1) {
+            talukFilter += 'e.fields.customfield_10401.value == "'+ taluk[i] + '"||';
+        } else {
+            talukFilter += 'e.fields.customfield_10401.value == "'+ taluk[i] + '"))';
+        }
+    }
+
+    //--------------------------------
+    console.log('taluk filter', talukFilter);
+    //--------------------------------
+    var issuetypeFilter = "e.fields.issuetype.name == '"+ issuetype +"'";
+    //--------------------------------
+    console.log('issuetypeFilter', issuetypeFilter);
+    //--------------------------------
+    var acreFilter = "(e.fields.customfield_10403 != null)&&(";
+    for(i=0;i<acres.length;i++) {
+        if (i != acres.length - 1) {
+            acreFilter += 'e.fields.customfield_10403'+ acres[i] + '||';
+        } else {
+            acreFilter += 'e.fields.customfield_10403'+ acres[i] + ')';
+        }
+    }
+    //--------------------------------
+    console.log('acre filter', acreFilter);
+    var issueJsonFile = 'jiraissues.json';
+    common.readJsonFile(issueJsonFile, function (err, issueData) {
+        var issues = issueData.issues;
+        var filteredIssues = issues.filter(function (e) {
+            return eval(issuetypeFilter) &&
+                eval(districtFilter) &&
+                eval(talukFilter) &&
+                eval(acreFilter);
+        });
+        console.log('filtered issues', JSON.stringify(filteredIssues));
+        return res.json({
+            success : 'success'
+        });
     });
 }
 
@@ -126,4 +179,4 @@ exports.indexPage = indexPage;
 exports.getOAuth = getOAuth;
 exports.getOAuthCallback = getOAuthCallback;
 exports.getJsonFromJira = getJsonFromJira;
-exports.test = test;
+exports.filterIssues = filterIssues;

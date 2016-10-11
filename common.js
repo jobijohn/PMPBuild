@@ -59,8 +59,8 @@ function getAllUniqueDistricts(jsonJiraProject, callback) {
     totalJiraIssues = jsonJiraProject.total;
 
     for (var i = 0; i < totalJiraIssues; i++) {
-        if(jsonJiraProject.issues[i].fields.customfield_10301) {
-            districts.push(jsonJiraProject.issues[i].fields.customfield_10301.value);
+        if(jsonJiraProject.issues[i].fields.customfield_10400) {
+            districts.push(jsonJiraProject.issues[i].fields.customfield_10400.value);
         }
     }
 
@@ -86,8 +86,8 @@ function getAllUniqueTaluks(jsonJiraProject, callback) {
     totalJiraIssues = jsonJiraProject.total;
 
     for (var i = 0; i < totalJiraIssues; i++) {
-        if(jsonJiraProject.issues[i].fields.customfield_10302) {
-            taluks.push(jsonJiraProject.issues[i].fields.customfield_10302.value);
+        if(jsonJiraProject.issues[i].fields.customfield_10401) {
+            taluks.push(jsonJiraProject.issues[i].fields.customfield_10401.value);
         }
     }
 

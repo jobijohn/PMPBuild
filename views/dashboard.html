@@ -34,7 +34,9 @@
 
 </head>
 <body>
-
+<input type="hidden" name="districtFilters" id="districtFilters">
+<input type="hidden" name="talukFilters" id="talukFilters">
+<input type="hidden" name="acreFilters" id="acreFilters">
 <div class="wrapper">
     <div class="sidebar" data-color="purple" data-image="img/sidebar-5.jpg">
 
@@ -63,17 +65,17 @@
                 <li class="">
                     <div class="form-group">
                         <label>New Issue Filter</label>
-                        <select>
+                        <select name="issuetype" class="" id="issuetype" >
                             <option value="">-- Select Issue Type --</option>
-                            {{#data}}
+                            {{#indexData.issueTypes}}
                             <option value="{{issuetype}}">{{issuetype}}</option>
-                            {{/data}}
+                            {{/indexData.issueTypes}}
                         </select>
                     </div>
                 </li>
 
                 <li class="">
-                    <a class="addFilterBtn">
+                    <a class="addFilterBtn" id="filter-Add">
                         <i class="pe-7s-plus"></i>
                         <p>Add Filter</p>
                     </a>
@@ -314,9 +316,9 @@
                 <div class="col-sm-12 mT15">
                     <select data-placeholder="Select Districts" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
                         <option value=""></option>
-                        {{#data1}}
+                        {{#indexData.districts}}
                         <option value="{{districts}}">{{districts}}</option>
-                        {{/data1}}
+                        {{/indexData.districts}}
                     </select>
                 </div>
                 <div class="col-sm-12">
@@ -333,9 +335,9 @@
                 <div class="col-sm-12 mT15">
                     <select data-placeholder="Select Taluks" name="taluk" class="chosen-select" multiple style="width: 100%;" id="taluk">
                         <option value=""></option>
-                        {{#data2}}
+                        {{#indexData.taluks}}
                         <option value="{{taluks}}">{{taluks}}</option>
-                        {{/data2}}
+                        {{/indexData.taluks}}
                     </select>
                 </div>
 
@@ -1011,9 +1013,7 @@
 
 
 
-            $('.addFilterBtn').click(function(){
-                $('.addFilter').addClass('active')
-            });
+            
             $('.close').click(function(){
                 $('.addFilter').removeClass('active')
             });
@@ -1151,14 +1151,81 @@
 </script>
 
 <script>
-    $('#test-button').click(function() {
-        var test = $("#filters").val();alert(test);
+//    $('#issuetype').on('change', function () {
+//        var selectVal = $("#issuetype option:selected").val();
+//    });
 
-        $.post('/test123', { test: test })
+    $('#filter-Add').click(function () {
+        var selectVal = $("#issuetype option:selected").val();
+        if(selectVal) {
+            $('.addFilter').addClass('active');
+        } else {
+            alert('Please select issue type');
+        }
+    });
+
+    $('#addDistrict').click(function () {
+        var _district = $("#district").val();
+        if(_district) {
+            var districtFilters = $('#districtFilters').val();
+            if(districtFilters){
+                $('#districtFilters').val($('#districtFilters').val() + ',' + _district);
+            } else {
+                $('#districtFilters').val(_district);
+            }
+        }
+    });
+    $('#addTaluk').click(function () {
+        var _taluk = $("#taluk").val();
+        if(_taluk) {
+            var talukFilters = $('#talukFilters').val();
+            if(talukFilters){
+                $('#talukFilters').val($('#talukFilters').val() + ',' + _taluk);
+            } else {
+                $('#talukFilters').val(_taluk);
+            }
+        }
+    });
+
+    $('#addAcreSingle').click(function () {
+        var _acreSymbol = $("#acreSymbol").val();
+        var _acreValue = $("#acreValue").val();
+        var _acre = _acreSymbol + _acreValue;
+        var lblAcreValuesOld = $('#lblAcreValues').text();
+        if(lblAcreValuesOld) {
+            $('#lblAcreValues').text(lblAcreValuesOld + ',' + _acre);
+        } else {
+            $('#lblAcreValues').text(_acre);
+        }
+        $("#acreValue").val("");
+    });
+
+    $('#addAcre').click(function () {
+        if ($('#lblAcreValues').text()) {
+            var acreFilters = $('#acreFilters').val();
+            if (acreFilters) {
+                $('#acreFilters').val($('#acreFilters').val() + ',' + $('#lblAcreValues').text());
+            } else {
+                $('#acreFilters').val($('#lblAcreValues').text());
+            }
+        }
+    });
+
+    $('#test-button').click(function() {
+        var district = $('#districtFilters').val().split(',');
+        var taluk = $('#talukFilters').val().split(',');
+        var issuetype = $('#issuetype').val();
+        var acres = $('#acreFilters').val().split(',');
+        $.post('/filter-issues', { issuetype:issuetype,
+                                    district: district,
+                                    taluk:taluk,
+                                    acres:acres})
                 .done(function (result) {
                     alert('ok')
                 });
     });
+
+
 </script>
 
 </html>
