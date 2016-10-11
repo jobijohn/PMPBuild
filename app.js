@@ -53,7 +53,8 @@ function launchApp() {
     app.post('/graph/line', graph.generateLineGraph);
     app.post('/chart/pie', graph.generatePieChart);
 
-    app.get('/jira/issue/create', jiraIssue.createJiraIssue);
+    app.get('/jira/issue/create', jiraIssue.renderForm);
+    app.post('/CreateIssue', jiraIssue.createJiraIssue);
     app.post('/save/xml', saveXml.saveToXml);
     app.get('/getCharts', saveXml.getCharts);
 
