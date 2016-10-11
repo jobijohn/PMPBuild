@@ -3686,5 +3686,8 @@ ul.filterOption li select option {
     color-stop(.5, transparent), to(transparent));
 }
 /* custom scroll bar end */
+.dataTable {
+    font-size: 12px;
+}
 
 
