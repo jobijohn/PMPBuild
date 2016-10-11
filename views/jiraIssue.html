@@ -6,68 +6,76 @@
 </head>
 <body>
 <h2>Create Task/Issue</h2>
-<table>
-    <tr>
-        <td>Issue Type</td>
-        <td><select>
-            <option value="">Member on-boarding</option>
-            <option value="">Seed Distribution</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>Summary</td>
-        <td>
+<form method="post" id="form-create-task" class="form-create-task">
+    <table>
+        <tr>
+            <td>Issue Type</td>
+            <td>
+                <select id="ap-issue-type" name="ap-issue-type">
+                    <option value="member-on-boarding">Member On-boarding</option>
+                    <option value="seed-distribution">Seed Distribution</option>
+                </select>
+            </td>
+        </tr>
 
-           <textarea></textarea>
+        <tr>
+            <td>District</td>
+            <td>
+                <select id="ap-district" name="ap-district">
+                    <option value="Adilabad">Adilabad</option>
+                    <option value="Anantapur">Anantapur</option>
+                    <option value="Chittoor">Chittoor</option>
+                    <option value="Cuddappah">Cuddappah</option>
+                    <option value="Guntur">Guntur</option>
+                    <option value="Karimnagar">Karimnagar</option>
+                    <option value="Karimnagar">Karimnagar</option>
+                    <option value="Krishna">Krishna</option>
+                    <option value="Kurnool">Kurnool</option>
+                    <option value="Mahaboob">Mahaboob</option>
+                    <option value="Medak">Medak</option>
+                </select>
 
-        </td>
-    </tr>
-    <tr>
-        <td>Name</td>
-        <td>
-
+            </td>
+        </tr>
+        <tr>
+            <td>Taluk</td>
+            <td id="ap-taluk" name="ap-taluk">
                 <input type="text"/>
-
-        </td>
-    </tr>
-    <tr>
-        <td>District</td>
-        <td>
-
-            <select>
-                <option value="">Chittor</option>
-                <option value="">Godavari</option>
-            </select>
-
-        </td>
-    </tr>
-    <tr>
-        <td>Taluk</td>
-        <td>
-
-            <select>
-                <option value="">sdfds</option>
-                <option value="">sdfsd</option>
-            </select>
-
-        </td>
-    </tr>
-    <tr>
-        <td>Acres</td>
-        <td>
-            <input type="text"/>
-
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>
-            <button>Create</button>
-
-        </td>
-    </tr>
-</table>
+            </td>
+        </tr>
+        <tr>
+            <td>Acres</td>
+            <td>
+                <input type="text" id="no-of-acres" name="no-of-acres"/>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button id="btn-create-task" name="btn-create-task">Create</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label id="display-msg"></label>
+            </td>
+        </tr>
+    </table>
+</form>
 
 </body>
 </html>
+
+
+<script>
+    $('#form-create-task').on('click', '#btn-create-task',  function (e) {
+        $.post('/CreateIssue', $('#form-create-task').serialize())
+                .done(function (result) {
+                    if(result) {
+                        $("#display-msg").val = "SUCCESS"
+                    } else {
+                        $("#display-msg").val = "FAILED"
+                    }
+                });
+    });
+</script>

@@ -7,6 +7,15 @@ var fs = require('fs'),
     graph = require('./graph');
 
 var base_url = "https://swarmact.atlassian.net"; //example https://test.atlassian.net
+var consumer = new OAuth(
+        base_url+"/plugins/servlet/oauth/request-token",
+        base_url+"/plugins/servlet/oauth/access-token",
+    "PMPBuildKey",
+    fs.readFileSync('jira.pem', 'utf8'), //consumer secret, eg. fs.readFileSync('jira.pem', 'utf8')
+    '1.0',
+    "http://localhost:1337/jira/callback",
+    "RSA-SHA1"
+);
 
 function indexPage(req, res) {
     var issueJsonFile = 'jiraissues.json';
@@ -77,7 +86,7 @@ function getOAuthCallback (req, res) {
 }
 
 function getJsonFromJira(req, res) {
-    var consumer = new OAuth(
+    /*var consumer = new OAuth(
         base_url+"/plugins/servlet/oauth/request-token",
         base_url+"/plugins/servlet/oauth/access-token",
         "PMPBuildKey",
@@ -85,7 +94,7 @@ function getJsonFromJira(req, res) {
         '1.0',
         "http://localhost:1337/jira/callback",
         "RSA-SHA1"
-    );
+    );*/
 
     function callback(error, data, resp) {
         fs.writeFile('jiraissues.json',data, function (err) {
