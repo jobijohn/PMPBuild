@@ -191,6 +191,140 @@
         </li>
         <input type="button" name="btnBarGraph" id="btnBarGraph" class="btn btn-info btn-fill pull-right" value="Create Bar Graph">
         </form>
+
+        <form method="post" id="formLineGraph" class="table-form">
+
+            <form method="post" id="formPieChart" class="table-form">
+                <div class="col-sm-12">
+                    <label for="graph-title-pie" class="control-label col-sm-2 custom-width">Title:</label>
+                    <div class="col-sm-5 p0">
+                        <input id="graph-title-pie" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-sm-12" style="height: 8px"></div>
+                <div class="col-sm-6 form-horizontal pR0">
+
+
+                    <div class="form-group">
+                        <label for="data-name-pie" class="control-label col-sm-2">Data name:</label>
+                        <div class="col-sm-10 p0">
+                            <select class="form-control" id="data-name-pie">
+                                <option value="">District</option>
+                                <option value="">Taluk</option>
+                                <option value="">No. of Acres</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="data-names-pie" class="control-label col-sm-2">Data Names:</label>
+                        <div class="col-sm-10 p0">
+                            <textarea style="height: 50px" class="form-control" id="data-names-pie">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-6 form-horizontal">
+
+                    <div class="form-group">
+                        <label for="data-value-pie" class="control-label col-sm-2">Data Value:</label>
+                        <div class="col-sm-10 p0">
+                            <select class="form-control" id="data-value-pie">
+                                <option value="">No. of Acres</option>
+                                <option value="">District</option>
+                                <option value="">Taluk</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="data-values-pie" class="control-label col-sm-2">Data Values:</label>
+                        <div class="col-sm-10 p0">
+                            <textarea style="height: 50px" class="form-control" id="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="slice-text-pie" class="control-label col-sm-2">Slice Text:</label>
+                        <div class="col-sm-10 p0">
+                            <select class="form-control" id="slice-text-pie">
+                                <option value="">Percentage</option>
+                                <option value="">Names</option>
+                                <option value="">Values</option>
+                                <option value="">None</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group add-filter-btn col-sm-5 pull-right">
+                        <input type="button" name="btnPieChart" id="btnPieChart" value="Create Pie Chart">
+                    </div>
+                </div>
+            </form>
+
+            <div class="col-sm-12">
+                <label for="graph-title-line" class="control-label col-sm-2 custom-width">Title:</label>
+                <div class="col-sm-5 p0">
+                    <input id="graph-title-line" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-12" style="height: 8px;"></div>
+            <div class="col-sm-6 form-horizontal pR0">
+                <div class="form-group">
+                    <label for="horizontal-axis-label" class="control-label col-sm-2">x Label:</label>
+                    <div class="col-sm-10 p0">
+                        <input id="horizontal-axis-label-line" type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="vertical-axis-label-line" class="control-label col-sm-2">y Label:</label>
+                    <div class="col-sm-10 p0">
+                        <input id="vertical-axis-label-line" type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="horizontal-data-type-line" class="control-label col-sm-2">x Data:</label>
+                    <div class="col-sm-10 p0">
+                        <select class="form-control" id="horizontal-data-type-line">
+                            <option value="">District</option>
+                            <option value="">Taluk</option>
+                            <option value="">No. of Acres</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 form-horizontal">
+                <div class="form-group">
+                    <label for="horizontal-data-values-line" class="control-label col-sm-2">x Values:</label>
+                    <div class="col-sm-10 p0">
+                        <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="vertical-data-type-line" class="control-label col-sm-2">v Data:</label>
+                    <div class="col-sm-10 p0">
+                        <select class="form-control" id="vertical-data-type-line">
+                            <option value="">No. of Acres</option>
+                            <option value="">District</option>
+                            <option value="">Taluk</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="vertical-data-values-line" class="control-label col-sm-2">v Values:</label>
+                    <div class="col-sm-10 p0">
+                        <textarea style="height: 50px" class="form-control" id="vertical-data-values-line">50&#13;&#10;100&#13;&#10;150</textarea>
+                    </div>
+                </div>
+                <div class="form-group add-filter-btn col-sm-5 pull-right">
+                    <input type="button" name="btnLineGraph" id="btnLineGraph" value="Create Line Graph">
+                </div>
+            </div>
+        </form>
     </ul>
 
     <div class="col-sm-3 addFilter">
@@ -574,7 +708,7 @@
                                         <td>{{status}}</td>
                                         <td>{{district}}</td>
                                         <td>{{taluk}}</td>
-                            
+
                                     </tr>
                                 {{/each}}
                                 </tbody>
@@ -930,6 +1064,88 @@
                     }
                 }
             });
+    });
+</script>
+
+
+<script>
+    $('#formLineGraph').on('click', '#btnLineGraph',  function (e) {
+        $.post('/graph/line', $('#formLineGraph').serialize())
+                .done(function (result) {
+                    if(result) {
+                        alert(result.xLabel);
+                        google.charts.load('current', {'packages': ['line']});
+                        google.charts.setOnLoadCallback(drawChart);
+
+                        function drawChart() {
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('number', result.xLabel);
+                            data.addColumn('number', result.yLabel);
+                            //data.addColumn('number', 'Taluk');
+                            //data.addColumn('number', 'Area');
+                            /*data.addRows([
+                             [1,  37.8, 80.8, 41.8],
+                             [2,  30.9, 69.5, 32.4],
+                             [3,  25.4,   57, 25.7],
+                             [4,  11.7, 18.8, 10.5],
+                             [5,  11.9, 17.6, 10.4],
+                             [6,   8.8, 13.6,  7.7],
+                             [7,   7.6, 12.3,  9.6],
+                             [8,  12.3, 29.2, 10.6],
+                             [9,  16.9, 42.9, 14.8],
+                             [10, 12.8, 30.9, 11.6],
+                             [11,  5.3,  7.9,  4.7],
+                             [12,  6.6,  8.4,  5.2],
+                             [13,  4.8,  6.3,  3.6],
+                             [14,  4.2,  6.2,  3.4]
+                             ]);*/
+                            data.addRows(
+                                    result.xDataValues);
+                            var options = {
+                                chart: {
+                                    title: result.title
+                                    //subtitle: 'in millions of dollars (USD)'
+                                },
+                                width: 500,
+                                height: 300
+                            };
+                            var chart = new google.charts.Line(document.getElementById('divChart'));
+                            chart.draw(data, options);
+
+                            $("#packages").val(JSON.stringify("['line']"));
+                            $("#data").val(JSON.stringify(data));
+                            $("#options").val(JSON.stringify(options));
+                        }
+                    }
+                });
+    });
+</script>
+
+
+<script>
+    $('#formPieChart').on('click', '#btnPieChart',  function (e) {
+        $.post('/chart/pie', $('#formPieChart').serialize())
+                .done(function (result) {
+                    if(result) {
+                        google.charts.load('current', {'packages': ['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+                        function drawChart() {
+                            var data = google.visualization.arrayToDataTable(result.xDataValues);
+
+                            var options = {
+                                title: result.title
+                            };
+
+                            var chart = new google.visualization.PieChart(document.getElementById('divChart'));
+
+                            chart.draw(data, options);
+
+                            $("#packages").val(JSON.stringify("['corechart']"));
+                            $("#data").val(JSON.stringify(data));
+                            $("#options").val(JSON.stringify(options));
+                        }
+                    }
+                });
     });
 </script>
 
