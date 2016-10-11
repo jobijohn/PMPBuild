@@ -14,11 +14,13 @@ function indexPage(req, res) {
         common.getAllUniqueIssueTypes(issueData, function (err, issueTypes) {
             common.getAllUniqueDistricts(issueData, function (err, districts) {
                 common.getAllUniqueTaluks(issueData, function (err, taluks) {
-                    res.render('index_new', {data:issueTypes, data1:districts, data2:taluks});
+                    res.render('dashboard', {data:issueTypes, data1:districts, data2:taluks});
                 });
             });
         });
+
     });
+    //res.render('dashboard', {data:issueTypes, data1:districts, data2:taluks});
 
 }
 
