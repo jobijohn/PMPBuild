@@ -3559,7 +3559,7 @@ ul.filterOption li select option {
     cursor: pointer;
 }
 .addFilter .sub-filter .content {
-    overflow: auto;
+    /*overflow: auto;*/
 }
 
 .addFilter .filterGroup h1 {
@@ -3671,7 +3671,7 @@ ul.filterOption li select option {
     font-weight: 300;
 }
 .settings-panel .table-full-width {
-    height: 260px;
+    height: 252px;
     overflow-y: scroll;
     font-size: 12px;
 }
