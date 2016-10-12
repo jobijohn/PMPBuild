@@ -87,7 +87,6 @@ function generatePieChart(req, res) {console.log('req', req);
     var title = req.param('graph-title-pie');
     var xDataType = req.param('data-name-pie');
     var xDataValues = [['District', 'Acres']];
-console.log('xDataType',xDataType);
     common.readJsonFile('filteredissues.json', function(err, selectedIssues) {
         if (xDataType == 'District') {
             for (var i = 0; i < selectedIssues.length; i++) {
@@ -98,15 +97,6 @@ console.log('xDataType',xDataType);
                 xDataValues.push([selectedIssues[i].fields.customfield_10401.value, selectedIssues[i].fields.customfield_10403]);
             }
         }
-console.log('xDataValues', xDataValues);
-        // xDataValues = [
-        //     ['District', 'Acres'],
-        //     ['Godavari', 11],
-        //     ['Srikakulam', 2],
-        //     ['Vizianagaram', 2],
-        //     ['Anantapur', 2],
-        //     ['Chittoor', 7]
-        // ];
 
         return res.json({
             title: title,

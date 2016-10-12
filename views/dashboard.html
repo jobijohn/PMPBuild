@@ -285,8 +285,12 @@
     </ul>
 
     <div class="col-sm-3 addFilter">
+
         <ul class="membes-on">
-            <a class="close">x</a>
+            <div class="col-sm-12 pull-right">
+                <a class="close">x</a>
+            </div>
+            <div class="clearfix"></div>
             <li class="district filterMainBtn" id="districtBtn">District</li>
             <li class="taluk filterMainBtn" id="talukBtn">Taluk</li>
             <li class="acres filterMainBtn" id="acresBtn">No. of Acres</li>
@@ -294,7 +298,7 @@
         <div class="sub-filter filterGroup district">
             <div class="content">
                 <h1>Filter Popup</h1>
-                <div class="back">back</div>
+                <div class="filterContentClose">x</div>
                 <div class="col-sm-12 mT15">
                     <select data-placeholder="Select Districts" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
                         <option value=""></option>
@@ -313,7 +317,7 @@
         <div class="sub-filter-taluk filterGroup taluk">
             <div class="content">
                 <h1>Filter Popup</h1>
-                <div class="back">back</div>
+                <div class="filterContentClose">x</div>
                 <div class="col-sm-12 mT15">
                     <select data-placeholder="Select Taluks" name="taluk" class="chosen-select" multiple style="width: 100%;" id="taluk">
                         <option value=""></option>
@@ -333,7 +337,7 @@
         <div class="sub-filter-acres filterGroup acres">
             <div class="content">
                 <h1>Filter Popup</h1>
-                <div class="back">back</div>
+                <div class="filterContentClose">x</div>
                 <div class="col-sm-12 mT15">
                     <ul class="Acres " style="padding: 0">
                         <select name="acreSymbol" id="acreSymbol">
@@ -343,7 +347,7 @@
                         </select>
                         <input type="text" value="" id="acreValue">
                         <button id="addAcreSingle">Add</button>
-                        <label id="lblAcreValues"></label>
+                        <label id="lblAcreValues" class="disable"></label>
                     </ul>
                 </div>
 
@@ -687,13 +691,13 @@
 
 
                 <div class="row">
-                    <div class="col-sm-12 saveDashboardInput" style="margin-bottom: 10px">
+                    <div class="col-sm-10 saveDashboardInput" style="margin-bottom: 10px">
                         <input type="text" id = "graph-filters" name="graph-filters" class="col-sm-12" placeholder="Filters" value="" readonly>
                         <!--issuetype=Member on-boarding&&district=Anantapur,Chittoor&&taluk=Agali,Amadagur&&acres=>10,<50-->
 
                     </div>
-                    <div class="col-sm-12" style="margin-bottom: 10px">
-                        <button id="test-button">Test</button>
+                    <div class="col-sm-2" style="margin-bottom: 10px">
+                        <button id="test-button" class="filterApplyBtn">Apply Filter</button>
                     </div>
 
                     <div class="col-md-6">
@@ -839,12 +843,16 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-sm-6 pull-right">
-                        <div class="col-sm-8 pL0 saveDashboardInput">
-                            <input type="text" id="save-title" name="save-title" style="width: 100%">
+                        <div class="col-sm-6 pL0 saveDashboardInput">
+                            <input type="text" id="save-title" name="save-title" placeholder="Enter Tittle" style="width: 100%">
                         </div>
-                        <div class="col-sm-4 p0">
-                            <button class="btn btn-info btn-fill pull-right" id="save-dashboard"> Save to Dashboard</button>
+                        <div class="col-sm-4 pL0">
+                            <button class="btn btn-info btn-fill" id="save-dashboard"> Save to Dashboard</button>
+                        </div>
+                        <div class="col-sm-2 p0">
+                            <button class="btn btn-info btn-fill pull-right" id="reset"> Reset</button>
                         </div>
                     </div>
                 </div>
@@ -1020,11 +1028,12 @@
                     $('.acres').addClass('active')
                 }
             });
-            $('.back').click(function(){
+            $('.filterContentClose').click(function(){
                 if($('.membes-on').hasClass('hide')){
                     $('.membes-on').removeClass('hide');
                     console.log($(this));
                     $(this).parent().parent().removeClass('active');
+                    $('.addFilter').removeClass('active')
                 }
             });
     	});
@@ -1226,8 +1235,10 @@
         var _acre = _acreSymbol + _acreValue;
         var lblAcreValuesOld = $('#lblAcreValues').text();
         if(lblAcreValuesOld) {
+            $("#acreValue").removeClass('disable');
             $('#lblAcreValues').text(lblAcreValuesOld + ',' + _acre);
         } else {
+            $("#lblAcreValues").removeClass('disable');
             $('#lblAcreValues').text(_acre);
         }
         $("#acreValue").val("");
@@ -1302,13 +1313,36 @@
     });
 
     $('#save-dashboard').on('click', function (e) {
+        var graphinfo = "";
+        var graphType = $("#graph-type").val();
+        if(graphType === 'bar') {
+            graphinfo += "type=bar&&"
+            graphinfo += "title=" + $("#graph-title").val() + "&&";
+            graphinfo += "xLabel=" + $("#horizontal-axis-label").val() + "&&";
+            graphinfo += "yLabel=" + $("#vertical-axis-label").val() + "&&";
+            graphinfo += "xDataType=" + $("#horizontal-data-type").val() + "&&";
+            graphinfo += "yDataType=" + $("#vertical-data-type").val() + "&&";
+        } else if(graphType === 'line') {
+            graphinfo += "type=line&&"
+            graphinfo += "title=" + $("#graph-title-line").val() + "&&";
+            graphinfo += "xLabel=" + $("#horizontal-axis-label-line").val() + "&&";
+            graphinfo += "yLabel=" + $("#vertical-axis-label-line").val() + "&&";
+            graphinfo += "xDataType=" + $("#horizontal-data-type-line").val() + "&&";
+            graphinfo += "yDataType=" + $("#vertical-data-type-line").val() + "&&";
+        } else if(graphType === 'pie'){
+            graphinfo += "type=pie&&"
+            graphinfo += "title=" + $("#graph-title-pie").val() + "&&";
+            graphinfo += "dataType=" + $("#data-name-pie").val() + "&&";
+            //TODO:add pie fields
+        }
+
         var saveTitle = $("#save-title").val();
         if(!saveTitle){
             alert('Please enter title!');
             return;
         }
         var filtersNew = $("#graph-filters").val();
-        filtersNew = "title=" + saveTitle + " && " + filtersNew;
+        filtersNew = graphinfo + "head=" + saveTitle + "&&" + filtersNew;
         if (!filtersNew) {
             alert('No Filters!');
             return;
@@ -1348,10 +1382,17 @@
 
     function loadDashboardData(){
         var filters = getCookie("filter");
-        $.post('/load-dashboard', $('#formPieChart').serialize())
-            .done(function (result) {
+        if(!filters){
+            alert("No saved items!");
+            return;
+        }
 
-            });
+        var arrayFilter = [];
+        arrayFilter = filters.split('#');
+
+        /*alert(arrayFilter.length);
+        alert(arrayFilter[0]);
+        alert(arrayFilter[1]);*/
     }
 </script>
 
