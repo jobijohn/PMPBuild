@@ -33,11 +33,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 </head>
-<body onLoad="loadDashboardData()">
-<input type="hidden" name="districtFilters" id="districtFilters">
-<input type="hidden" name="talukFilters" id="talukFilters">
-<input type="hidden" name="acreFilters" id="acreFilters">
-
+<body>
 <div class="wrapper">
     <div class="sidebar" data-color="purple" data-image="img/sidebar-5.jpg">
 
@@ -298,8 +294,12 @@
     </ul>
 
     <div class="col-sm-3 addFilter">
+
         <ul class="membes-on">
-            <a class="close">x</a>
+            <div class="col-sm-12 pull-right">
+                <a class="close">x</a>
+            </div>
+            <div class="clearfix"></div>
             <li class="district filterMainBtn" id="districtBtn">District</li>
             <li class="taluk filterMainBtn" id="talukBtn">Taluk</li>
             <li class="acres filterMainBtn" id="acresBtn">No. of Acres</li>
@@ -307,7 +307,7 @@
         <div class="sub-filter filterGroup district">
             <div class="content">
                 <h1>Filter Popup</h1>
-                <div class="back">back</div>
+                <div class="filterContentClose">x</div>
                 <div class="col-sm-12 mT15">
                     <select data-placeholder="Select Districts" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
                         <option value=""></option>
@@ -326,7 +326,7 @@
         <div class="sub-filter-taluk filterGroup taluk">
             <div class="content">
                 <h1>Filter Popup</h1>
-                <div class="back">back</div>
+                <div class="filterContentClose">x</div>
                 <div class="col-sm-12 mT15">
                     <select data-placeholder="Select Taluks" name="taluk" class="chosen-select" multiple style="width: 100%;" id="taluk">
                         <option value=""></option>
@@ -346,7 +346,7 @@
         <div class="sub-filter-acres filterGroup acres">
             <div class="content">
                 <h1>Filter Popup</h1>
-                <div class="back">back</div>
+                <div class="filterContentClose">x</div>
                 <div class="col-sm-12 mT15">
                     <ul class="Acres " style="padding: 0">
                         <select name="acreSymbol" id="acreSymbol">
@@ -356,7 +356,7 @@
                         </select>
                         <input type="text" value="" id="acreValue">
                         <button id="addAcreSingle">Add</button>
-                        <label id="lblAcreValues"></label>
+                        <label id="lblAcreValues" class="disable"></label>
                     </ul>
                 </div>
 
@@ -700,11 +700,13 @@
 
 
                 <div class="row">
-                    <div class="col-sm-12 saveDashboardInput" style="margin-bottom: 10px">
-                        <input type="text" id = "graph-filters" name="graph-filters" class="col-sm-12" placeholder="Filters" id="filterText" readonly>
+                    <div class="col-sm-10 saveDashboardInput" style="margin-bottom: 10px">
+                        <input type="text" id = "graph-filters" name="graph-filters" class="col-sm-12" placeholder="Filters" value="" readonly>
+                        <!--issuetype=Member on-boarding&&district=Anantapur,Chittoor&&taluk=Agali,Amadagur&&acres=>10,<50-->
+
                     </div>
-                    <div class="col-sm-12" style="margin-bottom: 10px">
-                        <button id="test-button">Test</button>
+                    <div class="col-sm-2" style="margin-bottom: 10px">
+                        <button id="test-button" class="filterApplyBtn">Apply Filter</button>
                     </div>
 
                     <div class="col-md-6">
@@ -850,12 +852,16 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-sm-6 pull-right">
-                        <div class="col-sm-8 pL0 saveDashboardInput">
-                            <input type="text" id="save-title" name="save-title" style="width: 100%">
+                        <div class="col-sm-6 pL0 saveDashboardInput">
+                            <input type="text" id="save-title" name="save-title" placeholder="Enter Tittle" style="width: 100%">
                         </div>
-                        <div class="col-sm-4 p0">
-                            <button class="btn btn-info btn-fill pull-right" id="save-dashboard"> Save to Dashboard</button>
+                        <div class="col-sm-4 pL0">
+                            <button class="btn btn-info btn-fill" id="save-dashboard"> Save to Dashboard</button>
+                        </div>
+                        <div class="col-sm-2 p0">
+                            <button class="btn btn-info btn-fill pull-right" id="reset"> Reset</button>
                         </div>
                     </div>
                 </div>
@@ -1031,11 +1037,12 @@
                     $('.acres').addClass('active')
                 }
             });
-            $('.back').click(function(){
+            $('.filterContentClose').click(function(){
                 if($('.membes-on').hasClass('hide')){
                     $('.membes-on').removeClass('hide');
                     console.log($(this));
                     $(this).parent().parent().removeClass('active');
+                    $('.addFilter').removeClass('active')
                 }
             });
     	});
@@ -1156,6 +1163,13 @@
         }
     });
 
+    $('#issuetype').on('change', function () {
+        var selectVal = $("#issuetype option:selected").val();
+        if(selectVal) {
+            $('#graph-filters').val('issuetype='+ selectVal);
+        }
+    });
+
     $('#addDistrict').click(function () {
         var _district = $("#district").val();
         if(_district) {
@@ -1167,9 +1181,9 @@
             }
 
             if($('#graph-filters').val())
-                $('#graph-filters').val($('#graph-filters').val() + ' && districts="' + _district + '"') ;
+                $('#graph-filters').val($('#graph-filters').val() + '&&districts=' + _district) ;
             else
-                $('#graph-filters').val('districts="' + _district + '"') ;
+                $('#graph-filters').val('districts=' + _district) ;
 
             if (!$("#horizontal-data-type option[value='District']").length) {
                 $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
@@ -1192,9 +1206,9 @@
             }
 
             if($('#graph-filters').val())
-                $('#graph-filters').val($('#graph-filters').val() + ' && taluks="' + _taluk + '"') ;
+                $('#graph-filters').val($('#graph-filters').val() + '&&taluks=' + _taluk) ;
             else
-                $('#graph-filters').val('taluks="' + _taluk + '"') ;
+                $('#graph-filters').val('taluks=' + _taluk) ;
 
             if (!$("#horizontal-data-type option[value='Taluk']").length) {
                 $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
@@ -1213,8 +1227,10 @@
         var _acre = _acreSymbol + _acreValue;
         var lblAcreValuesOld = $('#lblAcreValues').text();
         if(lblAcreValuesOld) {
+            $("#acreValue").removeClass('disable');
             $('#lblAcreValues').text(lblAcreValuesOld + ',' + _acre);
         } else {
+            $("#lblAcreValues").removeClass('disable');
             $('#lblAcreValues').text(_acre);
         }
         $("#acreValue").val("");
@@ -1231,9 +1247,10 @@
             }
 
             if($('#graph-filters').val())
-                $('#graph-filters').val($('#graph-filters').val() + ' && acres="' + $('#lblAcreValues').text() + '"') ;
+                $('#graph-filters').val($('#graph-filters').val() + '&&acres=' + $('#lblAcreValues').text()) ;
             else
-                $('#graph-filters').val('acres="' + $('#lblAcreValues').text() + '"') ;
+                $('#graph-filters').val('acres=' + $('#lblAcreValues').text()) ;
+
 
             if (!$("#vertical-data-type option[value='No. of Acres']").length) {
                 $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
@@ -1247,10 +1264,17 @@
     });
 
     $('#test-button').click(function() {
-        var district = $('#districtFilters').val().split(',');
-        var taluk = $('#talukFilters').val().split(',');
-        var issuetype = $('#issuetype').val();
-        var acres = $('#acreFilters').val().split(',');
+        var filters= {};
+        var filterText = $('#graph-filters').val();
+        var splitFilterText = filterText.split("&&");
+        for(var i in splitFilterText) {
+            var splitFilterTextEach = splitFilterText[i].split("=");
+            filters[splitFilterTextEach[0]] = splitFilterTextEach[1];
+        }
+        var district = filters["districts"].split(',');
+        var taluk = filters["taluks"].split(',');
+        var issuetype = filters["issuetype"];
+        var acres = filters["acres"].split(',');
         $.post('/filter-issues', { issuetype:issuetype,
                                     district: district,
                                     taluk:taluk,
@@ -1274,13 +1298,6 @@
                         }
                     }
                 });
-    });
-
-    $('#issuetype').on('change', function () {
-        var selectVal = $("#issuetype option:selected").val();
-        if(selectVal) {
-            $('#graph-filters').val('issuetype="'+ selectVal + '"');
-        }
     });
 
     $('#save-dashboard').on('click', function (e) {
