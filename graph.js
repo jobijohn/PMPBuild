@@ -1,7 +1,7 @@
 /**
  * Created by jobi on 10/4/16.
  */
-
+var common = require('./common');
 
 function generateBarGraph(req, res) {
     //TODO: validations
@@ -9,27 +9,40 @@ function generateBarGraph(req, res) {
     var xLabel = req.param('horizontal-axis-label');
     var yLabel = req.param('vertical-axis-label');
     var xDataType = req.param('horizontal-data-type');
-    var xDataValues = [];
-    xDataValues = [
-        ['', xLabel, { role: 'style' } ], //District should be xLabel
-        ['Godavari', 50, 'gray'],
-        ['Srikakulam', 40, '#76A7FA'],
-        ['Vizianagaram', 80, '#703593'],
-        ['Anantapur', 10, '#b87333'],
-        ['Chittoor', 25, '#871B47']
-    ];
-    var yDataType = req.param('vertical-data-type');
-    var yDataValues = req.param('vertical-data-values');
+    var xDataValues = [ ['', xLabel, { role: 'style' } ]];
+    common.readJsonFile('filteredissues.json', function(err, selectedIssues){
+        if(xDataType == 'District') {
+            for(var i=0;i<selectedIssues.length;i++) {
+                xDataValues.push([selectedIssues[i].fields.customfield_10400.value, selectedIssues[i].fields.customfield_10403,'gray']);
+            }
+        } else if(xDataType == 'Taluk') {
+            for(var i=0;i<selectedIssues.length;i++) {
+                xDataValues.push([selectedIssues[i].fields.customfield_10401.value, selectedIssues[i].fields.customfield_10403,'gray']);
+            }
+        }
+        var yDataType = req.param('vertical-data-type');
+        var yDataValues = req.param('vertical-data-values');
 
-    return res.json({
-        title: title,
-        xLabel: xLabel,
-        yLabel: yLabel,
-        xDataType : xDataType,
-        xDataValues : xDataValues,
-        yDataType : yDataType,
-        yDataValues : yDataValues
+        return res.json({
+            title: title,
+            xLabel: xLabel,
+            yLabel: yLabel,
+            xDataType : xDataType,
+            xDataValues : xDataValues,
+            yDataType : yDataType,
+            yDataValues : yDataValues
+        });
     });
+
+    // xDataValues = [
+    //     ['', xLabel, { role: 'style' } ], //District should be xLabel
+    //     ['Godavari', 50, 'gray'],
+    //     ['Srikakulam', 40, '#76A7FA'],
+    //     ['Vizianagaram', 80, '#703593'],
+    //     ['Anantapur', 10, '#b87333'],
+    //     ['Chittoor', 25, '#871B47']
+    // ];
+
 }
 
 function generateLineGraph(req, res) {

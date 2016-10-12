@@ -172,9 +172,6 @@
                 <div class="form-group">
                     <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
                         <option value="">Select X Data</option>
-                        <option value="">District</option>
-                        <option value="">Taluk</option>
-                        <option value="">No. of Acres</option>
                     </select>
                 </div>
             </li>
@@ -183,9 +180,6 @@
                 <div class="form-group">
                     <select id="vertical-data-type" name="vertical-data-type" class="form-control">
                         <option value="">Select Y Data</option>
-                        <option value="">No. of Acres</option>
-                        <option value="">District</option>
-                        <option value="">Taluk</option>
                     </select>
                 </div>
             </li>
@@ -1049,7 +1043,8 @@
 
 <script>
     $('#formBarGraph').on('click', '#btnBarGraph',  function (e) {
-        $.post('/graph/bar', $('#formBarGraph').serialize())
+        var selectedIssues = $('#filteredIssues').val();
+        $.post('/graph/bar', $('#formBarGraph').serialize() + '&selectedIssues='+ selectedIssues)
             .done(function (result) {
                 if(result) {
                     google.charts.load('current', {packages: ['corechart', 'bar']});
@@ -1175,6 +1170,9 @@
             else
                 $('#filterText').val('districts="' + _district + '"') ;
 
+            if (!$("#horizontal-data-type option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
+            }
 
             if($('.membes-on').hasClass('hide')){
                 $('.membes-on').removeClass('hide');
@@ -1196,6 +1194,10 @@
                 $('#filterText').val($('#filterText').val() + ' && taluks="' + _taluk + '"') ;
             else
                 $('#filterText').val('taluks="' + _taluk + '"') ;
+
+            if (!$("#horizontal-data-type option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
+            }
 
             if($('.membes-on').hasClass('hide')){
                 $('.membes-on').removeClass('hide');
@@ -1231,6 +1233,10 @@
                 $('#filterText').val($('#filterText').val() + ' && acres="' + $('#lblAcreValues').text() + '"') ;
             else
                 $('#filterText').val('acres="' + $('#lblAcreValues').text() + '"') ;
+
+            if (!$("#vertical-data-type option[value='No. of Acres']").length) {
+                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
+            }
 
             if($('.membes-on').hasClass('hide')){
                 $('.membes-on').removeClass('hide');
@@ -1275,6 +1281,7 @@
             $('#filterText').val('issuetype="'+ selectVal + '"');
         }
     });
+
 
 </script>
 
