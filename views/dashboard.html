@@ -33,11 +33,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 </head>
-<body onLoad="loadDashboardData()">
-<input type="hidden" name="districtFilters" id="districtFilters">
-<input type="hidden" name="talukFilters" id="talukFilters">
-<input type="hidden" name="acreFilters" id="acreFilters">
-
+<body>
 <div class="wrapper">
     <div class="sidebar" data-color="purple" data-image="img/sidebar-5.jpg">
 
@@ -65,7 +61,7 @@
                 </li>-->
                 <li class="">
                     <div class="form-group">
-                        <label>New Issue Filter</label>
+                        <label>Choose Filter</label>
                         <select name="issuetype" class="" id="issuetype" >
                             <option value="">-- Select Issue Type --</option>
                             {{#indexData.issueTypes}}
@@ -705,7 +701,9 @@
 
                 <div class="row">
                     <div class="col-sm-12 saveDashboardInput" style="margin-bottom: 10px">
-                        <input type="text" id = "graph-filters" name="graph-filters" class="col-sm-12" placeholder="Filters" id="filterText" value="taluk=test" readonly>
+                        <input type="text" id = "graph-filters" name="graph-filters" class="col-sm-12" placeholder="Filters" value="" readonly>
+                        <!--issuetype=Member on-boarding&&district=Anantapur,Chittoor&&taluk=Agali,Amadagur&&acres=>10,<50-->
+
                     </div>
                     <div class="col-sm-12" style="margin-bottom: 10px">
                         <button id="test-button">Test</button>
@@ -856,7 +854,7 @@
                     </div>
                     <div class="col-sm-6 pull-right">
                         <div class="col-sm-8 pL0 saveDashboardInput">
-                            <input type="text" style="width: 100%">
+                            <input type="text" id="save-title" name="save-title" style="width: 100%">
                         </div>
                         <div class="col-sm-4 p0">
                             <button class="btn btn-info btn-fill pull-right" id="save-dashboard"> Save to Dashboard</button>
@@ -1161,6 +1159,13 @@
         }
     });
 
+    $('#issuetype').on('change', function () {
+        var selectVal = $("#issuetype option:selected").val();
+        if(selectVal) {
+            $('#graph-filters').val('issuetype='+ selectVal);
+        }
+    });
+
     $('#addDistrict').click(function () {
         var _district = $("#district").val();
         if(_district) {
@@ -1171,10 +1176,10 @@
                 $('#districtFilters').val(_district);
             }
 
-            if($('#filterText').val())
-                $('#filterText').val($('#filterText').val() + ' && districts="' + _district + '"') ;
+            if($('#graph-filters').val())
+                $('#graph-filters').val($('#graph-filters').val() + '&&districts=' + _district) ;
             else
-                $('#filterText').val('districts="' + _district + '"') ;
+                $('#graph-filters').val('districts=' + _district) ;
 
             if (!$("#horizontal-data-type option[value='District']").length) {
                 $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
@@ -1196,10 +1201,10 @@
                 $('#talukFilters').val(_taluk);
             }
 
-            if($('#filterText').val())
-                $('#filterText').val($('#filterText').val() + ' && taluks="' + _taluk + '"') ;
+            if($('#graph-filters').val())
+                $('#graph-filters').val($('#graph-filters').val() + '&&taluks=' + _taluk) ;
             else
-                $('#filterText').val('taluks="' + _taluk + '"') ;
+                $('#graph-filters').val('taluks=' + _taluk) ;
 
             if (!$("#horizontal-data-type option[value='Taluk']").length) {
                 $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
@@ -1237,10 +1242,11 @@
                 $('#acreFilters').val($('#lblAcreValues').text());
             }
 
-            if($('#filterText').val())
-                $('#filterText').val($('#filterText').val() + ' && acres="' + $('#lblAcreValues').text() + '"') ;
+            if($('#graph-filters').val())
+                $('#graph-filters').val($('#graph-filters').val() + '&&acres=' + $('#lblAcreValues').text()) ;
             else
-                $('#filterText').val('acres="' + $('#lblAcreValues').text() + '"') ;
+                $('#graph-filters').val('acres=' + $('#lblAcreValues').text()) ;
+
 
             if (!$("#vertical-data-type option[value='No. of Acres']").length) {
                 $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
@@ -1254,10 +1260,17 @@
     });
 
     $('#test-button').click(function() {
-        var district = $('#districtFilters').val().split(',');
-        var taluk = $('#talukFilters').val().split(',');
-        var issuetype = $('#issuetype').val();
-        var acres = $('#acreFilters').val().split(',');
+        var filters= {};
+        var filterText = $('#graph-filters').val();
+        var splitFilterText = filterText.split("&&");
+        for(var i in splitFilterText) {
+            var splitFilterTextEach = splitFilterText[i].split("=");
+            filters[splitFilterTextEach[0]] = splitFilterTextEach[1];
+        }
+        var district = filters["districts"].split(',');
+        var taluk = filters["taluks"].split(',');
+        var issuetype = filters["issuetype"];
+        var acres = filters["acres"].split(',');
         $.post('/filter-issues', { issuetype:issuetype,
                                     district: district,
                                     taluk:taluk,
@@ -1283,17 +1296,17 @@
                 });
     });
 
-    $('#issuetype').on('change', function () {
-        var selectVal = $("#issuetype option:selected").val();
-        if(selectVal) {
-            $('#filterText').val('issuetype="'+ selectVal + '"');
+    $('#save-dashboard').on('click', function (e) {
+        var saveTitle = $("#save-title").val();
+        if(!saveTitle){
+            alert('Please enter title!');
+            return;
         }
-    });
-
-    $('#save-dashboard').on('click', function (e) {alert(1);
         var filtersNew = $("#graph-filters").val();
+        filtersNew = "title=" + saveTitle + " && " + filtersNew;
         if (!filtersNew) {
             alert('No Filters!');
+            return;
         }
         var filter = getCookie("filter");
 
@@ -1303,6 +1316,7 @@
         } else {
             setCookie('filter', filtersNew, 30);
         }
+        alert("Successfully saved to dashboard!")
     });
 
     function getCookie(cname) {
@@ -1328,7 +1342,6 @@
     }
 
     function loadDashboardData(){
-        alert('heloooooo');
         var filters = getCookie("filter");
         $.post('/load-dashboard', $('#formPieChart').serialize())
             .done(function (result) {

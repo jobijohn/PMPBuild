@@ -117,7 +117,6 @@ function getJsonFromJira(req, res) {
 
 function filterIssues (req, res){
     var district = req.param('district');
-    console.log('New Districts',district);
     var taluk = req.param('taluk');
     var issuetype = req.param('issuetype');
     var acres = req.param('acres');
@@ -152,7 +151,7 @@ function filterIssues (req, res){
     var acreFilter = "(e.fields.customfield_10403 != null)&&(";
     for(i=0;i<acres.length;i++) {
         if (i != acres.length - 1) {
-            acreFilter += 'e.fields.customfield_10403'+ acres[i] + '||';
+            acreFilter += 'e.fields.customfield_10403'+ acres[i] + '&&';
         } else {
             acreFilter += 'e.fields.customfield_10403'+ acres[i] + ')';
         }
