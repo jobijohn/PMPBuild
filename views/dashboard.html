@@ -33,7 +33,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 </head>
-<body>
+<body onLoad="loadDashboardData()">
 <input type="hidden" name="districtFilters" id="districtFilters">
 <input type="hidden" name="talukFilters" id="talukFilters">
 <input type="hidden" name="acreFilters" id="acreFilters">
@@ -1314,6 +1314,14 @@
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
 
+    function loadDashboardData(){
+        alert('heloooooo');
+        var filters = getCookie("filter");
+        $.post('/load-dashboard', $('#formPieChart').serialize())
+            .done(function (result) {
+
+            });
+    }
 </script>
 
 </html>
