@@ -34,12 +34,14 @@ function launchApp() {
     app.use('/img', express.static(__dirname + '/public/img'));
     app.use('/', express.static(__dirname + '/public/'));
     app.use(express.bodyParser());
-
-    app.use(session({
+    app.use(express.methodOverride());
+    app.use(express.cookieParser());
+    app.use(express.session({
         secret: 'sssh!!!',
         proxy: true,
         resave: true,
-        saveUninitialized: true
+        saveUninitialized: true,
+        cookie: {secure: false, maxAge: 86400000}
     }));
 
     app.get('/', index.indexPage);
