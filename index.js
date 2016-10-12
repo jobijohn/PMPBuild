@@ -168,10 +168,12 @@ function filterIssues (req, res){
                 eval(talukFilter) &&
                 eval(acreFilter);
         });
-        console.log('filtered issues', JSON.stringify(filteredIssues));
-        return res.json({
-            success : 'success',
-            filteredIssues:filteredIssues
+        fs.writeFile('filteredissues.json', JSON.stringify(filteredIssues), function (err) {
+            if (err) return console.log(err);
+            return res.json({
+                success : 'success',
+                filteredIssues:filteredIssues
+            });
         });
     });
 }
