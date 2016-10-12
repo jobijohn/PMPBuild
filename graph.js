@@ -97,7 +97,7 @@ function generatePieChart(req, res) {
         ['Anantapur', 2],
         ['Chittoor', 7]
     ];
-    var yDataType = req.param('vertical-data-type');
+    var dataType = req.param('data-name-pie');
     var yDataValues = req.param('vertical-data-values');
 
     return res.json({

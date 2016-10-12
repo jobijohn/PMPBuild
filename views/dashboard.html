@@ -1284,13 +1284,36 @@
     });
 
     $('#save-dashboard').on('click', function (e) {
+        var graphinfo = "";
+        var graphType = $("#graph-type").val();
+        if(graphType === 'bar') {
+            graphinfo += "type=bar&&"
+            graphinfo += "title=" + $("#graph-title").val() + "&&";
+            graphinfo += "xLabel=" + $("#horizontal-axis-label").val() + "&&";
+            graphinfo += "yLabel=" + $("#vertical-axis-label").val() + "&&";
+            graphinfo += "xDataType=" + $("#horizontal-data-type").val() + "&&";
+            graphinfo += "yDataType=" + $("#vertical-data-type").val() + "&&";
+        } else if(graphType === 'line') {
+            graphinfo += "type=line&&"
+            graphinfo += "title=" + $("#graph-title-line").val() + "&&";
+            graphinfo += "xLabel=" + $("#horizontal-axis-label-line").val() + "&&";
+            graphinfo += "yLabel=" + $("#vertical-axis-label-line").val() + "&&";
+            graphinfo += "xDataType=" + $("#horizontal-data-type-line").val() + "&&";
+            graphinfo += "yDataType=" + $("#vertical-data-type-line").val() + "&&";
+        } else if(graphType === 'pie'){
+            graphinfo += "type=pie&&"
+            graphinfo += "title=" + $("#graph-title-pie").val() + "&&";
+            graphinfo += "dataType=" + $("#data-name-pie").val() + "&&";
+            //TODO:add pie fields
+        }
+
         var saveTitle = $("#save-title").val();
         if(!saveTitle){
             alert('Please enter title!');
             return;
         }
         var filtersNew = $("#graph-filters").val();
-        filtersNew = "title=" + saveTitle + " && " + filtersNew;
+        filtersNew = graphinfo + "head=" + saveTitle + "&&" + filtersNew;
         if (!filtersNew) {
             alert('No Filters!');
             return;
@@ -1330,10 +1353,17 @@
 
     function loadDashboardData(){
         var filters = getCookie("filter");
-        $.post('/load-dashboard', $('#formPieChart').serialize())
-            .done(function (result) {
+        if(!filters){
+            alert("No saved items!");
+            return;
+        }
 
-            });
+        var arrayFilter = [];
+        arrayFilter = filters.split('#');
+
+        /*alert(arrayFilter.length);
+        alert(arrayFilter[0]);
+        alert(arrayFilter[1]);*/
     }
 </script>
 
