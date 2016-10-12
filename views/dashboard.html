@@ -298,8 +298,12 @@
     </ul>
 
     <div class="col-sm-3 addFilter">
+
         <ul class="membes-on">
-            <a class="close">x</a>
+            <div class="col-sm-12 pull-right">
+                <a class="close">x</a>
+            </div>
+            <div class="clearfix"></div>
             <li class="district filterMainBtn" id="districtBtn">District</li>
             <li class="taluk filterMainBtn" id="talukBtn">Taluk</li>
             <li class="acres filterMainBtn" id="acresBtn">No. of Acres</li>
@@ -307,7 +311,7 @@
         <div class="sub-filter filterGroup district">
             <div class="content">
                 <h1>Filter Popup</h1>
-                <div class="back">back</div>
+                <div class="filterContentClose">x</div>
                 <div class="col-sm-12 mT15">
                     <select data-placeholder="Select Districts" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
                         <option value=""></option>
@@ -326,7 +330,7 @@
         <div class="sub-filter-taluk filterGroup taluk">
             <div class="content">
                 <h1>Filter Popup</h1>
-                <div class="back">back</div>
+                <div class="filterContentClose">x</div>
                 <div class="col-sm-12 mT15">
                     <select data-placeholder="Select Taluks" name="taluk" class="chosen-select" multiple style="width: 100%;" id="taluk">
                         <option value=""></option>
@@ -346,7 +350,7 @@
         <div class="sub-filter-acres filterGroup acres">
             <div class="content">
                 <h1>Filter Popup</h1>
-                <div class="back">back</div>
+                <div class="filterContentClose">x</div>
                 <div class="col-sm-12 mT15">
                     <ul class="Acres " style="padding: 0">
                         <select name="acreSymbol" id="acreSymbol">
@@ -356,7 +360,7 @@
                         </select>
                         <input type="text" value="" id="acreValue">
                         <button id="addAcreSingle">Add</button>
-                        <label id="lblAcreValues"></label>
+                        <label id="lblAcreValues" class="disable"></label>
                     </ul>
                 </div>
 
@@ -1031,11 +1035,12 @@
                     $('.acres').addClass('active')
                 }
             });
-            $('.back').click(function(){
+            $('.filterContentClose').click(function(){
                 if($('.membes-on').hasClass('hide')){
                     $('.membes-on').removeClass('hide');
                     console.log($(this));
                     $(this).parent().parent().removeClass('active');
+                    $('.addFilter').removeClass('active')
                 }
             });
     	});
@@ -1213,8 +1218,10 @@
         var _acre = _acreSymbol + _acreValue;
         var lblAcreValuesOld = $('#lblAcreValues').text();
         if(lblAcreValuesOld) {
+            $("#acreValue").removeClass('disable');
             $('#lblAcreValues').text(lblAcreValuesOld + ',' + _acre);
         } else {
+            $("#lblAcreValues").removeClass('disable');
             $('#lblAcreValues').text(_acre);
         }
         $("#acreValue").val("");
