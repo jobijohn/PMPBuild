@@ -196,16 +196,13 @@
         <form method="post" id="formPieChart" class="table-form disable">
             <li>
                 <div class="form-group">
-                    <input id="graph-title-pie" type="text" class="form-control" placeholder="Enter Tittle">
+                    <input id="graph-title-pie" name="graph-title-pie" type="text" class="form-control" placeholder="Enter Tittle">
                 </div>
             </li>
             <li>
                 <div class="form-group">
-                    <select class="form-control" id="data-name-pie">
+                    <select class="form-control" id="data-name-pie" name="data-name-pie">
                         <option value="">Select Data</option>
-                        <option value="">District</option>
-                        <option value="">Taluk</option>
-                        <option value="">No. of Acres</option>
                     </select>
                 </div>
             </li>
@@ -263,9 +260,6 @@
                 <div class="form-group">
                     <select class="form-control" id="horizontal-data-type-line">
                         <option value="">Select X Data</option>
-                        <option value="">District</option>
-                        <option value="">Taluk</option>
-                        <option value="">No. of Acres</option>
                     </select>
                 </div>
             </li>
@@ -278,9 +272,6 @@
                 <div class="form-group">
                     <select class="form-control" id="vertical-data-type-line">
                         <option value="">Select Y Data</option>
-                        <option value="">No. of Acres</option>
-                        <option value="">District</option>
-                        <option value="">Taluk</option>
                     </select>
                 </div>
             </li>
@@ -1189,6 +1180,15 @@
                 $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
             }
 
+            if (!$("#horizontal-data-type-line option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type-line'));
+            }
+
+
+            if (!$("#data-name-pie option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#data-name-pie'));
+            }
+
             if($('.membes-on').hasClass('hide')){
                 $('.membes-on').removeClass('hide');
                 $('.district').removeClass('active')
@@ -1212,6 +1212,14 @@
 
             if (!$("#horizontal-data-type option[value='Taluk']").length) {
                 $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
+            }
+
+            if (!$("#horizontal-data-type-line option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type-line'));
+            }
+
+            if (!$("#data-name-pie option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#data-name-pie'));
             }
 
             if($('.membes-on').hasClass('hide')){
@@ -1254,6 +1262,10 @@
 
             if (!$("#vertical-data-type option[value='No. of Acres']").length) {
                 $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
+            }
+
+            if (!$("#vertical-data-type-line option[value='No. of Acres']").length) {
+                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type-line'));
             }
 
             if($('.membes-on').hasClass('hide')){
@@ -1301,13 +1313,36 @@
     });
 
     $('#save-dashboard').on('click', function (e) {
+        var graphinfo = "";
+        var graphType = $("#graph-type").val();
+        if(graphType === 'bar') {
+            graphinfo += "type=bar&&"
+            graphinfo += "title=" + $("#graph-title").val() + "&&";
+            graphinfo += "xLabel=" + $("#horizontal-axis-label").val() + "&&";
+            graphinfo += "yLabel=" + $("#vertical-axis-label").val() + "&&";
+            graphinfo += "xDataType=" + $("#horizontal-data-type").val() + "&&";
+            graphinfo += "yDataType=" + $("#vertical-data-type").val() + "&&";
+        } else if(graphType === 'line') {
+            graphinfo += "type=line&&"
+            graphinfo += "title=" + $("#graph-title-line").val() + "&&";
+            graphinfo += "xLabel=" + $("#horizontal-axis-label-line").val() + "&&";
+            graphinfo += "yLabel=" + $("#vertical-axis-label-line").val() + "&&";
+            graphinfo += "xDataType=" + $("#horizontal-data-type-line").val() + "&&";
+            graphinfo += "yDataType=" + $("#vertical-data-type-line").val() + "&&";
+        } else if(graphType === 'pie'){
+            graphinfo += "type=pie&&"
+            graphinfo += "title=" + $("#graph-title-pie").val() + "&&";
+            graphinfo += "dataType=" + $("#data-name-pie").val() + "&&";
+            //TODO:add pie fields
+        }
+
         var saveTitle = $("#save-title").val();
         if(!saveTitle){
             alert('Please enter title!');
             return;
         }
         var filtersNew = $("#graph-filters").val();
-        filtersNew = "title=" + saveTitle + " && " + filtersNew;
+        filtersNew = graphinfo + "head=" + saveTitle + "&&" + filtersNew;
         if (!filtersNew) {
             alert('No Filters!');
             return;
@@ -1347,10 +1382,17 @@
 
     function loadDashboardData(){
         var filters = getCookie("filter");
-        $.post('/load-dashboard', $('#formPieChart').serialize())
-            .done(function (result) {
+        if(!filters){
+            alert("No saved items!");
+            return;
+        }
 
-            });
+        var arrayFilter = [];
+        arrayFilter = filters.split('#');
+
+        /*alert(arrayFilter.length);
+        alert(arrayFilter[0]);
+        alert(arrayFilter[1]);*/
     }
 </script>
 

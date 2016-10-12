@@ -82,32 +82,27 @@ function generateLineGraph(req, res) {
     });
 }
 
-function generatePieChart(req, res) {
+function generatePieChart(req, res) {console.log('req', req);
     //TODO: validations
     var title = req.param('graph-title-pie');
-    var xLabel = req.param('horizontal-axis-label');
-    var yLabel = req.param('vertical-axis-label');
-    var xDataType = req.param('horizontal-data-type');
-    var xDataValues = [];
-    xDataValues = [
-        ['District', 'Acres'],
-        ['Godavari', 11],
-        ['Srikakulam', 2],
-        ['Vizianagaram', 2],
-        ['Anantapur', 2],
-        ['Chittoor', 7]
-    ];
-    var yDataType = req.param('vertical-data-type');
-    var yDataValues = req.param('vertical-data-values');
+    var xDataType = req.param('data-name-pie');
+    var xDataValues = [['District', 'Acres']];
+    common.readJsonFile('filteredissues.json', function(err, selectedIssues) {
+        if (xDataType == 'District') {
+            for (var i = 0; i < selectedIssues.length; i++) {
+                xDataValues.push([selectedIssues[i].fields.customfield_10400.value, selectedIssues[i].fields.customfield_10403]);
+            }
+        } else if (xDataType == 'Taluk') {
+            for (var i = 0; i < selectedIssues.length; i++) {
+                xDataValues.push([selectedIssues[i].fields.customfield_10401.value, selectedIssues[i].fields.customfield_10403]);
+            }
+        }
 
-    return res.json({
-        title: title,
-        xLabel: xLabel,
-        yLabel: yLabel,
-        xDataType : xDataType,
-        xDataValues : xDataValues,
-        yDataType : yDataType,
-        yDataValues : yDataValues
+        return res.json({
+            title: title,
+            xDataType: xDataType,
+            xDataValues: xDataValues
+        });
     });
 }
 
