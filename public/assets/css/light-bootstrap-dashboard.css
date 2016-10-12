@@ -3778,6 +3778,9 @@ ul.filterOption li select option {
 .pL0 {
     padding-left: 0;
 }
+.pR0 {
+    padding-right: 0;
+}
 .saveDashboardInput input {
     padding: 9px;
     border-radius: 4px;
@@ -3803,6 +3806,26 @@ ul.filterOption li select option {
 }
 .filterContentClose:hover {
     opacity: 1;
+}
+.filterApplyBtn {
+    background: rgb(66, 208, 237);
+    border-radius: 4px;
+    padding: 10px;
+    color: #fff;
+    border: 0;
+    width: 100%;
+}
+.filterApplyBtn:hover {
+    background: rgba(66, 208, 237, 0.8);
+}
+
+/*** ux **/
+.dashboard_panel {
+    -webkit-transition: opcity;
+    -moz-transition: opcity;
+    -ms-transition: opcity;
+    -o-transition: opcity;
+    transition: opcity;
 }
 
 
