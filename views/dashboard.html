@@ -471,7 +471,7 @@
                             </div>
                             <div class="stats">
                                 <div class="">
-                                    <table class="table">
+                                    <table class="table" id="issueTable">
                                         <tbody>
                                         <tr>
                                             <td>
@@ -706,12 +706,11 @@
 
                 <div class="row">
                     <div class="col-sm-12 saveDashboardInput" style="margin-bottom: 10px">
-                        <input type="text" class="col-sm-12" placeholder="Filters">
+                        <input type="text" class="col-sm-12" placeholder="Filters" id="filterText" readonly>
                     </div>
-                    <!--<div class="col-sm-12" style="margin-bottom: 10px">
-                        <input id="filters" name="filters" type="text" class="col-sm-12" placeholder="Filters">
+                    <div class="col-sm-12" style="margin-bottom: 10px">
                         <button id="test-button">Test</button>
-                    </div>-->
+                    </div>
 
                     <div class="col-md-6">
                         <div class="card ">
@@ -745,7 +744,7 @@
                             <div class="content">
                                 <div class="table-full-width">
                                     <table class="table">
-                                        <tbody>
+                                        <tbody class="test">
                                             <tr>
                                                 <td>
                                                     <label class="checkbox">
@@ -1170,6 +1169,17 @@
             } else {
                 $('#districtFilters').val(_district);
             }
+
+            if($('#filterText').val())
+                $('#filterText').val($('#filterText').val() + ' && districts="' + _district + '"') ;
+            else
+                $('#filterText').val('districts="' + _district + '"') ;
+
+
+            if($('.membes-on').hasClass('hide')){
+                $('.membes-on').removeClass('hide');
+                $('.district').removeClass('active')
+            }
         }
     });
     $('#addTaluk').click(function () {
@@ -1180,6 +1190,16 @@
                 $('#talukFilters').val($('#talukFilters').val() + ',' + _taluk);
             } else {
                 $('#talukFilters').val(_taluk);
+            }
+
+            if($('#filterText').val())
+                $('#filterText').val($('#filterText').val() + ' && taluks="' + _taluk + '"') ;
+            else
+                $('#filterText').val('taluks="' + _taluk + '"') ;
+
+            if($('.membes-on').hasClass('hide')){
+                $('.membes-on').removeClass('hide');
+                $('.taluk').removeClass('active')
             }
         }
     });
@@ -1195,6 +1215,7 @@
             $('#lblAcreValues').text(_acre);
         }
         $("#acreValue").val("");
+
     });
 
     $('#addAcre').click(function () {
@@ -1204,6 +1225,16 @@
                 $('#acreFilters').val($('#acreFilters').val() + ',' + $('#lblAcreValues').text());
             } else {
                 $('#acreFilters').val($('#lblAcreValues').text());
+            }
+
+            if($('#filterText').val())
+                $('#filterText').val($('#filterText').val() + ' && acres="' + $('#lblAcreValues').text() + '"') ;
+            else
+                $('#filterText').val('acres="' + $('#lblAcreValues').text() + '"') ;
+
+            if($('.membes-on').hasClass('hide')){
+                $('.membes-on').removeClass('hide');
+                $('.acres').removeClass('active')
             }
         }
     });
@@ -1218,10 +1249,32 @@
                                     taluk:taluk,
                                     acres:acres})
                 .done(function (result) {
-                    alert('ok')
+                    if(result.success){
+                        $('.test').empty();
+                        $('.test').append('<tr>' +
+                                '<td><b>Date</b></td>' +
+                                '<td><b>Summary</b></td>' +
+                                '<td><b>Issue Type</b></td>' +
+                                '<td><b>Status</b></td>' +
+                                '</tr>');
+                        for (var data in result.filteredIssues) {
+                            $('.test').append('<tr>' +
+                                    '<td>' + result.filteredIssues[data].fields.created +'</td>' +
+                                    '<td>' + result.filteredIssues[data].fields.summary +'</td>' +
+                                    '<td>' + result.filteredIssues[data].fields.issuetype.name +'</td>' +
+                                    '<td>' + result.filteredIssues[data].fields.status.name +'</td>' +
+                                            '</tr>');
+                        }
+                    }
                 });
     });
 
+    $('#issuetype').on('change', function () {
+        var selectVal = $("#issuetype option:selected").val();
+        if(selectVal) {
+            $('#filterText').val('issuetype="'+ selectVal + '"');
+        }
+    });
 
 </script>
 

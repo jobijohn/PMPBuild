@@ -170,7 +170,8 @@ function filterIssues (req, res){
         });
         console.log('filtered issues', JSON.stringify(filteredIssues));
         return res.json({
-            success : 'success'
+            success : 'success',
+            filteredIssues:filteredIssues
         });
     });
 }
