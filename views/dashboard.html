@@ -37,6 +37,7 @@
 <input type="hidden" name="districtFilters" id="districtFilters">
 <input type="hidden" name="talukFilters" id="talukFilters">
 <input type="hidden" name="acreFilters" id="acreFilters">
+
 <div class="wrapper">
     <div class="sidebar" data-color="purple" data-image="img/sidebar-5.jpg">
 
@@ -700,7 +701,7 @@
 
                 <div class="row">
                     <div class="col-sm-12 saveDashboardInput" style="margin-bottom: 10px">
-                        <input type="text" class="col-sm-12" placeholder="Filters" id="filterText" readonly>
+                        <input type="text" id = "graph-filters" name="graph-filters" class="col-sm-12" placeholder="Filters" id="filterText" value="taluk=test" readonly>
                     </div>
                     <div class="col-sm-12" style="margin-bottom: 10px">
                         <button id="test-button">Test</button>
@@ -854,7 +855,7 @@
                             <input type="text" style="width: 100%">
                         </div>
                         <div class="col-sm-4 p0">
-                            <button class="btn btn-info btn-fill pull-right"> Save to Dashboard</button>
+                            <button class="btn btn-info btn-fill pull-right" id="save-dashboard"> Save to Dashboard</button>
                         </div>
                     </div>
                 </div>
@@ -1282,6 +1283,42 @@
         }
     });
 
+    $('#save-dashboard').on('click', function (e) {alert(1);
+        var filtersNew = $("#graph-filters").val();
+        if (!filtersNew) {
+            alert('No Filters!');
+        }
+        var filter = getCookie("filter");
+
+        if (filter != "") {
+            var filterSet = filter + "#" + filtersNew;
+            setCookie('filter', filterSet, 30);
+        } else {
+            setCookie('filter', filtersNew, 30);
+        }
+    });
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length,c.length);
+            }
+        }
+        return "";
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
 
 </script>
 
