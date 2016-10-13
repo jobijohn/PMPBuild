@@ -4,7 +4,8 @@ var session = require('express-session');
 var OAuth = require('oauth').OAuth;
 var fs = require('fs'),
     common = require('./common'),
-    graph = require('./graph');
+    graph = require('./graph'),
+    async = require('async');
 
 var base_url = "https://swarmact.atlassian.net"; //example https://test.atlassian.net
 var consumer = new OAuth(
@@ -29,9 +30,11 @@ function indexPage(req, res) {
                     indexData.taluks = taluks;
                     common.getAllIssues(issueData, function (err, allIssues) {
                         indexData.allIssues = allIssues;
-                        getSavedGraphAndIssues(function(err, savedFilters) {
-                            console.log('savedFilters',savedFilters);
-                            res.render('dashboard', {indexData:indexData});
+                        getSavedGraphAndIssuesFilter(function(err, savedFilters) {
+                            getDataForSavedGraphAndIssuesFilter(savedFilters, function (err, savedFilterData) {
+                                indexData.savedFilterData = savedFilterData;
+                                res.render('dashboard', {indexData:indexData});
+                            });
                         });
                     });
                 });
@@ -181,6 +184,67 @@ function filterIssues (req, res){
 }
 
 /**
+ * Get Selected Issues by filter
+ * @param savedFilters
+ * @param callback
+ */
+function getIssuesByFilters(savedFilters, callback) {
+    var district = savedFilters.districts.split(',');
+    var taluk = savedFilters.taluks.split(',');
+    var issuetype = savedFilters.issuetype;
+    var acres = savedFilters.acres.split(',');
+
+    var districtFilter = "(e.fields.customfield_10400 != null)&&(";
+    for(i=0;i<district.length;i++) {
+        if (i != district.length - 1) {
+            districtFilter += 'e.fields.customfield_10400.value == "'+ district[i] + '"||';
+        } else {
+            districtFilter += 'e.fields.customfield_10400.value == "'+ district[i] + '")';
+        }
+    }
+
+    var talukFilter = "(e.fields.customfield_10401 != null &&  (";
+    for(i=0;i<taluk.length;i++) {
+        if (i != taluk.length - 1) {
+            talukFilter += 'e.fields.customfield_10401.value == "'+ taluk[i] + '"||';
+        } else {
+            talukFilter += 'e.fields.customfield_10401.value == "'+ taluk[i] + '"))';
+        }
+    }
+
+    var issuetypeFilter = "e.fields.issuetype.name == '"+ issuetype +"'";
+
+    var acreFilter = "(e.fields.customfield_10403 != null)&&(";
+    for(i=0;i<acres.length;i++) {
+        if (i != acres.length - 1) {
+            acreFilter += 'e.fields.customfield_10403'+ acres[i] + '&&';
+        } else {
+            acreFilter += 'e.fields.customfield_10403'+ acres[i] + ')';
+        }
+    }
+
+    var issueJsonFile = 'jiraissues.json';
+    common.readJsonFile(issueJsonFile, function (err, issueData) {
+        var issues = issueData.issues;
+        var filteredIssues = issues.filter(function (e) {
+            return eval(issuetypeFilter) &&
+                eval(districtFilter) &&
+                eval(talukFilter) &&
+                eval(acreFilter);
+        });
+        fs.writeFile('filteredissues.json', JSON.stringify(filteredIssues), function (err) {
+            if (err) return console.log(err);
+            var issueSummary = [];
+            for (var data in filteredIssues) {
+                var summary = filteredIssues[data].fields.summary;
+                issueSummary.push({summary:summary});
+            }
+            callback(null, issueSummary);
+        });
+    });
+}
+
+/**
  * Function to save filters and graph filters into a file
  * @param req
  * @param res
@@ -224,7 +288,7 @@ function getSavedFilters(callback) {
  * Functo get All saved graph and filters
  * @param callback
  */
-function getSavedGraphAndIssues(callback) {
+function getSavedGraphAndIssuesFilter(callback) {
     getSavedFilters(function (err, txtData) {
         var savedfilters = txtData.split("|");
         var eachfilter = [], eachFilterSplit = [];
@@ -245,6 +309,25 @@ function getSavedGraphAndIssues(callback) {
         callback(null, eachFilterSplit);
     }) ;
 }
+
+function getDataForSavedGraphAndIssuesFilter(savedFilters, callback) {
+    var savedFiltersData = [];
+    async.each(savedFilters, function(filter, callback) {
+        var dummy = {};
+        getIssuesByFilters(filter, function (err, selectedIssues) {
+            graph.populateGraphData(filter, function (err, graphData) {
+                dummy.selectedIssues = selectedIssues;
+                dummy.graphData = graphData;//console.log('dummy', dummy);
+                savedFiltersData.push(dummy);
+                callback();
+            });
+        });
+    }, function(err){
+            console.log('All files have been processed successfully',savedFiltersData);
+        callback(null, savedFiltersData);
+    });
+}
+
 exports.indexPage = indexPage;
 exports.getOAuth = getOAuth;
 exports.getOAuthCallback = getOAuthCallback;

@@ -7,14 +7,15 @@ var common = require('./common');
 function populateGraphData(graphData, callback) {
     if(graphData.type == "bar") {
         var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
+        var colorArray = ['gray','#76A7FA','#703593','#871B47','gray','#76A7FA','#703593','#871B47','gray','#76A7FA','#703593','#871B47'];
         common.readJsonFile('filteredissues.json', function(err, selectedIssues){
             if(graphData.xDataType == 'District') {
                 for(var i=0;i<selectedIssues.length;i++) {
-                    xDataValues.push([selectedIssues[i].fields.customfield_10400.value, selectedIssues[i].fields.customfield_10403,'gray']);
+                    xDataValues.push([selectedIssues[i].fields.customfield_10400.value, selectedIssues[i].fields.customfield_10403,colorArray[i]]);
                 }
             } else if(graphData.xDataType == 'Taluk') {
                 for(var i=0;i<selectedIssues.length;i++) {
-                    xDataValues.push([selectedIssues[i].fields.customfield_10401.value, selectedIssues[i].fields.customfield_10403,'gray']);
+                    xDataValues.push([selectedIssues[i].fields.customfield_10401.value, selectedIssues[i].fields.customfield_10403,colorArray[i]]);
                 }
             }
             graphData["xDataValues"] = xDataValues;
@@ -109,3 +110,4 @@ function generateLineGraph(req, res) {
 exports.generateBarGraph = generateBarGraph;
 exports.generateLineGraph = generateLineGraph;
 exports.generatePieChart = generatePieChart;
+exports.populateGraphData = populateGraphData;
