@@ -30,10 +30,11 @@ function getAllUniqueIssueTypes(jsonJiraProject, callback) {
         issueTypes = [],
         uniqueIssueTypes = [];
 
-    totalJiraIssues = jsonJiraProject.total;             // to get total issue count
+    totalJiraIssues = jsonJiraProject.maxResults;             // to get total issue count
 
     for (var i = 0; i < totalJiraIssues; i++) {
-        issueTypes.push(jsonJiraProject.issues[i].fields.issuetype.name);       // To get all issue Types in the json
+        if(jsonJiraProject.issues[i].fields)
+            issueTypes.push(jsonJiraProject.issues[i].fields.issuetype.name);       // To get all issue Types in the json
     }
 
     uniqueIssueTypes = issueTypes.filter(function (elem, index, self) {         // To get unique issue types from all issues
@@ -56,7 +57,7 @@ function getAllUniqueDistricts(jsonJiraProject, callback) {
         districts = [],
         uniqueDistricts = [];
 
-    totalJiraIssues = jsonJiraProject.total;
+    totalJiraIssues = jsonJiraProject.maxResults;
 
     for (var i = 0; i < totalJiraIssues; i++) {
         if(jsonJiraProject.issues[i].fields.customfield_10400) {
@@ -83,7 +84,7 @@ function getAllUniqueTaluks(jsonJiraProject, callback) {
         taluks = [],
         uniqueTaluks = [];
 
-    totalJiraIssues = jsonJiraProject.total;
+    totalJiraIssues = jsonJiraProject.maxResults;
 
     for (var i = 0; i < totalJiraIssues; i++) {
         if(jsonJiraProject.issues[i].fields.customfield_10401) {
@@ -107,7 +108,7 @@ function getAllUniqueTaluks(jsonJiraProject, callback) {
  * @param callback
  */
 function getAllIssues(jsonJiraProject, callback) {
-    var totalJiraIssues = jsonJiraProject.total;
+    var totalJiraIssues = jsonJiraProject.maxResults;
     var issuesselectedFields = [];
     for(var i=0 ; i<totalJiraIssues ; i++){
         var issue = {};
