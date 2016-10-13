@@ -114,6 +114,10 @@ function getAllIssues(jsonJiraProject, callback) {
         issue.issueType = jsonJiraProject.issues[i].fields.issuetype.name;
         issue.summary = jsonJiraProject.issues[i].fields.summary;
         issue.created = jsonJiraProject.issues[i].fields.created;
+
+        var dateFormat = require('dateformat');
+        issue.created = dateFormat(issue.created, "dd-mm-yyyy");
+
         if(jsonJiraProject.issues[i].fields.customfield_10400) {
             issue.district = jsonJiraProject.issues[i].fields.customfield_10400.value;
         } else {
@@ -145,6 +149,7 @@ function getAllIssues(jsonJiraProject, callback) {
     }
     callback(null, issuesselectedFields);
 }
+
 exports.readJsonFile = readJsonFile;
 exports.getAllUniqueIssueTypes = getAllUniqueIssueTypes;
 exports.getAllUniqueDistricts = getAllUniqueDistricts;
