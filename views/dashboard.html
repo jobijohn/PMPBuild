@@ -1347,53 +1347,57 @@
             alert('No Filters!');
             return;
         }
-        var filter = getCookie("filter");
 
-        if (filter != "") {
-            var filterSet = filter + "#" + filtersNew;
-            setCookie('filter', filterSet, 30);
-        } else {
-            setCookie('filter', filtersNew, 30);
-        }
-        alert("Successfully saved to dashboard!")
+        $.post('/save-to-dashboard',{filtersNew:filtersNew})
+                .done(function (result) {
+                    if(result) {
+                        alert('ok');
+                    }
+                });
+//        var filter = getCookie("filter");
+//
+//        if (filter != "") {
+//            var filterSet = filter + "#" + filtersNew;
+//            setCookie('filter', filterSet, 30);
+//        } else {
+//            setCookie('filter', filtersNew, 30);
+//        }
+//        alert("Successfully saved to dashboard!")
     });
 
-    function getCookie(cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for(var i = 0; i <ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0)==' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length,c.length);
-            }
-        }
-        return "";
-    }
-
-    function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        var expires = "expires="+d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    function loadDashboardData(){
-        var filters = getCookie("filter");
-        if(!filters){
-            alert("No saved items!");
-            return;
-        }
-
-        var arrayFilter = [];
-        arrayFilter = filters.split('#');
-
-        /*alert(arrayFilter.length);
-        alert(arrayFilter[0]);
-        alert(arrayFilter[1]);*/
-    }
+//    function getCookie(cname) {
+//        var name = cname + "=";
+//        var ca = document.cookie.split(';');
+//        for(var i = 0; i <ca.length; i++) {
+//            var c = ca[i];
+//            while (c.charAt(0)==' ') {
+//                c = c.substring(1);
+//            }
+//            if (c.indexOf(name) == 0) {
+//                return c.substring(name.length,c.length);
+//            }
+//        }
+//        return "";
+//    }
+//
+//    function setCookie(cname, cvalue, exdays) {
+//        var d = new Date();
+//        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+//        var expires = "expires="+d.toUTCString();
+//        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+//    }
+//
+//    function loadDashboardData(){
+//        var filters = getCookie("filter");alert(filters);
+//        if(!filters){
+//            alert("No saved items!");
+//            return;
+//        }
+//    }
+//$( document ).ready(function() {
+//    console.log( "ready!" );
+//    loadDashboardData();
+//});
 </script>
 
 </html>
