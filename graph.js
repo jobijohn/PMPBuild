@@ -7,7 +7,7 @@ var common = require('./common');
 function populateGraphData(graphData, callback) {
     if(graphData.type == "bar") {
         var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
-        var colorArray = ['gray','#76A7FA','#703593','#871B47','gray','#76A7FA','#703593','#871B47','gray','#76A7FA','#703593','#871B47'];
+        var colorArray = ['#1DC7EA','#FF4A55','#1DC7EA','#FF4A55','#1DC7EA','#FF4A55','#1DC7EA','#FF4A55','#1DC7EA','#FF4A55','#1DC7EA','#FF4A55','#1DC7EA','#FF4A55','#1DC7EA','#FF4A55','#1DC7EA','#FF4A55','#1DC7EA','#FF4A55'];
         common.readJsonFile('filteredissues.json', function(err, selectedIssues){
             if(graphData.xDataType == 'District') {
                 for(var i=0;i<selectedIssues.length;i++) {
