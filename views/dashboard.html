@@ -60,9 +60,9 @@
                     </a>
                 </li>-->
                 <li class="">
-                    <div class="form-group">
+                    <div class="form-group filter-Select">
                         <label>Choose Filter</label>
-                        <select name="issuetype" class="" id="issuetype" >
+                        <select name="issuetype" class="chosen-select-filterPan" id="issuetype" >
                             <option value="">-- Select Issue Type --</option>
                             {{#indexData.issueTypes}}
                             <option value="{{issuetype}}">{{issuetype}}</option>
@@ -79,8 +79,9 @@
                 </li>
 
                 <li>
-                    <div class="form-group">
-                        <select id="graph-type">
+                    <div class="form-group filter-Select">
+                        <label>Choose Graph</label>
+                        <select id="graph-type" class="chosen-select-filterPan">
                             <option value="">- Select Graph Type -</option>
                             <option value="bar">Bar Graph</option>
                             <option value="line">Line Graph</option>
@@ -729,6 +730,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $(".chosen-select").chosen({width: "100%"});
+            $('.chosen-select-filterPan').chosen({width: '100%',disable_search: true})
             $('#myTable').DataTable();
         });
     </script>
