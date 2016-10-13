@@ -1,5 +1,2 @@
-<<<<<<< HEAD
 type=bar&&title=District vs Acres&&xLabel=District&&yLabel=Acres&&xDataType=District&&yDataType=No. of Acres&&head=asd&&issuetype=Member on-boarding&&districts=Anantapur,East Godavari&&taluks=Amadagur,Agali&&acres=>10|type=bar&&title=Bar Graph Acres Estimation&&xLabel=Districts&&yLabel=Acres&&xDataType=District&&yDataType=No. of Acres&&head=Test Graph 1&&issuetype=Member on-boarding&&districts=Chittoor&&taluks=Agali&&acres=>10
-=======
-type=bar&&title=Bar Graph Acres Estimation&&xLabel=Districts&&yLabel=Acres&&xDataType=District&&yDataType=No. of Acres&&head=Test Graph 1&&issuetype=Member on-boarding&&districts=Chittoor&&taluks=Agali&&acres=>10
->>>>>>> 377c6195c9b3ddc532f18613a1dc34a4a406f5b6
+
