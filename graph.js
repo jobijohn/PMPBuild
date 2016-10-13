@@ -110,3 +110,4 @@ function generateLineGraph(req, res) {
 exports.generateBarGraph = generateBarGraph;
 exports.generateLineGraph = generateLineGraph;
 exports.generatePieChart = generatePieChart;
+exports.populateGraphData = populateGraphData;
