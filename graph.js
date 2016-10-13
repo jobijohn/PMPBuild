@@ -1,43 +1,103 @@
 /**
  * Created by jobi on 10/4/16.
  */
-var common = require('./common');
+var common = require('./common'),
+    async = require('async');
 
-
-function populateGraphData(graphData, callback) {
-    if(graphData.type == "bar") {
-        var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
-        var colorArray = ['gray','#76A7FA','#703593','#871B47','gray','#76A7FA','#703593','#871B47','gray','#76A7FA','#703593','#871B47'];
-        common.readJsonFile('filteredissues.json', function(err, selectedIssues){
-            if(graphData.xDataType == 'District') {
-                for(var i=0;i<selectedIssues.length;i++) {
-                    xDataValues.push([selectedIssues[i].fields.customfield_10400.value, selectedIssues[i].fields.customfield_10403,colorArray[i]]);
-                }
-            } else if(graphData.xDataType == 'Taluk') {
-                for(var i=0;i<selectedIssues.length;i++) {
-                    xDataValues.push([selectedIssues[i].fields.customfield_10401.value, selectedIssues[i].fields.customfield_10403,colorArray[i]]);
-                }
-            }
-            graphData["xDataValues"] = xDataValues;
-            callback(null, graphData);
-        });
-    } else if(graphData.type == "pie") {
-        var xDataValues = [['District', 'Acres']];
-        common.readJsonFile('filteredissues.json', function(err, selectedIssues) {
-            if (graphData.xDataType == 'District') {
-                for (var i = 0; i < selectedIssues.length; i++) {
-                    xDataValues.push([selectedIssues[i].fields.customfield_10400.value, selectedIssues[i].fields.customfield_10403]);
-                }
-            } else if (graphData.xDataType == 'Taluk') {
-                for (var i = 0; i < selectedIssues.length; i++) {
-                    xDataValues.push([selectedIssues[i].fields.customfield_10401.value, selectedIssues[i].fields.customfield_10403]);
-                }
-            }
-            graphData["xDataValues"] = xDataValues;
-            callback(null, graphData);
-        });
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
     }
+    return color;
+}
 
+
+function populateGraphData(graphData, selectedIssues, callback) {
+    if(selectedIssues == "") {
+        common.readJsonFile('filteredissues.json', function(err, selectedIssues){
+            if(graphData.type == "bar") {
+                var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
+                if(graphData.xDataType == 'District') {
+                    async.each(selectedIssues, function(issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403, getRandomColor()]);
+                        callback();
+                    }, function(err){
+                        graphData["xDataValues"] = xDataValues;
+                        callback(null, graphData);
+                    });
+                } else if(graphData.xDataType == 'Taluk') {
+                    async.each(selectedIssues, function(issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403, getRandomColor()]);
+                        callback();
+                    }, function(err){
+                        graphData["xDataValues"] = xDataValues;
+                        callback(null, graphData);
+                    });
+                }
+            } else if(graphData.type == "pie") {
+                var xDataValues = [['District', 'Acres']];
+                if (graphData.xDataType == 'District') {
+                    async.each(selectedIssues, function(issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403]);
+                        callback();
+                    }, function(err){
+                        graphData["xDataValues"] = xDataValues;
+                        callback(null, graphData);
+                    });
+                } else if (graphData.xDataType == 'Taluk') {
+                    async.each(selectedIssues, function(issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403]);
+                        callback();
+                    }, function(err){
+                        graphData["xDataValues"] = xDataValues;
+                        callback(null, graphData);
+                    });
+                }
+            }
+        });
+    } else {
+        if(graphData.type == "bar") {
+            var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
+            if(graphData.xDataType == 'District') {
+                async.each(selectedIssues, function(issues, callback) {
+                    xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403, getRandomColor()]);
+                    callback();
+                }, function(err){
+                    graphData["xDataValues"] = xDataValues;console.log('Graph Data',graphData);
+                    callback(null, graphData);
+                });
+            } else if(graphData.xDataType == 'Taluk') {
+                async.each(selectedIssues, function(issues, callback) {
+                    xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403, getRandomColor()]);
+                    callback();
+                }, function(err){
+                    graphData["xDataValues"] = xDataValues;
+                    callback(null, graphData);
+                });
+            }
+        } else if(graphData.type == "pie") {
+            var xDataValues = [['District', 'Acres']];
+            if (graphData.xDataType == 'District') {
+                async.each(selectedIssues, function(issues, callback) {
+                    xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403]);
+                    callback();
+                }, function(err){
+                    graphData["xDataValues"] = xDataValues;
+                    callback(null, graphData);
+                });
+            } else if (graphData.xDataType == 'Taluk') {
+                async.each(selectedIssues, function(issues, callback) {
+                    xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403]);
+                    callback();
+                }, function(err){
+                    graphData["xDataValues"] = xDataValues;
+                    callback(null, graphData);
+                });
+            }
+        }
+    }
 }
 
 function generateBarGraph(req, res) {
@@ -51,7 +111,7 @@ function generateBarGraph(req, res) {
         xDataType : req.param('horizontal-data-type'),
         yDataType : req.param('vertical-data-type')
     };
-    populateGraphData(graphData, function (err, graphData) {
+    populateGraphData(graphData,'',function (err, graphData) {
         return res.json(graphData);
     });
 }
@@ -66,7 +126,7 @@ function generatePieChart(req, res) {
         xDataType : req.param('data-name-pie'),
         yDataType : ''
     };
-    populateGraphData(graphData, function (err, graphData) {
+    populateGraphData(graphData,'', function (err, graphData) {
         return res.json(graphData);
     });
 }

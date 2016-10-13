@@ -34,6 +34,7 @@
 
 </head>
 <body>
+<input type="text" id="graphData" value="{{indexData.savedFilterData}}">
 <div class="wrapper">
     <div class="sidebar" data-color="purple" data-image="img/sidebar-5.jpg">
 
@@ -841,7 +842,7 @@
 <script>
     $('#formBarGraph').on('click', '#btnBarGraph',  function (e) {
         var selectedIssues = $('#filteredIssues').val();
-        $.post('/graph/bar', $('#formBarGraph').serialize() + '&selectedIssues='+ selectedIssues)
+        $.post('/graph/bar', $('#formBarGraph').serialize())
             .done(function (result) {
                 if(result) {
                     google.charts.load('current', {packages: ['corechart', 'bar']});
@@ -939,9 +940,6 @@
 </script>
 
 <script>
-//    $('#issuetype').on('change', function () {
-//        var selectVal = $("#issuetype option:selected").val();
-//    });
 
     $('#filter-Add').click(function () {
         var selectVal = $("#issuetype option:selected").val();
@@ -1081,10 +1079,14 @@
             var splitFilterTextEach = splitFilterText[i].split("=");
             filters[splitFilterTextEach[0]] = splitFilterTextEach[1];
         }
-        var district = filters["districts"].split(',');
-        var taluk = filters["taluks"].split(',');
-        var issuetype = filters["issuetype"];
-        var acres = filters["acres"].split(',');
+        if(filters["districts"])
+            var district = filters["districts"].split(',');
+        if(filters["taluks"])
+            var taluk = filters["taluks"].split(',');
+        if(filters["issuetype"])
+            var issuetype = filters["issuetype"];
+        if(filters["acres"])
+            var acres = filters["acres"].split(',');
         $.post('/filter-issues', { issuetype:issuetype,
                                     district: district,
                                     taluk:taluk,
@@ -1092,19 +1094,11 @@
                 .done(function (result) {
                     if(result.success){
                         $('.test').empty();
-                        /*$('.test').append('<tr>' +
-                                '<td><b>Date</b></td>' +
-                                '<td><b>Summary</b></td>' +
-                                '<td><b>Issue Type</b></td>' +
-                                '<td><b>Status</b></td>' +
-                                '</tr>');*/
                         for (var data in result.filteredIssues) {
                             $('.test').append('<tr>' +
                                     '<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +
                                     '<td>' + result.filteredIssues[data].fields.summary +'</td>' +
-                                    /*'<td>' + result.filteredIssues[data].fields.issuetype.name +'</td>' +
-                                    '<td>' + result.filteredIssues[data].fields.status.name +'</td>' +*/
-                                            '</tr>');
+                                    '</tr>');
                         }
                     }
                 });
@@ -1113,21 +1107,21 @@
     $('#save-dashboard').on('click', function (e) {
         var graphinfo = "";
         var graphType = $("#graph-type").val();
-        if(graphType === 'bar') {
+        if (graphType === 'bar') {
             graphinfo += "type=bar&&"
             graphinfo += "title=" + $("#graph-title").val() + "&&";
             graphinfo += "xLabel=" + $("#horizontal-axis-label").val() + "&&";
             graphinfo += "yLabel=" + $("#vertical-axis-label").val() + "&&";
             graphinfo += "xDataType=" + $("#horizontal-data-type").val() + "&&";
             graphinfo += "yDataType=" + $("#vertical-data-type").val() + "&&";
-        } else if(graphType === 'line') {
+        } else if (graphType === 'line') {
             graphinfo += "type=line&&"
             graphinfo += "title=" + $("#graph-title-line").val() + "&&";
             graphinfo += "xLabel=" + $("#horizontal-axis-label-line").val() + "&&";
             graphinfo += "yLabel=" + $("#vertical-axis-label-line").val() + "&&";
             graphinfo += "xDataType=" + $("#horizontal-data-type-line").val() + "&&";
             graphinfo += "yDataType=" + $("#vertical-data-type-line").val() + "&&";
-        } else if(graphType === 'pie'){
+        } else if (graphType === 'pie') {
             graphinfo += "type=pie&&"
             graphinfo += "title=" + $("#graph-title-pie").val() + "&&";
             graphinfo += "dataType=" + $("#data-name-pie").val() + "&&";
@@ -1135,7 +1129,7 @@
         }
 
         var saveTitle = $("#save-title").val();
-        if(!saveTitle){
+        if (!saveTitle) {
             alert('Please enter title!');
             return;
         }
@@ -1146,56 +1140,13 @@
             return;
         }
 
-        $.post('/save-to-dashboard',{filtersNew:filtersNew})
+        $.post('/save-to-dashboard', {filtersNew: filtersNew})
                 .done(function (result) {
-                    if(result) {
+                    if (result) {
                         alert('ok');
                     }
                 });
-//        var filter = getCookie("filter");
-//
-//        if (filter != "") {
-//            var filterSet = filter + "#" + filtersNew;
-//            setCookie('filter', filterSet, 30);
-//        } else {
-//            setCookie('filter', filtersNew, 30);
-//        }
-//        alert("Successfully saved to dashboard!")
     });
-
-//    function getCookie(cname) {
-//        var name = cname + "=";
-//        var ca = document.cookie.split(';');
-//        for(var i = 0; i <ca.length; i++) {
-//            var c = ca[i];
-//            while (c.charAt(0)==' ') {
-//                c = c.substring(1);
-//            }
-//            if (c.indexOf(name) == 0) {
-//                return c.substring(name.length,c.length);
-//            }
-//        }
-//        return "";
-//    }
-//
-//    function setCookie(cname, cvalue, exdays) {
-//        var d = new Date();
-//        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-//        var expires = "expires="+d.toUTCString();
-//        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-//    }
-//
-//    function loadDashboardData(){
-//        var filters = getCookie("filter");alert(filters);
-//        if(!filters){
-//            alert("No saved items!");
-//            return;
-//        }
-//    }
-//$( document ).ready(function() {
-//    console.log( "ready!" );
-//    loadDashboardData();
-//});
 </script>
 
 </html>

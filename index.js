@@ -110,9 +110,12 @@ function getJsonFromJira(req, res) {
     );*/
 
     function callback(error, data, resp) {
-        fs.writeFile('jiraissues.json',data, function (err) {
+        fs.writeFile('jiraissues.json',"", function (err) {
             if (err) return console.log(err);
-            res.redirect('/');
+            fs.writeFile('jiraissues.json',data, function (err) {
+                if (err) return console.log(err);
+                res.redirect('/');
+            })
         })
     }
     consumer.get(base_url+"/rest/api/2/search?jql=project%20%3D%20MGM",
@@ -126,58 +129,66 @@ function filterIssues (req, res){
     var taluk = req.param('taluk');
     var issuetype = req.param('issuetype');
     var acres = req.param('acres');
-    //-------------------------------
-    var districtFilter = "(e.fields.customfield_10400 != null)&&(";
-    for(i=0;i<district.length;i++) {
-        if (i != district.length - 1) {
-            districtFilter += 'e.fields.customfield_10400.value == "'+ district[i] + '"||';
-        } else {
-            districtFilter += 'e.fields.customfield_10400.value == "'+ district[i] + '")';
-        }
-    }
-    //--------------------------------
-    console.log('district filter', districtFilter);
-    //--------------------------------
-    var talukFilter = "(e.fields.customfield_10401 != null &&  (";
-    for(i=0;i<taluk.length;i++) {
-        if (i != taluk.length - 1) {
-            talukFilter += 'e.fields.customfield_10401.value == "'+ taluk[i] + '"||';
-        } else {
-            talukFilter += 'e.fields.customfield_10401.value == "'+ taluk[i] + '"))';
-        }
+    var filter= "";
+    var districtFilter, talukFilter, issuetypeFilter, acreFilter;
+
+    if(issuetype) {
+        issuetypeFilter = "e.fields.issuetype.name == '"+ issuetype +"'";
+        filter = issuetypeFilter;
     }
 
-    //--------------------------------
-    console.log('taluk filter', talukFilter);
-    //--------------------------------
-    var issuetypeFilter = "e.fields.issuetype.name == '"+ issuetype +"'";
-    //--------------------------------
-    console.log('issuetypeFilter', issuetypeFilter);
-    //--------------------------------
-    var acreFilter = "(e.fields.customfield_10403 != null)&&(";
-    for(i=0;i<acres.length;i++) {
-        if (i != acres.length - 1) {
-            acreFilter += 'e.fields.customfield_10403'+ acres[i] + '&&';
-        } else {
-            acreFilter += 'e.fields.customfield_10403'+ acres[i] + ')';
+    if(district) {
+        districtFilter = "(e.fields.customfield_10400 != null)&&(";
+        for (i = 0; i < district.length; i++) {
+            if (i != district.length - 1) {
+                districtFilter += 'e.fields.customfield_10400.value == "' + district[i] + '"||';
+            } else {
+                districtFilter += 'e.fields.customfield_10400.value == "' + district[i] + '")';
+            }
         }
+        filter = filter + '&&' + districtFilter;
     }
-    //--------------------------------
-    console.log('acre filter', acreFilter);
+
+    if(taluk) {
+        talukFilter = "(e.fields.customfield_10401 != null &&  (";
+        for (i = 0; i < taluk.length; i++) {
+            if (i != taluk.length - 1) {
+                talukFilter += 'e.fields.customfield_10401.value == "' + taluk[i] + '"||';
+            } else {
+                talukFilter += 'e.fields.customfield_10401.value == "' + taluk[i] + '"))';
+            }
+        }
+        filter = filter + '&&' + talukFilter;
+    }
+
+
+
+    if(acres) {
+        acreFilter = "(e.fields.customfield_10403 != null)&&(";
+        for (i = 0; i < acres.length; i++) {
+            if (i != acres.length - 1) {
+                acreFilter += 'e.fields.customfield_10403' + acres[i] + '&&';
+            } else {
+                acreFilter += 'e.fields.customfield_10403' + acres[i] + ')';
+            }
+        }
+        filter = filter + '&&' + acreFilter;
+    }
+
     var issueJsonFile = 'jiraissues.json';
     common.readJsonFile(issueJsonFile, function (err, issueData) {
         var issues = issueData.issues;
         var filteredIssues = issues.filter(function (e) {
-            return eval(issuetypeFilter) &&
-                eval(districtFilter) &&
-                eval(talukFilter) &&
-                eval(acreFilter);
+            return eval(filter);
         });
-        fs.writeFile('filteredissues.json', JSON.stringify(filteredIssues), function (err) {
+        fs.writeFile('filteredissues.json', "", function (err) {
             if (err) return console.log(err);
-            return res.json({
-                success : 'success',
-                filteredIssues:filteredIssues
+            fs.writeFile('filteredissues.json', JSON.stringify(filteredIssues), function (err) {
+                if (err) return console.log(err);
+                return res.json({
+                    success: 'success',
+                    filteredIssues: filteredIssues
+                });
             });
         });
     });
@@ -193,54 +204,63 @@ function getIssuesByFilters(savedFilters, callback) {
     var taluk = savedFilters.taluks.split(',');
     var issuetype = savedFilters.issuetype;
     var acres = savedFilters.acres.split(',');
+    var districtFilter, talukFilter, acreFilter, issuetypeFilter;
+    var filter="";
 
-    var districtFilter = "(e.fields.customfield_10400 != null)&&(";
-    for(i=0;i<district.length;i++) {
-        if (i != district.length - 1) {
-            districtFilter += 'e.fields.customfield_10400.value == "'+ district[i] + '"||';
-        } else {
-            districtFilter += 'e.fields.customfield_10400.value == "'+ district[i] + '")';
-        }
+    if(issuetype) {
+        issuetypeFilter = "e.fields.issuetype.name == '"+ issuetype +"'";
+        filter = issuetypeFilter;
     }
 
-    var talukFilter = "(e.fields.customfield_10401 != null &&  (";
-    for(i=0;i<taluk.length;i++) {
-        if (i != taluk.length - 1) {
-            talukFilter += 'e.fields.customfield_10401.value == "'+ taluk[i] + '"||';
-        } else {
-            talukFilter += 'e.fields.customfield_10401.value == "'+ taluk[i] + '"))';
+    if(district) {
+        districtFilter = "(e.fields.customfield_10400 != null)&&(";
+        for (i = 0; i < district.length; i++) {
+            if (i != district.length - 1) {
+                districtFilter += 'e.fields.customfield_10400.value == "' + district[i] + '"||';
+            } else {
+                districtFilter += 'e.fields.customfield_10400.value == "' + district[i] + '")';
+            }
         }
+        filter = filter + '&&' + districtFilter;
     }
 
-    var issuetypeFilter = "e.fields.issuetype.name == '"+ issuetype +"'";
-
-    var acreFilter = "(e.fields.customfield_10403 != null)&&(";
-    for(i=0;i<acres.length;i++) {
-        if (i != acres.length - 1) {
-            acreFilter += 'e.fields.customfield_10403'+ acres[i] + '&&';
-        } else {
-            acreFilter += 'e.fields.customfield_10403'+ acres[i] + ')';
+    if(taluk) {
+        talukFilter = "(e.fields.customfield_10401 != null &&  (";
+        for (i = 0; i < taluk.length; i++) {
+            if (i != taluk.length - 1) {
+                talukFilter += 'e.fields.customfield_10401.value == "' + taluk[i] + '"||';
+            } else {
+                talukFilter += 'e.fields.customfield_10401.value == "' + taluk[i] + '"))';
+            }
         }
+        filter = filter + '&&' + talukFilter;
+    }
+
+
+    if(acres) {
+        acreFilter = "(e.fields.customfield_10403 != null)&&(";
+        for (i = 0; i < acres.length; i++) {
+            if (i != acres.length - 1) {
+                acreFilter += 'e.fields.customfield_10403' + acres[i] + '&&';
+            } else {
+                acreFilter += 'e.fields.customfield_10403' + acres[i] + ')';
+            }
+        }
+        filter = filter + '&&' + acreFilter;
     }
 
     var issueJsonFile = 'jiraissues.json';
     common.readJsonFile(issueJsonFile, function (err, issueData) {
         var issues = issueData.issues;
         var filteredIssues = issues.filter(function (e) {
-            return eval(issuetypeFilter) &&
-                eval(districtFilter) &&
-                eval(talukFilter) &&
-                eval(acreFilter);
+            return eval(filter);
         });
-        fs.writeFile('filteredissues.json', JSON.stringify(filteredIssues), function (err) {
-            if (err) return console.log(err);
-            var issueSummary = [];
-            for (var data in filteredIssues) {
-                var summary = filteredIssues[data].fields.summary;
-                issueSummary.push({summary:summary});
-            }
-            callback(null, issueSummary);
-        });
+        var issueSummary = [];
+        for (var data in filteredIssues) {
+            var summary = filteredIssues[data].fields.summary;
+            issueSummary.push({summary:summary});
+        }
+        callback(null, filteredIssues, issueSummary);
     });
 }
 
@@ -314,16 +334,25 @@ function getDataForSavedGraphAndIssuesFilter(savedFilters, callback) {
     var savedFiltersData = [];
     async.each(savedFilters, function(filter, callback) {
         var dummy = {};
-        getIssuesByFilters(filter, function (err, selectedIssues) {
-            graph.populateGraphData(filter, function (err, graphData) {
-                dummy.selectedIssues = selectedIssues;
-                dummy.graphData = graphData;//console.log('dummy', dummy);
-                savedFiltersData.push(dummy);
-                callback();
-            });
+        async.waterfall([
+            function(callback) {
+                getIssuesByFilters(filter, function (err, selectedIssues, issueSummary) {
+                    dummy.selectedIssues = issueSummary;
+                    callback(null, selectedIssues, dummy);
+                });
+            },
+            function(selectedIssues, dummy, callback) {
+                graph.populateGraphData(filter, selectedIssues, function (err, graphData) {
+                    dummy.graphData = graphData;
+                    callback(null, dummy);
+                });
+            }
+        ], function (err, result) {
+            savedFiltersData.push(result);
+            callback();
         });
+
     }, function(err){
-            console.log('All files have been processed successfully',savedFiltersData);
         callback(null, savedFiltersData);
     });
 }
