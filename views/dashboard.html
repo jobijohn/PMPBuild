@@ -36,7 +36,7 @@
 <body>
 <input type="text" id="graphData" value="{{indexData.savedFilterData}}">
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="img/sidebar-5.jpg">
+    <div class="sidebar disable" data-color="purple" data-image="img/sidebar-5.jpg">
 
     <!--
 
@@ -490,7 +490,7 @@
 
                 <div class="row">
                     <div class="col-sm-10 saveDashboardInput" style="margin-bottom: 10px">
-                        <input type="text" id = "graph-filters" name="graph-filters" class="col-sm-12" placeholder="Filters" value="" readonly>
+                        <input type="text" id = "graph-filters" name="graph-filters" class="col-sm-12" placeholder="Filters" value="">
                         <!--issuetype=Member on-boarding&&district=Anantapur,Chittoor&&taluk=Agali,Amadagur&&acres=>10,<50-->
 
                     </div>
@@ -524,7 +524,7 @@
                     <div class="col-md-6">
                         <div class="card ">
                             <div class="header">
-                                <h4 class="title">Tasks / Issues</h4>
+                                <h4 class="title"><i class="fa fa-circle text-info"></i> Tasks / Issues</h4>
                                 <!--<p class="category">Backend development</p>-->
                             </div>
                             <div class="content">
@@ -650,7 +650,7 @@
                             <button class="btn btn-info btn-fill" id="save-dashboard"> Save to Dashboard</button>
                         </div>
                         <div class="col-sm-2 p0">
-                            <button class="btn btn-info btn-fill pull-right" id="reset"> Reset</button>
+                            <button class="btn btn-info btn-fill pull-right" id="reset">Reset </button>
                         </div>
                     </div>
                 </div>
@@ -764,12 +764,23 @@
                     if($('.sidebar-wrapper').hasClass('disable')){
                         $('.sidebar-wrapper').removeClass('disable');
                     }
+                    if($('.sidebar').hasClass('disable')){
+                        $('.sidebar').removeClass('disable');
+                    }
                 } else if(id === 'dashBoard'){
                     $('.main-panel').addClass('dashboard-active');
                     $('.dashboard_panel').removeClass('disable');
                     $('.settings-panel').addClass('disable');
                     $('.sidebar-wrapper').addClass('disable');
+                    $('.sidebar').addClass('disable')
                 }
+            });
+
+            $('#reset').on('click', function(){
+                $('input[type="text"]').val('');
+                $('select').val('');
+                $('.settings-panel .test').html('')
+
             });
 
             $('#graph-type').on('change', function(){
@@ -850,8 +861,10 @@
                     function drawBasic(){
                         var data = google.visualization.arrayToDataTable(result.xDataValues);
                         var options = {
-                            title: result.title/*,
-                             chartArea: {width: '60%'}*/,
+                            title: result.title,
+                             //chartArea: {height: '200'},
+                            width: 435,
+                            height: 220,
                             hAxis: {
                                 title: result.xLabel,
                                 minValue: 0
@@ -866,6 +879,13 @@
                     }
                 }
             });
+    });
+
+    $('#reset').on('click', function(){
+        var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+        chart.clearChart();
+        $('#divChart').html('');
+        $('#lblAcreValues').html('');
     });
 </script>
 
@@ -1096,7 +1116,7 @@
                         $('.test').empty();
                         for (var data in result.filteredIssues) {
                             $('.test').append('<tr>' +
-                                    '<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +
+                                    /*'<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +*/
                                     '<td>' + result.filteredIssues[data].fields.summary +'</td>' +
                                     '</tr>');
                         }
@@ -1147,6 +1167,28 @@
                     }
                 });
     });
+
+/*$('#reset').on('click', function (e) {
+    e.preventDefault();
+    var pageRef = $(this).attr('href');
+    callPage(pageRef);
+});
+
+function callPage(pageRefInput){
+    $.ajax({
+        url: pageRefInput,
+        type: 'GET',
+        dataType: 'text',
+        success:function(response){
+            console.log('the page was loded', response);
+        },
+        error:function(error){
+            console.log('page was not loaded', error)
+        }
+    });
+}*/
+
+
 </script>
 
 </html>
