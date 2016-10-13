@@ -3821,6 +3821,19 @@ ul.filterOption li select option {
 table .test td {
     text-align: center;
 }
+.allissueTable tbody tr td:nth-child(1){
+    width: 68px;
+}
+.allissueTable tbody tr td:nth-child(3){
+    width: 126px;
+}
+.dataTables_filter input {
+    background: rgba(238, 238, 238, .4);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    color: #000;
+}
 
 /*** ux **/
 .dashboard_panel {
