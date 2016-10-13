@@ -4,7 +4,8 @@ var session = require('express-session');
 var OAuth = require('oauth').OAuth;
 var fs = require('fs'),
     common = require('./common'),
-    graph = require('./graph');
+    graph = require('./graph'),
+    async = require('async');
 
 var base_url = "https://swarmact.atlassian.net"; //example https://test.atlassian.net
 var consumer = new OAuth(
@@ -236,7 +237,7 @@ function getIssuesByFilters(savedFilters, callback) {
             var issueSummary = [];
             for (var data in filteredIssues) {
                 var summary = filteredIssues[data].fields.summary;
-                issueSummary.push(summary);
+                issueSummary.push({summary:summary});
             }
             callback(null, issueSummary);
         });
@@ -311,20 +312,20 @@ function getSavedGraphAndIssuesFilter(callback) {
 
 function getDataForSavedGraphAndIssuesFilter(savedFilters, callback) {
     var savedFiltersData = [];
-    for (var i in savedFilters) {
+    async.each(savedFilters, function(filter, callback) {
         var dummy = {};
-        getIssuesByFilters(savedFilters[i], function (err, selectedIssues) {
-            graph.populateGraphData(savedFilters[i], function (err, graphData) {
+        getIssuesByFilters(filter, function (err, selectedIssues) {
+            graph.populateGraphData(filter, function (err, graphData) {
                 dummy.selectedIssues = selectedIssues;
-                dummy.graphData = graphData;
+                dummy.graphData = graphData;//console.log('dummy', dummy);
                 savedFiltersData.push(dummy);
+                callback();
             });
         });
-    }
-    setTimeout(function(){
+    }, function(err){
+            console.log('All files have been processed successfully',savedFiltersData);
         callback(null, savedFiltersData);
-    }, 5000);
-
+    });
 }
 
 exports.indexPage = indexPage;

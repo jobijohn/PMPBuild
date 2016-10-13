@@ -416,9 +416,11 @@
                                 <div class="">
                                     <table class="table" id="{{graphData.title}}">
                                         <tbody>
+                                        {{#each selectedIssues}}
                                         <tr>
-                                            <td>{{selectedIssues}}</td>
+                                            <td>{{summary}}</td>
                                         </tr>
+                                        {{/each}}
                                         </tbody>
                                     </table>
                                 </div>
