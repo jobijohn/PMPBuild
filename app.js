@@ -62,6 +62,7 @@ function launchApp() {
     app.get('/getCharts', saveXml.getCharts);
 
     app.post('/filter-issues', index.filterIssues);
+    app.post('/save-to-dashboard', index.saveToDashboard);
 
     var port = app.get('port') || 1337;
     app.listen(port);

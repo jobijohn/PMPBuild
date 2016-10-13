@@ -29,7 +29,10 @@ function indexPage(req, res) {
                     indexData.taluks = taluks;
                     common.getAllIssues(issueData, function (err, allIssues) {
                         indexData.allIssues = allIssues;
-                        res.render('dashboard', {indexData:indexData});
+                        getSavedGraphAndIssues(function(err, savedFilters) {
+                            console.log('savedFilters',savedFilters);
+                            res.render('dashboard', {indexData:indexData});
+                        });
                     });
                 });
             });
@@ -177,8 +180,74 @@ function filterIssues (req, res){
     });
 }
 
+/**
+ * Function to save filters and graph filters into a file
+ * @param req
+ * @param res
+ */
+function saveToDashboard(req, res) {
+    var filters = req.param('filtersNew');
+    var saveData;
+    fs.readFile('savedfilters.txt', 'utf8', function (err, txtData) {
+        if (err) {
+            callback(err, null);
+        }
+        if(txtData) {
+            saveData = txtData + '|' + filters;
+        } else {
+            saveData = filters;
+        }
+        fs.writeFile('savedfilters.txt', saveData, function (err) {
+            if(err) return console.log(err);
+            return res.json({
+                success:'success'
+            });
+        });
+
+    });
+}
+
+/**
+ * Function to get saved filters
+ * @param callback
+ */
+function getSavedFilters(callback) {
+    fs.readFile('savedfilters.txt', 'utf8', function (err, txtData) {
+        if (err) {
+            callback(err, null);
+        }
+        callback(null, txtData);
+    });
+}
+
+/**
+ * Functo get All saved graph and filters
+ * @param callback
+ */
+function getSavedGraphAndIssues(callback) {
+    getSavedFilters(function (err, txtData) {
+        var savedfilters = txtData.split("|");
+        var eachfilter = [], eachFilterSplit = [];
+
+        for(var i in savedfilters) {
+            var filterValues = savedfilters[i].split("&&");
+            eachfilter.push(filterValues);
+        }
+
+        for(var j in eachfilter) {
+            var dummyArray = [];
+            for(var k in eachfilter[j]) {
+                var splitEachfilter = eachfilter[j][k].split("=");
+                dummyArray[splitEachfilter[0]] = splitEachfilter[1];
+            }
+            eachFilterSplit.push(dummyArray);
+        }
+        callback(null, eachFilterSplit);
+    }) ;
+}
 exports.indexPage = indexPage;
 exports.getOAuth = getOAuth;
 exports.getOAuthCallback = getOAuthCallback;
 exports.getJsonFromJira = getJsonFromJira;
 exports.filterIssues = filterIssues;
+exports.saveToDashboard = saveToDashboard;
