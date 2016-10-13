@@ -34,12 +34,14 @@ function launchApp() {
     app.use('/img', express.static(__dirname + '/public/img'));
     app.use('/', express.static(__dirname + '/public/'));
     app.use(express.bodyParser());
-
-    app.use(session({
+    app.use(express.methodOverride());
+    app.use(express.cookieParser());
+    app.use(express.session({
         secret: 'sssh!!!',
         proxy: true,
         resave: true,
-        saveUninitialized: true
+        saveUninitialized: true,
+        cookie: {secure: false, maxAge: 86400000}
     }));
 
     app.get('/', index.indexPage);
@@ -53,9 +55,14 @@ function launchApp() {
     app.post('/graph/line', graph.generateLineGraph);
     app.post('/chart/pie', graph.generatePieChart);
 
-    app.get('/jira/issue/create', jiraIssue.createJiraIssue);
+    app.get('/CreateIssue', jiraIssue.renderForm);
+    app.post('/CreateIssue', jiraIssue.createJiraIssue);
+
     app.post('/save/xml', saveXml.saveToXml);
     app.get('/getCharts', saveXml.getCharts);
+
+    app.post('/filter-issues', index.filterIssues);
+    app.post('/save-to-dashboard', index.saveToDashboard);
 
     var port = app.get('port') || 1337;
     app.listen(port);

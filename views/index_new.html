@@ -30,7 +30,7 @@
 <div class="row box-theme">
 <div class="nav-bar">
     <div class="col-sm-9 text-left">
-        <h1>Project Management Prototype Build</h1>
+        <h1>WASSAN Project Management</h1>
     </div>
     <div class="col-sm-3">
 
@@ -42,20 +42,20 @@
 </div>
 
 
-<div id="Settings" class="tabcontent default-active">
+<div id="Settings" class="tabcontent ">
 <div class="col-sm-3 filter-pan p0">
-    <div class="form-group">
+    <!--<div class="form-group">
         <a href="/jira" class="btn-submit filter-btn">Refresh</a>
-    </div>
+    </div>-->
 
-    <div class="form-group">
+    <div class="form-group mT15">
         <label for="issuetype" class="control-label col-sm-12 text-left">New Issue Filter :</label>
         <div class="col-sm-8 text-left custom-select">
             <select name="issuetype" class="" id="issuetype" >
                 <option value="">-- Select Issue Type --</option>
-                {{#data}}
+                {{#issueTypes}}
                 <option value="{{issuetype}}">{{issuetype}}</option>
-                {{/data}}
+                {{/issueTypes}}
             </select>
         </div>
         <div class="col-sm-4 pl0">
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <!--<div class="form-group">
         <label for="savedFilter" class="control-label col-sm-12 text-left">Saved Filters:</label>
         <div class="col-sm-12 text-left custom-select">
             <select id="savedFilter" class="">
@@ -76,16 +76,16 @@
                 <option value="">Issue filter 4</option>
             </select>
         </div>
-    </div>
+    </div>-->
 
     <ol id="filterList" class="filter-List-ul">
     </ol>
 
-    <div class="col-sm-12 mT15">
+    <!--<div class="col-sm-12 mT15">
         <div class=" col-sm-12 add-filter-btn">
             <button>Save Filter</button>
         </div>
-    </div>
+    </div>-->
 
 
 </div>
@@ -113,7 +113,7 @@
             <div class="col-sm-12">
                 <label for="graph-title" class="control-label col-sm-2 custom-width">Title:</label>
                 <div class="col-sm-5 p0">
-                    <input type="text" class="form-control" id="graph-title">
+                    <input type="text" class="form-control" id="graph-title" name="graph-title">
                 </div>
             </div>
             <div style="height: 8px" class="col-sm-12"></div>
@@ -123,14 +123,14 @@
                 <div class="form-group">
                     <label for="horizontal-axis-label" class="control-label col-sm-2">x Label:</label>
                     <div class="col-sm-10 p0">
-                        <input type="text" class="form-control" id="horizontal-axis-label">
+                        <input type="text" class="form-control" id="horizontal-axis-label" name="horizontal-axis-label">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="horizontal-data-values" class="control-label col-sm-2">x Values:</label>
                     <div class="col-sm-10 p0">
-                        <textarea style="height: 50px" id="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                        <textarea style="height: 50px" id="horizontal-data-values" name="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
                     </div>
                 </div>
 
@@ -139,7 +139,7 @@
                 <div class="form-group">
                     <label for="horizontal-data-type" class="control-label col-sm-2">x Data:</label>
                     <div class="col-sm-10 p0">
-                        <select id="horizontal-data-type" class="form-control">
+                        <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
                             <option value="">District</option>
                             <option value="">Taluk</option>
                             <option value="">No. of Acres</option>
@@ -155,7 +155,7 @@
                 <div class="form-group">
                     <label for="vertical-data-type" class="control-label col-sm-2">v Data:</label>
                     <div class="col-sm-10 p0">
-                        <select id="vertical-data-type" class="form-control">
+                        <select id="vertical-data-type" name="vertical-data-type" class="form-control">
                             <option value="">No. of Acres</option>
                             <option value="">District</option>
                             <option value="">Taluk</option>
@@ -166,14 +166,14 @@
                 <div class="form-group">
                     <label for="vertical-data-values" class="control-label col-sm-2">v Values:</label>
                     <div class="col-sm-10 p0">
-                        <textarea style="height: 50px" id="vertical-data-values" class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
+                        <textarea style="height: 50px" id="vertical-data-values" name="vertical-data-values"  class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="vertical-axis-label" class="control-label col-sm-2">y Label:</label>
                     <div class="col-sm-10 p0">
-                        <input type="text" class="form-control" id="vertical-axis-label">
+                        <input type="text" class="form-control" id="vertical-axis-label" name="vertical-axis-label">
                     </div>
                 </div>
 
@@ -371,31 +371,12 @@
 
 </div>
 
-<div id="Dashboard" class="tabcontent">
+<div id="Dashboard" class="tabcontent default-active">
     <div class="col-sm-12 main-content">
-        <div class="col-sm-12 entries mT15">
-            <h1> All Issues from JIRA:</h1>
-            <div class="col-sm-6">
-                <ul>
-                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
-                    <li><a href=""> This is an example issue for jira-connector</a></li>
-                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
-                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
-
-                </ul>
-            </div>
-        </div>
 
         <div class="col-sm-12 entries mT15">
             <div class="col-sm-4">
-                <img src="http://getwordwall.com/Attachments/Screenshots/Play/bar-graph.png" style="width:345px" >
+                <div id="divChartDash"></div>
             </div>
             <div class="col-sm-5">
                 <ul>
@@ -414,11 +395,39 @@
                 </ul>
             </div>
             <div class="col-sm-3">
-                After click on a particular issue, <br/>
-                then the corresponding JIRA Issue page <br/>
-                will be displayed in this pane...
+               <button>Back to Settings...</button>
             </div>
         </div>
+
+        <div>
+            <button>Add New Graph...</button>
+        </div>
+
+        <div class="col-sm-12 entries mT15">
+            <h1> All Issues from JIRA:</h1>
+            Sort: Created Date <select name="" id="">
+                                <option value=">"</option>
+                                <option value="<">&lt;</option>
+                                <option value="=">=</option>
+                            </select>
+            <div class="col-sm-6">
+                <ul>
+                    <li><a href=""> An improvement or enhancement to an existing feature or task</a></li>
+                    <li><a href=""> This is an example issue for jira-connector</a></li>
+                    <li><a href=""> Propagate Milestone/Version creation between Jira and GitHub</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+                    <li><a href=""> This issue was once resolved, but the resolution was deemed incorrect.</a></li>
+                    <li><a href=""> A problem which impairs or prevents the functions of the product.</a></li>
+
+                </ul>
+            </div>
+        </div>
+
     </div>
 
 
@@ -1063,7 +1072,9 @@ function openCity(evt, cityName) {
                                 height: 300
                             };
                             var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+                            var chartDash = new google.visualization.ColumnChart(document.getElementById('divChartDash'));
                             chart.draw(data, options);
+                            chartDash.draw(data, options);
 
                             $("#packages").val(JSON.stringify("['corechart', 'bar']"));
                             $("#data").val(JSON.stringify(data));

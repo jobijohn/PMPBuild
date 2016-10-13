@@ -1,0 +1,1194 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<!--<link rel="icon" type="image/png" href="../public/assets/img/favicon.ico">-->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>Wassan Project Management</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <!-- Bootstrap core CSS     -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="/assets/css/animate.min.css" rel="stylesheet"/>
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="/assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="/assets/css/demo.css" rel="stylesheet" />
+
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+</head>
+<body>
+<input type="text" id="graphData" value="{{indexData.savedFilterData}}">
+<div class="wrapper">
+    <div class="sidebar disable" data-color="purple" data-image="img/sidebar-5.jpg">
+
+    <!--
+
+        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+        Tip 2: you can also add an image using data-image tag
+
+    -->
+
+    	<div class="sidebar-wrapper disable">
+            <div class="logo">
+                <a href="http://wassan.org/" class="simple-text">
+                    WASSAN </br>
+                    <span>Project Management</span>
+                </a>
+            </div>
+
+            <ul class="nav">
+                <!--<li class="active">
+                    <a href="dashboard.html">
+                        <i class="pe-7s-graph"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>-->
+                <li class="">
+                    <div class="form-group filter-Select">
+                        <label>Choose Filter</label>
+                        <select name="issuetype" class="chosen-select-filterPan" id="issuetype" >
+                            <option value="">-- Select Issue Type --</option>
+                            {{#indexData.issueTypes}}
+                            <option value="{{issuetype}}">{{issuetype}}</option>
+                            {{/indexData.issueTypes}}
+                        </select>
+                    </div>
+                </li>
+
+                <li class="">
+                    <a class="addFilterBtn" id="filter-Add">
+                        <i class="pe-7s-plus"></i>
+                        <p>Add Filter</p>
+                    </a>
+                </li>
+
+                <li>
+                    <div class="form-group filter-Select">
+                        <label>Choose Graph</label>
+                        <select id="graph-type" class="chosen-select-filterPan">
+                            <option value="">- Select Graph Type -</option>
+                            <option value="bar">Bar Graph</option>
+                            <option value="line">Line Graph</option>
+                            <option value="pie">Pie Chart</option>
+                        </select>
+                    </div>
+                </li>
+            </ul>
+    	</div>
+    </div>
+
+    <ul class="filterOption">
+
+        <a class="close">x</a>
+        <form method="post" id="formBarGraph" class="table-form disable">
+            <li>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="graph-title" name="graph-title" placeholder="Enter Tittle">
+                </div>
+            </li>
+
+            <li>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="horizontal-axis-label" name="horizontal-axis-label" placeholder="Enter X Label">
+                </div>
+            </li>
+
+            <li>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="vertical-axis-label" name="vertical-axis-label" placeholder="Select Y Label">
+                </div>
+            </li>
+
+            <!--<li>
+                <div class="form-group">
+                    <textarea style="height: 50px" id="horizontal-data-values" name="horizontal-data-values" class="form-control">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                </div>
+            </li>-->
+
+            <li>
+                <div class="form-group">
+                    <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
+                        <option value="">Select X Data</option>
+                    </select>
+                </div>
+            </li>
+
+            <li>
+                <div class="form-group">
+                    <select id="vertical-data-type" name="vertical-data-type" class="form-control">
+                        <option value="">Select Y Data</option>
+                    </select>
+                </div>
+            </li>
+
+            <!--<li>
+                <div class="form-group">
+                    <textarea style="height: 50px" id="vertical-data-values" name="vertical-data-values"  class="form-control">50&#13;&#10;100&#13;&#10;150</textarea>
+                </div>
+            </li>-->
+
+
+            <input type="button" name="btnBarGraph" id="btnBarGraph" class="btn btn-info btn-fill pull-right createGraphBtn" value="Create Bar Graph">
+        </form>
+
+
+
+        <form method="post" id="formPieChart" class="table-form disable">
+            <li>
+                <div class="form-group">
+                    <input id="graph-title-pie" name="graph-title-pie" type="text" class="form-control" placeholder="Enter Tittle">
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <select class="form-control" id="data-name-pie" name="data-name-pie">
+                        <option value="">Select Data</option>
+                    </select>
+                </div>
+            </li>
+            <!--<li>
+                <div class="form-group">
+                    <textarea style="height: 50px" class="form-control" id="data-names-pie">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                </div>
+            </li>-->
+           <!-- <li>
+                <div class="form-group">
+                    <select class="form-control" id="data-value-pie">
+                        <option value="">Select Value</option>
+                        <option value="">No. of Acres</option>
+                        <option value="">District</option>
+                        <option value="">Taluk</option>
+                    </select>
+                </div>
+            </li>-->
+            <!--<li>
+                <div class="form-group">
+                    <textarea style="height: 50px" class="form-control" id="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
+                </div>
+            </li>-->
+            <!--<li>
+                <div class="form-group">
+                    <select class="form-control" id="slice-text-pie">
+                        <option value="">Percentage</option>
+                        <option value="">Names</option>
+                        <option value="">Values</option>
+                        <option value="">None</option>
+                    </select>
+                </div>
+            </li>-->
+            <input type="button" class="btn btn-info btn-fill pull-right createGraphBtn" name="btnPieChart" id="btnPieChart" value="Create Pie Chart">
+
+        </form>
+
+        <form method="post" id="formLineGraph" class="table-form disable">
+            <li>
+                <div class="form-group">
+                    <input id="graph-title-line" type="text" class="form-control" placeholder="Enter Tittle">
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <input id="horizontal-axis-label-line" type="text" class="form-control" placeholder="Enter X Label">
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <input id="vertical-axis-label-line" type="text" class="form-control" placeholder="Enter Y Label">
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <select class="form-control" id="horizontal-data-type-line">
+                        <option value="">Select X Data</option>
+                    </select>
+                </div>
+            </li>
+            <!--<li>
+                <div class="form-group">
+                    <textarea style="height: 50px" class="form-control" id="horizontal-data-values-line">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
+                </div>
+            </li>-->
+            <li>
+                <div class="form-group">
+                    <select class="form-control" id="vertical-data-type-line">
+                        <option value="">Select Y Data</option>
+                    </select>
+                </div>
+            </li>
+            <!--<li>
+                <div class="form-group">
+                    <textarea style="height: 50px" class="form-control" id="vertical-data-values-line">50&#13;&#10;100&#13;&#10;150</textarea>
+                </div>
+            </li>-->
+            <input type="button" class="btn btn-info btn-fill pull-right createGraphBtn" name="btnLineGraph" id="btnLineGraph" value="Create Line Graph">
+        </form>
+    </ul>
+
+    <div class="col-sm-3 addFilter">
+
+        <ul class="membes-on">
+            <div class="col-sm-12 pull-right">
+                <a class="close">x</a>
+            </div>
+            <div class="clearfix"></div>
+            <li class="district filterMainBtn" id="districtBtn">District</li>
+            <li class="taluk filterMainBtn" id="talukBtn">Taluk</li>
+            <li class="acres filterMainBtn" id="acresBtn">No. of Acres</li>
+        </ul>
+        <div class="sub-filter filterGroup district">
+            <div class="content">
+                <h1>Filter Popup</h1>
+                <div class="filterContentClose">x</div>
+                <div class="col-sm-12 mT15">
+                    <select data-placeholder="Select Districts" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
+                        <option value=""></option>
+                        {{#indexData.districts}}
+                        <option value="{{districts}}">{{districts}}</option>
+                        {{/indexData.districts}}
+                    </select>
+                </div>
+                <div class="col-sm-12">
+                        <button type="button" id="addDistrict" class="btn btn-info btn-fill pull-right">Add this filter</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="sub-filter-taluk filterGroup taluk">
+            <div class="content">
+                <h1>Filter Popup</h1>
+                <div class="filterContentClose">x</div>
+                <div class="col-sm-12 mT15">
+                    <select data-placeholder="Select Taluks" name="taluk" class="chosen-select" multiple style="width: 100%;" id="taluk">
+                        <option value=""></option>
+                        {{#indexData.taluks}}
+                        <option value="{{taluks}}">{{taluks}}</option>
+                        {{/indexData.taluks}}
+                    </select>
+                </div>
+
+                <div class="col-sm-12">
+                        <button type="button" id="addTaluk" class="btn btn-info btn-fill pull-right">Add this filter</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="sub-filter-acres filterGroup acres">
+            <div class="content">
+                <h1>Filter Popup</h1>
+                <div class="filterContentClose">x</div>
+                <div class="col-sm-12 mT15">
+                    <ul class="Acres " style="padding: 0">
+                        <select name="acreSymbol" id="acreSymbol">
+                            <option value=">">&gt;</option>
+                            <option value="<">&lt;</option>
+                            <option value="=">=</option>
+                        </select>
+                        <input type="text" value="" id="acreValue">
+                        <button id="addAcreSingle">Add</button>
+                        <label id="lblAcreValues" class="disable"></label>
+                    </ul>
+                </div>
+
+                <div class="col-sm-12">
+                        <button type="button" id="addAcre" class="btn btn-info btn-fill pull-right">Add this filter</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="dashboard-active main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand selected" href="#" id="dashBoard">Dashboard</a>
+                    <a class="navbar-brand" href="#" id="settings">Settings</a>
+                </div>
+                <!--<div class="collapse navbar-collapse">-->
+                    <!--<ul class="nav navbar-nav navbar-left">
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-dashboard"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-globe"></i>
+                                    <b class="caret"></b>
+                                    <span class="notification">5</span>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#">Notification 1</a></li>
+                                <li><a href="#">Notification 2</a></li>
+                                <li><a href="#">Notification 3</a></li>
+                                <li><a href="#">Notification 4</a></li>
+                                <li><a href="#">Another notification</a></li>
+                              </ul>
+                        </li>
+                        <li>
+                           <a href="">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                    </ul>-->
+
+                    <!--<ul class="nav navbar-nav navbar-right">
+                        <li>
+                           <a href="">
+                               Account
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Dropdown
+                                    <b class="caret"></b>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                              </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Log out
+                            </a>
+                        </li>
+                    </ul>-->
+                <!--</div>-->
+            </div>
+        </nav>
+
+        <div class="dashboard_panel col-sm-12">
+            <div class="container-fluid">
+
+                {{#each indexData.savedFilterData}}
+                <div class="col-md-6">
+                    <div class="card ">
+                        <div class="header">
+                            <h4 class="title">{{graphData.title}}</h4>
+                           <!-- <p class="category">All products including Taxes</p>-->
+                        </div>
+                        <div class="content">
+                            <div id="dash-chart" class="ct-chart"></div>
+
+
+                        </div>
+
+                        <div class="footer">
+                            <div class="legend">
+                               <i class="fa fa-circle text-info"></i> Issues / Tasks
+                               <!--  <i class="fa fa-circle text-danger"></i> BMW 5 Series-->
+                            </div>
+                            <div class="stats">
+                                <div class="">
+                                    <table class="table" id="{{graphData.title}}">
+                                        <tbody>
+                                        {{#each selectedIssues}}
+                                        <tr>
+                                            <td>{{summary}}</td>
+                                        </tr>
+                                        {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <button class="btn btn-info btn-fill pull-right"><i class="pe-7s-edit"> Settings</i></button>
+                        </div>
+
+                    </div>
+                </div>
+                {{/each}}
+                <div class="col-sm-12">
+                    <div class="newGraphBtn p0 m0">
+                        <button class="btn btn-info btn-fill text-center"><i class="pe-7s-graph1"> Create New Graph</i></button>
+                    </div>
+
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card pT0">
+                        <div class="header full-color-heder">
+                            <h4 class="title">All issues From Jira</h4><br/>
+                            <!--<p class="category">Here is a subtitle for this table</p>-->
+
+                        </div>
+                        <div class="col-sm-12">
+                            <table id="myTable" class="display allissueTable compact" cellspacing="0" width="100%">
+                                <thead>
+                                <th>Created</th>
+                                <th>Summary</th>
+                                <th>Issue Type</th>
+                                <th>Status</th>
+                                <th>District</th>
+                                <th>Taluk</th>
+
+                                </thead>
+                                <tbody>
+                                {{#each indexData.allIssues}}
+                                    <tr>
+                                        <td>{{created}}</td>
+                                        <td>{{summary}}</td>
+                                        <td>{{issueType}}</td>
+                                        <td>{{status}}</td>
+                                        <td>{{district}}</td>
+                                        <td>{{taluk}}</td>
+
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="content settings-panel disable">
+            <div class="container-fluid">
+
+
+
+
+                <div class="row">
+                    <div class="col-sm-10 saveDashboardInput" style="margin-bottom: 10px">
+                        <input type="text" id = "graph-filters" name="graph-filters" class="col-sm-12" placeholder="Filters" value="">
+                        <!--issuetype=Member on-boarding&&district=Anantapur,Chittoor&&taluk=Agali,Amadagur&&acres=>10,<50-->
+
+                    </div>
+                    <div class="col-sm-2" style="margin-bottom: 10px">
+                        <button id="test-button" class="filterApplyBtn">Apply Filter</button>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card ">
+                            <div class="header">
+                                <h4 class="title">Wassan Graph</h4>
+                                <!--<p class="category">All products including Taxes</p>-->
+                            </div>
+                            <div class="content">
+                                <div id="divChart" class="ct-chart"></div>
+
+                                <div class="footer">
+                                    <div class="legend">
+                                       <!-- <i class="fa fa-circle text-info"></i> Tesla Model S
+                                        <i class="fa fa-circle text-danger"></i> BMW 5 Series-->
+                                    </div>
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card ">
+                            <div class="header">
+                                <h4 class="title"><i class="fa fa-circle text-info"></i> Tasks / Issues</h4>
+                                <!--<p class="category">Backend development</p>-->
+                            </div>
+                            <div class="content">
+                                <div class="table-full-width">
+                                    <table class="table">
+                                        <tbody class="test">
+                                            <!--<tr>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox">
+                                                    </label>
+                                                </td>
+                                                <td>Sign contract for "What are conference organizers afraid of?"</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox" checked="">
+                                                    </label>
+                                                </td>
+                                                <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox" checked="">
+                                                    </label>
+                                                </td>
+                                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox">
+                                                    </label>
+                                                </td>
+                                                <td>Create 4 Invisible User Experiences you Never Knew About</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox">
+                                                    </label>
+                                                </td>
+                                                <td>Read "Following makes Medium better"</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox">
+                                                    </label>
+                                                </td>
+                                                <td>Unfollow 5 enemies from twitter</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="footer">
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 pull-right">
+                        <div class="col-sm-6 pL0 saveDashboardInput">
+                            <input type="text" id="save-title" name="save-title" placeholder="Enter Tittle" style="width: 100%">
+                        </div>
+                        <div class="col-sm-4 pL0">
+                            <button class="btn btn-info btn-fill" id="save-dashboard"> Save to Dashboard</button>
+                        </div>
+                        <div class="col-sm-2 p0">
+                            <button class="btn btn-info btn-fill pull-right" id="reset">Reset </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <!--<nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Company
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Portfolio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                               Blog
+                            </a>
+                        </li>
+                    </ul>
+                </nav>-->
+                <p class="copyright pull-right">
+                    &copy; 2016 <a href="">WASSAN</a> Project Management
+                </p>
+            </div>
+        </footer>
+
+    </div>
+</div>
+
+
+</body>
+
+    <!--   Core JS Files   -->
+    <script src="/assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+	<script src="/assets/js/bootstrap.min.js" type="text/javascript"></script>
+
+	<!--  Checkbox, Radio & Switch Plugins -->
+	<script src="/assets/js/bootstrap-checkbox-radio-switch.js"></script>
+
+	<!--  Charts Plugin -->
+	<!--<script src="/assets/js/chartist.min.js"></script>-->
+
+    <!--  Notifications Plugin    -->
+    <script src="/assets/js/bootstrap-notify.js"></script>
+
+    <!--  Google Maps Plugin    -->
+   <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+
+    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+	<script src="/assets/js/light-bootstrap-dashboard.js"></script>
+
+	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+	<!--<script src="/assets/js/demo.js"></script>-->
+
+<link rel="stylesheet" href="/css/chosen.min.css">
+<!--CDN Stylesheet for DataTable-->
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="/js/chosen.jquery.min.js" type="text/javascript"></script>
+
+<!--CDN js for DataTable-->
+<script src="http://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".chosen-select").chosen({width: "100%"});
+            $('.chosen-select-filterPan').chosen({width: '100%',disable_search: true})
+            $('#myTable').DataTable();
+        });
+    </script>
+	<script type="text/javascript">
+    	$(document).ready(function(){
+
+
+        	/*demo.initChartist();*/
+
+        	/*$.notify({
+            	icon: 'pe-7s-gift',
+            	message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
+
+            },{
+                type: 'info',
+                timer: 4000
+            });*/
+
+            var tab = $('.navbar-brand');
+            tab.click(function(){
+                $('.navbar-brand').removeClass('selected');
+                $(this).addClass('selected');
+                var id = this.getAttribute('id');
+                if(id === 'settings') {
+                    $('.main-panel').removeClass('dashboard-active');
+                    $('.dashboard_panel').addClass('disable');
+                    if($('.settings-panel').hasClass('disable')){
+                        $('.content').removeClass('disable');
+                    }
+                    if($('.sidebar-wrapper').hasClass('disable')){
+                        $('.sidebar-wrapper').removeClass('disable');
+                    }
+                    if($('.sidebar').hasClass('disable')){
+                        $('.sidebar').removeClass('disable');
+                    }
+                } else if(id === 'dashBoard'){
+                    $('.main-panel').addClass('dashboard-active');
+                    $('.dashboard_panel').removeClass('disable');
+                    $('.settings-panel').addClass('disable');
+                    $('.sidebar-wrapper').addClass('disable');
+                    $('.sidebar').addClass('disable')
+                }
+            });
+
+            $('#reset').on('click', function(){
+                $('input[type="text"]').val('');
+                $('select').val('');
+                $('.settings-panel .test').html('')
+
+            });
+
+            $('#graph-type').on('change', function(){
+                var value = $(this).val();
+                if($('.table-form').hasClass('disable')){
+                    //do nothing
+                } else {
+                    $('.table-form').addClass('disable');
+                }
+
+                if(value === 'bar') {
+                    $('#formBarGraph').removeClass('disable');
+                    $('#formLineGraph').addClass('disable');
+                    $('#formPieChart').addClass('disable');
+                } else if(value === 'line') {
+                    $('#formLineGraph').removeClass('disable');
+                    $('#formBarGraph').addClass('disable');
+                    $('#formPieChart').addClass('disable');
+                }else if(value === ''){
+                    $('.filterOption').removeClass('visible');
+                    return false;
+                }
+                else {
+                    $('#formPieChart').removeClass('disable');
+                    $('#formLineGraph').addClass('disable');
+                    $('#formBarGraph').addClass('disable');
+                }
+                $('.filterOption').addClass('visible');
+            });
+            $('.close').on('click', function(){
+                $('.filterOption').removeClass('visible');
+            });
+            $('.createGraphBtn').click(function(){
+                $('.filterOption').removeClass('visible');
+            });
+
+
+
+            
+            $('.close').click(function(){
+                $('.addFilter').removeClass('active')
+            });
+            var button = $('.filterMainBtn');
+            button.click(function(){
+                var id = this.getAttribute('id');
+                console.log(id);
+                if(id === 'districtBtn') {
+                    $('.membes-on').addClass('hide');
+                    $('.district').addClass('active')
+                } else if(id === 'talukBtn'){
+                    $('.membes-on').addClass('hide');
+                    $('.taluk').addClass('active')
+                } else {
+                    $('.membes-on').addClass('hide');
+                    $('.acres').addClass('active')
+                }
+            });
+            $('.filterContentClose').click(function(){
+                if($('.membes-on').hasClass('hide')){
+                    $('.membes-on').removeClass('hide');
+                    console.log($(this));
+                    $(this).parent().parent().removeClass('active');
+                    $('.addFilter').removeClass('active')
+                }
+            });
+    	});
+	</script>
+
+
+<script>
+    $('#formBarGraph').on('click', '#btnBarGraph',  function (e) {
+        var selectedIssues = $('#filteredIssues').val();
+        $.post('/graph/bar', $('#formBarGraph').serialize())
+            .done(function (result) {
+                if(result) {
+                    google.charts.load('current', {packages: ['corechart', 'bar']});
+                    google.charts.setOnLoadCallback(drawBasic);
+                    function drawBasic(){
+                        var data = google.visualization.arrayToDataTable(result.xDataValues);
+                        var options = {
+                            title: result.title,
+                             //chartArea: {height: '200'},
+                            width: 435,
+                            height: 220,
+                            hAxis: {
+                                title: result.xLabel,
+                                minValue: 0
+                            },
+                            vAxis: {
+                                title: result.yLabel
+                            }
+                        };
+                        var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+                        chart.draw(data, options);
+
+                    }
+                }
+            });
+    });
+
+    $('#reset').on('click', function(){
+        var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+        chart.clearChart();
+        $('#divChart').html('');
+        $('#lblAcreValues').html('');
+    });
+</script>
+
+
+<script>
+    $('#formLineGraph').on('click', '#btnLineGraph',  function (e) {
+        $.post('/graph/line', $('#formLineGraph').serialize())
+                .done(function (result) {
+                    if(result) {
+                        google.charts.load('current', {'packages': ['line']});
+                        google.charts.setOnLoadCallback(drawChart);
+
+                        function drawChart() {
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('number', result.xLabel);
+                            data.addColumn('number', result.yLabel);
+                            //data.addColumn('number', 'Taluk');
+                            //data.addColumn('number', 'Area');
+                            /*data.addRows([
+                             [1,  37.8, 80.8, 41.8],
+                             [2,  30.9, 69.5, 32.4],
+                             [3,  25.4,   57, 25.7],
+                             [4,  11.7, 18.8, 10.5],
+                             [5,  11.9, 17.6, 10.4],
+                             [6,   8.8, 13.6,  7.7],
+                             [7,   7.6, 12.3,  9.6],
+                             [8,  12.3, 29.2, 10.6],
+                             [9,  16.9, 42.9, 14.8],
+                             [10, 12.8, 30.9, 11.6],
+                             [11,  5.3,  7.9,  4.7],
+                             [12,  6.6,  8.4,  5.2],
+                             [13,  4.8,  6.3,  3.6],
+                             [14,  4.2,  6.2,  3.4]
+                             ]);*/
+                            data.addRows(
+                                    result.xDataValues);
+                            var options = {
+                                chart: {
+                                    title: result.title
+                                    //subtitle: 'in millions of dollars (USD)'
+                                }
+                            };
+                            var chart = new google.charts.Line(document.getElementById('divChart'));
+                            chart.draw(data, options);
+                        }
+                    }
+                });
+    });
+</script>
+
+
+<script>
+    $('#formPieChart').on('click', '#btnPieChart',  function (e) {
+        $.post('/chart/pie', $('#formPieChart').serialize())
+                .done(function (result) {
+                    if(result) {
+                        google.charts.load('current', {'packages': ['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+                        function drawChart() {
+                            var data = google.visualization.arrayToDataTable(result.xDataValues);
+
+                            var options = {
+                                title: result.title
+                            };
+
+                            var chart = new google.visualization.PieChart(document.getElementById('divChart'));
+                            chart.draw(data, options);
+                        }
+                    }
+                });
+    });
+</script>
+
+<script>
+
+    $('#filter-Add').click(function () {
+        var selectVal = $("#issuetype option:selected").val();
+        if(selectVal) {
+            $('.addFilter').addClass('active');
+        } else {
+            alert('Please select issue type');
+        }
+    });
+
+    $('#issuetype').on('change', function () {
+        var selectVal = $("#issuetype option:selected").val();
+        if(selectVal) {
+            $('#graph-filters').val('issuetype='+ selectVal);
+        }
+    });
+
+    $('#addDistrict').click(function () {
+        var _district = $("#district").val();
+        if(_district) {
+            var districtFilters = $('#districtFilters').val();
+            if(districtFilters){
+                $('#districtFilters').val($('#districtFilters').val() + ',' + _district);
+            } else {
+                $('#districtFilters').val(_district);
+            }
+
+            if($('#graph-filters').val())
+                $('#graph-filters').val($('#graph-filters').val() + '&&districts=' + _district) ;
+            else
+                $('#graph-filters').val('districts=' + _district) ;
+
+            if (!$("#horizontal-data-type option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
+            }
+
+            if (!$("#horizontal-data-type-line option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type-line'));
+            }
+
+
+            if (!$("#data-name-pie option[value='District']").length) {
+                $('<option>').val('District').text('District').appendTo($('#data-name-pie'));
+            }
+
+            if($('.membes-on').hasClass('hide')){
+                $('.membes-on').removeClass('hide');
+                $('.district').removeClass('active')
+            }
+        }
+    });
+    $('#addTaluk').click(function () {
+        var _taluk = $("#taluk").val();
+        if(_taluk) {
+            var talukFilters = $('#talukFilters').val();
+            if(talukFilters){
+                $('#talukFilters').val($('#talukFilters').val() + ',' + _taluk);
+            } else {
+                $('#talukFilters').val(_taluk);
+            }
+
+            if($('#graph-filters').val())
+                $('#graph-filters').val($('#graph-filters').val() + '&&taluks=' + _taluk) ;
+            else
+                $('#graph-filters').val('taluks=' + _taluk) ;
+
+            if (!$("#horizontal-data-type option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
+            }
+
+            if (!$("#horizontal-data-type-line option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type-line'));
+            }
+
+            if (!$("#data-name-pie option[value='Taluk']").length) {
+                $('<option>').val('Taluk').text('Taluk').appendTo($('#data-name-pie'));
+            }
+
+            if($('.membes-on').hasClass('hide')){
+                $('.membes-on').removeClass('hide');
+                $('.taluk').removeClass('active')
+            }
+        }
+    });
+
+    $('#addAcreSingle').click(function () {
+        var _acreSymbol = $("#acreSymbol").val();
+        var _acreValue = $("#acreValue").val();
+        var _acre = _acreSymbol + _acreValue;
+        var lblAcreValuesOld = $('#lblAcreValues').text();
+        if(lblAcreValuesOld) {
+            $("#acreValue").removeClass('disable');
+            $('#lblAcreValues').text(lblAcreValuesOld + ',' + _acre);
+        } else {
+            $("#lblAcreValues").removeClass('disable');
+            $('#lblAcreValues').text(_acre);
+        }
+        $("#acreValue").val("");
+
+    });
+
+    $('#addAcre').click(function () {
+        if ($('#lblAcreValues').text()) {
+            var acreFilters = $('#acreFilters').val();
+            if (acreFilters) {
+                $('#acreFilters').val($('#acreFilters').val() + ',' + $('#lblAcreValues').text());
+            } else {
+                $('#acreFilters').val($('#lblAcreValues').text());
+            }
+
+            if($('#graph-filters').val())
+                $('#graph-filters').val($('#graph-filters').val() + '&&acres=' + $('#lblAcreValues').text()) ;
+            else
+                $('#graph-filters').val('acres=' + $('#lblAcreValues').text()) ;
+
+
+            if (!$("#vertical-data-type option[value='No. of Acres']").length) {
+                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
+            }
+
+            if (!$("#vertical-data-type-line option[value='No. of Acres']").length) {
+                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type-line'));
+            }
+
+            if($('.membes-on').hasClass('hide')){
+                $('.membes-on').removeClass('hide');
+                $('.acres').removeClass('active')
+            }
+        }
+    });
+
+    $('#test-button').click(function() {
+        var filters= {};
+        var filterText = $('#graph-filters').val();
+        var splitFilterText = filterText.split("&&");
+        for(var i in splitFilterText) {
+            var splitFilterTextEach = splitFilterText[i].split("=");
+            filters[splitFilterTextEach[0]] = splitFilterTextEach[1];
+        }
+        if(filters["districts"])
+            var district = filters["districts"].split(',');
+        if(filters["taluks"])
+            var taluk = filters["taluks"].split(',');
+        if(filters["issuetype"])
+            var issuetype = filters["issuetype"];
+        if(filters["acres"])
+            var acres = filters["acres"].split(',');
+        $.post('/filter-issues', { issuetype:issuetype,
+                                    district: district,
+                                    taluk:taluk,
+                                    acres:acres})
+                .done(function (result) {
+                    if(result.success){
+                        $('.test').empty();
+                        for (var data in result.filteredIssues) {
+                            $('.test').append('<tr>' +
+                                    /*'<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +*/
+                                    '<td>' + result.filteredIssues[data].fields.summary +'</td>' +
+                                    '</tr>');
+                        }
+                    }
+                });
+    });
+
+    $('#save-dashboard').on('click', function (e) {
+        var graphinfo = "";
+        var graphType = $("#graph-type").val();
+        if (graphType === 'bar') {
+            graphinfo += "type=bar&&"
+            graphinfo += "title=" + $("#graph-title").val() + "&&";
+            graphinfo += "xLabel=" + $("#horizontal-axis-label").val() + "&&";
+            graphinfo += "yLabel=" + $("#vertical-axis-label").val() + "&&";
+            graphinfo += "xDataType=" + $("#horizontal-data-type").val() + "&&";
+            graphinfo += "yDataType=" + $("#vertical-data-type").val() + "&&";
+        } else if (graphType === 'line') {
+            graphinfo += "type=line&&"
+            graphinfo += "title=" + $("#graph-title-line").val() + "&&";
+            graphinfo += "xLabel=" + $("#horizontal-axis-label-line").val() + "&&";
+            graphinfo += "yLabel=" + $("#vertical-axis-label-line").val() + "&&";
+            graphinfo += "xDataType=" + $("#horizontal-data-type-line").val() + "&&";
+            graphinfo += "yDataType=" + $("#vertical-data-type-line").val() + "&&";
+        } else if (graphType === 'pie') {
+            graphinfo += "type=pie&&"
+            graphinfo += "title=" + $("#graph-title-pie").val() + "&&";
+            graphinfo += "dataType=" + $("#data-name-pie").val() + "&&";
+            //TODO:add pie fields
+        }
+
+        var saveTitle = $("#save-title").val();
+        if (!saveTitle) {
+            alert('Please enter title!');
+            return;
+        }
+        var filtersNew = $("#graph-filters").val();
+        filtersNew = graphinfo + "head=" + saveTitle + "&&" + filtersNew;
+        if (!filtersNew) {
+            alert('No Filters!');
+            return;
+        }
+
+        $.post('/save-to-dashboard', {filtersNew: filtersNew})
+                .done(function (result) {
+                    if (result) {
+                        alert('ok');
+                    }
+                });
+    });
+
+/*$('#reset').on('click', function (e) {
+    e.preventDefault();
+    var pageRef = $(this).attr('href');
+    callPage(pageRef);
+});
+
+function callPage(pageRefInput){
+    $.ajax({
+        url: pageRefInput,
+        type: 'GET',
+        dataType: 'text',
+        success:function(response){
+            console.log('the page was loded', response);
+        },
+        error:function(error){
+            console.log('page was not loaded', error)
+        }
+    });
+}*/
+
+
+</script>
+
+</html>

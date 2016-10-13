@@ -30,10 +30,11 @@ function getAllUniqueIssueTypes(jsonJiraProject, callback) {
         issueTypes = [],
         uniqueIssueTypes = [];
 
-    totalJiraIssues = jsonJiraProject.total;             // to get total issue count
+    totalJiraIssues = jsonJiraProject.maxResults;             // to get total issue count
 
     for (var i = 0; i < totalJiraIssues; i++) {
-        issueTypes.push(jsonJiraProject.issues[i].fields.issuetype.name);       // To get all issue Types in the json
+        if(jsonJiraProject.issues[i].fields)
+            issueTypes.push(jsonJiraProject.issues[i].fields.issuetype.name);       // To get all issue Types in the json
     }
 
     uniqueIssueTypes = issueTypes.filter(function (elem, index, self) {         // To get unique issue types from all issues
@@ -56,11 +57,11 @@ function getAllUniqueDistricts(jsonJiraProject, callback) {
         districts = [],
         uniqueDistricts = [];
 
-    totalJiraIssues = jsonJiraProject.total;
+    totalJiraIssues = jsonJiraProject.maxResults;
 
     for (var i = 0; i < totalJiraIssues; i++) {
-        if(jsonJiraProject.issues[i].fields.customfield_10301) {
-            districts.push(jsonJiraProject.issues[i].fields.customfield_10301.value);
+        if(jsonJiraProject.issues[i].fields.customfield_10400) {
+            districts.push(jsonJiraProject.issues[i].fields.customfield_10400.value);
         }
     }
 
@@ -83,11 +84,11 @@ function getAllUniqueTaluks(jsonJiraProject, callback) {
         taluks = [],
         uniqueTaluks = [];
 
-    totalJiraIssues = jsonJiraProject.total;
+    totalJiraIssues = jsonJiraProject.maxResults;
 
     for (var i = 0; i < totalJiraIssues; i++) {
-        if(jsonJiraProject.issues[i].fields.customfield_10302) {
-            taluks.push(jsonJiraProject.issues[i].fields.customfield_10302.value);
+        if(jsonJiraProject.issues[i].fields.customfield_10401) {
+            taluks.push(jsonJiraProject.issues[i].fields.customfield_10401.value);
         }
     }
 
@@ -100,7 +101,58 @@ function getAllUniqueTaluks(jsonJiraProject, callback) {
     }
     callback(null, uniqueTaluks);
 }
+
+/**
+ * Function to get all jira issues
+ * @param jsonJiraProject
+ * @param callback
+ */
+function getAllIssues(jsonJiraProject, callback) {
+    var totalJiraIssues = jsonJiraProject.maxResults;
+    var issuesselectedFields = [];
+    for(var i=0 ; i<totalJiraIssues ; i++){
+        var issue = {};
+        issue.issueType = jsonJiraProject.issues[i].fields.issuetype.name;
+        issue.summary = jsonJiraProject.issues[i].fields.summary;
+        issue.created = jsonJiraProject.issues[i].fields.created;
+
+        var dateFormat = require('dateformat');
+        issue.created = dateFormat(issue.created, "dd-mm-yyyy");
+
+        if(jsonJiraProject.issues[i].fields.customfield_10400) {
+            issue.district = jsonJiraProject.issues[i].fields.customfield_10400.value;
+        } else {
+            issue.district = "";
+        }
+        if(jsonJiraProject.issues[i].fields.customfield_10401) {
+            issue.taluk = jsonJiraProject.issues[i].fields.customfield_10401.value;
+        } else {
+            issue.taluk = "";
+        }
+        issue.status = jsonJiraProject.issues[i].fields.status.name;
+        if(jsonJiraProject.issues[i].fields.customfield_10404) {
+            issue.seedName = jsonJiraProject.issues[i].fields.customfield_10404.value
+            ;
+        } else {
+            issue.seedName = "";
+        }
+        if(jsonJiraProject.issues[i].fields.customfield_10405) {
+            issue.seedquantity = jsonJiraProject.issues[i].fields.customfield_10405;
+        } else {
+            issue.seedQuantity = 0;
+        }
+        if(jsonJiraProject.issues[i].fields.customfield_10402) {
+            issue.customer = jsonJiraProject.issues[i].fields.customfield_10402;
+        } else {
+            issue.customer=""
+        }
+        issuesselectedFields.push(issue);
+    }
+    callback(null, issuesselectedFields);
+}
+
 exports.readJsonFile = readJsonFile;
 exports.getAllUniqueIssueTypes = getAllUniqueIssueTypes;
 exports.getAllUniqueDistricts = getAllUniqueDistricts;
 exports.getAllUniqueTaluks = getAllUniqueTaluks;
+exports.getAllIssues = getAllIssues;
