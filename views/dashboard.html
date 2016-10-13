@@ -733,7 +733,7 @@
                                 <div class="table-full-width">
                                     <table class="table">
                                         <tbody class="test">
-                                            <tr>
+                                            <!--<tr>
                                                 <td>
                                                     <label class="checkbox">
                                                         <input type="checkbox" value="" data-toggle="checkbox">
@@ -829,7 +829,7 @@
                                                         <i class="fa fa-times"></i>
                                                     </button>
                                                 </td>
-                                            </tr>
+                                            </tr>-->
                                         </tbody>
                                     </table>
                                 </div>
@@ -1294,18 +1294,18 @@
                 .done(function (result) {
                     if(result.success){
                         $('.test').empty();
-                        $('.test').append('<tr>' +
+                        /*$('.test').append('<tr>' +
                                 '<td><b>Date</b></td>' +
                                 '<td><b>Summary</b></td>' +
                                 '<td><b>Issue Type</b></td>' +
                                 '<td><b>Status</b></td>' +
-                                '</tr>');
+                                '</tr>');*/
                         for (var data in result.filteredIssues) {
                             $('.test').append('<tr>' +
-                                    '<td>' + result.filteredIssues[data].fields.created +'</td>' +
+                                    '<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +
                                     '<td>' + result.filteredIssues[data].fields.summary +'</td>' +
-                                    '<td>' + result.filteredIssues[data].fields.issuetype.name +'</td>' +
-                                    '<td>' + result.filteredIssues[data].fields.status.name +'</td>' +
+                                    /*'<td>' + result.filteredIssues[data].fields.issuetype.name +'</td>' +
+                                    '<td>' + result.filteredIssues[data].fields.status.name +'</td>' +*/
                                             '</tr>');
                         }
                     }
