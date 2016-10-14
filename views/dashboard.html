@@ -860,6 +860,16 @@
 
 
 <script>
+    $('#reset').on('click', function(){
+        var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+        chart.clearChart();
+        $('input[type="text"]').val('');
+        $('select').val('');
+        $('.settings-panel .test').html('')
+        $('#divChart').html('');
+        $('#lblAcreValues').html('');
+    });
+    
     $('#formBarGraph').on('click', '#btnBarGraph',  function (e) {
         var selectedIssues = $('#filteredIssues').val();
         $.post('/graph/bar', $('#formBarGraph').serialize())
@@ -890,12 +900,7 @@
             });
     });
 
-    $('#reset').on('click', function(){
-        var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
-        chart.clearChart();
-        $('#divChart').html('');
-        $('#lblAcreValues').html('');
-    });
+
 </script>
 
 

@@ -32,7 +32,7 @@ function indexPage(req, res) {
                         indexData.allIssues = allIssues;
                         getSavedGraphAndIssuesFilter(function(err, savedFilters) {
                             getDataForSavedGraphAndIssuesFilter(savedFilters, function (err, savedFilterData) {
-                                indexData.savedFilterData = savedFilterData;console.log('***************',savedFilterData)
+                                indexData.savedFilterData = savedFilterData;//console.log('***************',savedFilterData)
                                 res.render('dashboard', {indexData:indexData});
                             });
                         });

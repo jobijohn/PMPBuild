@@ -15,8 +15,8 @@ function getRandomColor() {
 
 
 function populateGraphData(graphData, selectedIssues, callback) {
-    console.log('#################');
-    console.log(graphData);
+    //console.log('#################');
+    //console.log(graphData);
     if(selectedIssues == "") {
         common.readJsonFile('filteredissues.json', function(err, selectedIssues){
             if(graphData.type == "bar") {
@@ -68,7 +68,7 @@ function populateGraphData(graphData, selectedIssues, callback) {
                     xDataValues.push([issues.fields.customfield_10400.value, parseInt(issues.fields.customfield_10403), getRandomColor()]);
                     callback();
                 }, function(err){
-                    graphData["xDataValues"] = xDataValues;console.log('xDataValues:',graphData);
+                    graphData["xDataValues"] = xDataValues;//console.log('xDataValues:',graphData);
                     callback(null, graphData);
                 });
             } else if(graphData.xDataType == 'Taluk') {
@@ -116,7 +116,7 @@ function generateBarGraph(req, res) {
         yDataType : req.param('vertical-data-type')
     };
 
-    console.log("ID........" + graphData.id);
+    //console.log("ID........" + graphData.id);
     populateGraphData(graphData,'',function (err, graphData) {
         return res.json(graphData);
     });
