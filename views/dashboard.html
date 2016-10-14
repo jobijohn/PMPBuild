@@ -35,7 +35,7 @@
 
 </head>
 <body>
-<input type="text" id="graphData" value="{{indexData.savedFilterData}}">
+<!--<input type="text" id="graphData" value="{{indexData.savedFilterData}}">-->
 <div class="wrapper">
     <div class="sidebar disable" data-color="purple" data-image="img/sidebar-5.jpg">
 
@@ -409,8 +409,8 @@
                             <input type="hidden" id="chart-title" class="chart-title" value="{{graphData.title}}">
                             <input type="hidden" id="chart-xLabel" class="chart-xLabel" value="{{graphData.xLabel}}">
                             <input type="hidden" id="chart-yLabel" class="chart-yLabel" value="{{graphData.yLabel}}">
-                            <input type="text" id="chart-xDataValues" class="chart-xDataValues" value="{{graphData.xDataValues}}">
-                            <input type="text" id="divId" class="divId" value="{{graphData.id}}">
+                            <input type="hidden" id="chart-xDataValues" class="chart-xDataValues" value="{{graphData.xDataValues}}">
+                            <input type="hidden" id="divId" class="divId" value="{{graphData.id}}">
 
 
 
@@ -837,7 +837,6 @@
             var button = $('.filterMainBtn');
             button.click(function(){
                 var id = this.getAttribute('id');
-                console.log(id);
                 if(id === 'districtBtn') {
                     $('.membes-on').addClass('hide');
                     $('.district').addClass('active')
@@ -852,7 +851,6 @@
             $('.filterContentClose').click(function(){
                 if($('.membes-on').hasClass('hide')){
                     $('.membes-on').removeClass('hide');
-                    console.log($(this));
                     $(this).parent().parent().removeClass('active');
                     $('.addFilter').removeClass('active')
                 }
@@ -1179,7 +1177,7 @@
         $.post('/save-to-dashboard', {filtersNew: filtersNew})
                 .done(function (result) {
                     if (result) {
-                        alert('ok');
+                        alert('Saved to dashboard');
                     }
                 });
     });
@@ -1193,26 +1191,6 @@
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
                 s4() + '-' + s4() + s4() + s4();
     }
-
-/*$('#reset').on('click', function (e) {
-    e.preventDefault();
-    var pageRef = $(this).attr('href');
-    callPage(pageRef);
-});
-
-function callPage(pageRefInput){
-    $.ajax({
-        url: pageRefInput,
-        type: 'GET',
-        dataType: 'text',
-        success:function(response){
-            console.log('the page was loded', response);
-        },
-        error:function(error){
-            console.log('page was not loaded', error)
-        }
-    });
-}*/
 
 
 </script>
@@ -1244,7 +1222,7 @@ function callPage(pageRefInput){
             ylabel.push(ylabel1);
         });
         $('.chart-xDataValues').each(function(){
-            var xdataVlaues1 = $(this).val();alert("xdataVlaues1:"+ xdataVlaues1);
+            var xdataVlaues1 = $(this).val();
             xdatavalue.push(xdataVlaues1);
         });
         $('.divId').each(function(){
@@ -1253,55 +1231,31 @@ function callPage(pageRefInput){
         });
 
 
-
-            //console.log(container);
-            alert('hoy hoy');
-           /* var values = [
-                ['Element', 'Density', { role: 'style' }],
-                ['Copper', 8.94, '#b87333'],            // RGB value
-                ['Silver', 10.49, 'silver'],            // English color name
-                ['Gold', 19.30, 'gold'],
-                ['Platinum', 21.45, 'color: #e5e4e2' ] // CSS-style declaration
-            ] //$("#chart-xDataValues").val();*/
-
             google.charts.load('current', {packages: ['corechart', 'bar']});
             google.charts.setOnLoadCallback(drawBasic);
-            function drawBasic() { //alert(1);
+            function drawBasic() {
                 for(var i=0; i < 2; i++){
-                    //console.log('before', xdatavalue[i]);
                     var splits = [];
                     splits = xdatavalue[i].split(',');
                     var sliced= [];
-                    console.log("before :", xdatavalue[i]);
                     sliced.push(['test', 'District', { role: 'style' }]);
                     for(var s = 0; s < splits.length; s+=3) {
                         sliced.push(splits.slice(s, s+3));
-                        console.log(splits);
                     }
-                    console.log("before conversion :", sliced);
 
-                    var len = sliced.length; alert(len);
+                    var len = sliced.length;
                     for(var m = 1; m < len; m++) {
-                        alert('before');
-
-                            sliced[m][1] = parseInt(sliced[m][1]);
-                            //console.log('new :', sliced[m]);
-                        alert('after');
-
+                        sliced[m][1] = parseInt(sliced[m][1]);
                     }
-                    alert('done');
-
-                    console.log('after', sliced);
 
                     var container = "ct-chart_"+ divId[i];
-                    console.log(container);
                     var item
                     var data = google.visualization.arrayToDataTable(sliced);
                     var options = {
                         title: title[i],
                         //chartArea: {height: '200'},
-                        width: 435,
-                        height: 220,
+                        /*width: 435,
+                        height: 220,*/
                         hAxis: {
                             title: $("#chart-xLabel").val(),
                             minValue: 0
@@ -1314,73 +1268,7 @@ function callPage(pageRefInput){
                     chart.draw(data, options);
                 }
 
-
-                /* $('.ct-chart').each(function(i){
-                 var id = 'ct-chart'+ '_' + $("#divId").val();
-                 //var id = $("#divId").val();
-                 alert(id);
-                 var chart = new google.visualization.ColumnChart(document.getElementById(id));
-                 chart.draw(data, options);
-                 });*/
-               /* $(".divId").each(function(){
-                    var divId = $(this).val();
-                    //alert(divId)
-
-                })*/
-
-                alert('hello');
-
-
-                //var chart = new google.visualization.ColumnChart(document.getElementById(divId));
-                //chart.draw(data, options);
             }
-        //console.log('tittle:',title,'xlabel:', xlabel, 'ylebel:', ylabel, 'xdata-value:', xdatavalue, 'divId:', divId);
-        //var tit = $("#chart-title").val();
-        /*var values = [
-            ['Element', 'Density', { role: 'style' }],
-            ['Copper', 8.94, '#b87333'],            // RGB value
-            ['Silver', 10.49, 'silver'],            // English color name
-            ['Gold', 19.30, 'gold'],
-            ['Platinum', 21.45, 'color: #e5e4e2' ], // CSS-style declaration
-        ] //$("#chart-xDataValues").val();
-
-        google.charts.load('current', {packages: ['corechart', 'bar']});
-        google.charts.setOnLoadCallback(drawBasic);
-        function drawBasic() { //alert(1);
-            var data = google.visualization.arrayToDataTable(values);
-
-            var options = {
-                title: title,
-                //chartArea: {height: '200'},
-                width: 435,
-                height: 220,
-                hAxis: {
-                    title: $("#chart-xLabel").val(),
-                    minValue: 0
-                },
-                vAxis: {
-                    title: $("#chart-yLabel").val()
-                }
-            };
-
-            *//* $('.ct-chart').each(function(i){
-             var id = 'ct-chart'+ '_' + $("#divId").val();
-             //var id = $("#divId").val();
-             alert(id);
-             var chart = new google.visualization.ColumnChart(document.getElementById(id));
-             chart.draw(data, options);
-             });*//*
-            $(".divId").each(function(){
-                var divId = $(this).val();
-                //alert(divId)
-                var chart = new google.visualization.ColumnChart(document.getElementById("ct-chart_" + divId));
-                chart.draw(data, options);
-            })
-
-
-            //var chart = new google.visualization.ColumnChart(document.getElementById(divId));
-            //chart.draw(data, options);
-        }*/
     });
 
 </script>
