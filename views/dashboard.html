@@ -406,62 +406,14 @@
                         </div>
                         <div class="content">
 
-                            <input type="hidden" id="chart-title" value="{{graphData.title}}">
-                            <input type="hidden" id="chart-xLabel" value="{{graphData.xLabel}}">
-                            <input type="hidden" id="chart-yLabel" value="{{graphData.yLabel}}">
-                            <input type="hidden" id="chart-xDataValues" value="{{graphData.xDataValues}}">
-                            <input type="hidden" id="divId" value="">
+                            <input type="hidden" id="chart-title" class="chart-title" value="{{graphData.title}}">
+                            <input type="hidden" id="chart-xLabel" class="chart-xLabel" value="{{graphData.xLabel}}">
+                            <input type="hidden" id="chart-yLabel" class="chart-yLabel" value="{{graphData.yLabel}}">
+                            <input type="text" id="chart-xDataValues" class="chart-xDataValues" value="{{graphData.xDataValues}}">
+                            <input type="text" id="divId" class="divId" value="{{graphData.id}}">
 
 
 
-                            <script>
-                                $(document).ready(function() {
-                                    alert('entered...');
-
-
-                                    var tit = $("#chart-title").val();
-                                    var values = [
-                                        ['Element', 'Density', { role: 'style' }],
-                                        ['Copper', 8.94, '#b87333'],            // RGB value
-                                        ['Silver', 10.49, 'silver'],            // English color name
-                                        ['Gold', 19.30, 'gold'],
-                                        ['Platinum', 21.45, 'color: #e5e4e2' ], // CSS-style declaration
-                                    ] //$("#chart-xDataValues").val();
-                                    alert(values);
-
-
-                                    google.charts.load('current', {packages: ['corechart', 'bar']});
-                                    google.charts.setOnLoadCallback(drawBasic);
-                                    function drawBasic() { alert(1);
-                                        var data = google.visualization.arrayToDataTable(values);
-                                        alert(data);
-                                        var options = {
-                                            title: tit,
-                                            //chartArea: {height: '200'},
-                                            width: 435,
-                                            height: 220,
-                                            hAxis: {
-                                                title: $("#chart-xLabel").val(),
-                                                minValue: 0
-                                            },
-                                            vAxis: {
-                                                title: $("#chart-yLabel").val()
-                                            }
-                                        };alert(2);
-
-                                        var divId = $('.ct-chart').attr("id");
-                                        var ArrayDiv = divId.split('_');
-                                        var num = parseInt(ArrayDiv[1]) + 1;
-                                        divId = ArrayDiv[0] + "_" + num;
-
-                                        alert("ID:" + divId);
-
-                                        var chart = new google.visualization.ColumnChart(document.getElementById(divId));
-                                        chart.draw(data, options);
-                                    }
-                                });
-
-                            </script>
 
                             <div id="dash-chart" class="ct-chart">
 
@@ -1184,16 +1136,21 @@
     });
 
     $('#save-dashboard').on('click', function (e) {
+        var ss= guid();
+        alert(ss);
+
         var graphinfo = "";
         var graphType = $("#graph-type").val();
         if (graphType === 'bar') {
-            graphinfo += "type=bar&&"
+            graphinfo += "id="+ guid() +"&&";
+            graphinfo += "type=bar&&";
             graphinfo += "title=" + $("#graph-title").val() + "&&";
             graphinfo += "xLabel=" + $("#horizontal-axis-label").val() + "&&";
             graphinfo += "yLabel=" + $("#vertical-axis-label").val() + "&&";
             graphinfo += "xDataType=" + $("#horizontal-data-type").val() + "&&";
             graphinfo += "yDataType=" + $("#vertical-data-type").val() + "&&";
         } else if (graphType === 'line') {
+            graphinfo += "id="+ guid() +"&&";
             graphinfo += "type=line&&"
             graphinfo += "title=" + $("#graph-title-line").val() + "&&";
             graphinfo += "xLabel=" + $("#horizontal-axis-label-line").val() + "&&";
@@ -1201,12 +1158,12 @@
             graphinfo += "xDataType=" + $("#horizontal-data-type-line").val() + "&&";
             graphinfo += "yDataType=" + $("#vertical-data-type-line").val() + "&&";
         } else if (graphType === 'pie') {
+            graphinfo += "id="+ guid() +"&&";
             graphinfo += "type=pie&&"
             graphinfo += "title=" + $("#graph-title-pie").val() + "&&";
             graphinfo += "dataType=" + $("#data-name-pie").val() + "&&";
             //TODO:add pie fields
         }
-
         var saveTitle = $("#save-title").val();
         if (!saveTitle) {
             alert('Please enter title!');
@@ -1226,6 +1183,16 @@
                     }
                 });
     });
+
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                s4() + '-' + s4() + s4() + s4();
+    }
 
 /*$('#reset').on('click', function (e) {
     e.preventDefault();
@@ -1249,7 +1216,6 @@ function callPage(pageRefInput){
 
 
 </script>
-
 <script>
     $(document).ready(function() {
         $(".ct-chart").each(function(i) {
@@ -1258,7 +1224,166 @@ function callPage(pageRefInput){
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+        var title = [];
+        var xlabel = [];
+        var ylabel = [];
+        var xdatavalue = [];
+        var divId = [];
+        $(".chart-title").each(function(){
+            var title1 = $(this).val();
+            title.push(title1)
+        });
+        $('.chart-xLabel').each(function(){
+            var xlabel1 = $(this).val()
+            xlabel.push(xlabel1);
+        });
+        $('.chart-yLabel').each(function(){
+            var ylabel1 = $(this).val()
+            ylabel.push(ylabel1);
+        });
+        $('.chart-xDataValues').each(function(){
+            var xdataVlaues1 = $(this).val();alert("xdataVlaues1:"+ xdataVlaues1);
+            xdatavalue.push(xdataVlaues1);
+        });
+        $('.divId').each(function(){
+            var divId1 = $(this).val();
+            divId.push(divId1);
+        });
 
+
+
+            //console.log(container);
+            alert('hoy hoy');
+           /* var values = [
+                ['Element', 'Density', { role: 'style' }],
+                ['Copper', 8.94, '#b87333'],            // RGB value
+                ['Silver', 10.49, 'silver'],            // English color name
+                ['Gold', 19.30, 'gold'],
+                ['Platinum', 21.45, 'color: #e5e4e2' ] // CSS-style declaration
+            ] //$("#chart-xDataValues").val();*/
+
+            google.charts.load('current', {packages: ['corechart', 'bar']});
+            google.charts.setOnLoadCallback(drawBasic);
+            function drawBasic() { //alert(1);
+                for(var i=0; i < 2; i++){
+                    //console.log('before', xdatavalue[i]);
+                    var splits = [];
+                    splits = xdatavalue[i].split(',');
+                    var sliced= [];
+                    console.log("before :", xdatavalue[i]);
+                    sliced.push(['test', 'District', { role: 'style' }]);
+                    for(var s = 0; s < splits.length; s+=3) {
+                        sliced.push(splits.slice(s, s+3));
+                        console.log(splits);
+                    }
+                    console.log("before conversion :", sliced);
+
+                    var len = sliced.length; alert(len);
+                    for(var m = 1; m < len; m++) {
+                        alert('before');
+
+                            sliced[m][1] = parseInt(sliced[m][1]);
+                            //console.log('new :', sliced[m]);
+                        alert('after');
+
+                    }
+                    alert('done');
+
+                    console.log('after', sliced);
+
+                    var container = "ct-chart_"+ divId[i];
+                    console.log(container);
+                    var item
+                    var data = google.visualization.arrayToDataTable(sliced);
+                    var options = {
+                        title: title[i],
+                        //chartArea: {height: '200'},
+                        width: 435,
+                        height: 220,
+                        hAxis: {
+                            title: $("#chart-xLabel").val(),
+                            minValue: 0
+                        },
+                        vAxis: {
+                            title: $("#chart-yLabel").val()
+                        }
+                    };
+                    var chart = new google.visualization.ColumnChart(document.getElementById(container));
+                    chart.draw(data, options);
+                }
+
+
+                /* $('.ct-chart').each(function(i){
+                 var id = 'ct-chart'+ '_' + $("#divId").val();
+                 //var id = $("#divId").val();
+                 alert(id);
+                 var chart = new google.visualization.ColumnChart(document.getElementById(id));
+                 chart.draw(data, options);
+                 });*/
+               /* $(".divId").each(function(){
+                    var divId = $(this).val();
+                    //alert(divId)
+
+                })*/
+
+                alert('hello');
+
+
+                //var chart = new google.visualization.ColumnChart(document.getElementById(divId));
+                //chart.draw(data, options);
+            }
+        //console.log('tittle:',title,'xlabel:', xlabel, 'ylebel:', ylabel, 'xdata-value:', xdatavalue, 'divId:', divId);
+        //var tit = $("#chart-title").val();
+        /*var values = [
+            ['Element', 'Density', { role: 'style' }],
+            ['Copper', 8.94, '#b87333'],            // RGB value
+            ['Silver', 10.49, 'silver'],            // English color name
+            ['Gold', 19.30, 'gold'],
+            ['Platinum', 21.45, 'color: #e5e4e2' ], // CSS-style declaration
+        ] //$("#chart-xDataValues").val();
+
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(drawBasic);
+        function drawBasic() { //alert(1);
+            var data = google.visualization.arrayToDataTable(values);
+
+            var options = {
+                title: title,
+                //chartArea: {height: '200'},
+                width: 435,
+                height: 220,
+                hAxis: {
+                    title: $("#chart-xLabel").val(),
+                    minValue: 0
+                },
+                vAxis: {
+                    title: $("#chart-yLabel").val()
+                }
+            };
+
+            *//* $('.ct-chart').each(function(i){
+             var id = 'ct-chart'+ '_' + $("#divId").val();
+             //var id = $("#divId").val();
+             alert(id);
+             var chart = new google.visualization.ColumnChart(document.getElementById(id));
+             chart.draw(data, options);
+             });*//*
+            $(".divId").each(function(){
+                var divId = $(this).val();
+                //alert(divId)
+                var chart = new google.visualization.ColumnChart(document.getElementById("ct-chart_" + divId));
+                chart.draw(data, options);
+            })
+
+
+            //var chart = new google.visualization.ColumnChart(document.getElementById(divId));
+            //chart.draw(data, options);
+        }*/
+    });
+
+</script>
 
 
 </html>

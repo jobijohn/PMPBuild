@@ -15,6 +15,8 @@ function getRandomColor() {
 
 
 function populateGraphData(graphData, selectedIssues, callback) {
+    console.log('#################');
+    console.log(graphData);
     if(selectedIssues == "") {
         common.readJsonFile('filteredissues.json', function(err, selectedIssues){
             if(graphData.type == "bar") {
@@ -59,18 +61,19 @@ function populateGraphData(graphData, selectedIssues, callback) {
         });
     } else {
         if(graphData.type == "bar") {
-            var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
+            var xDataValues = [];
+            //xDataValues.push([["'" + 'test' + "'", "'" + graphData.xLabel + "'", { role: 'style' } ]]);
             if(graphData.xDataType == 'District') {
                 async.each(selectedIssues, function(issues, callback) {
-                    xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403, getRandomColor()]);
+                    xDataValues.push([issues.fields.customfield_10400.value, parseInt(issues.fields.customfield_10403), getRandomColor()]);
                     callback();
                 }, function(err){
-                    graphData["xDataValues"] = xDataValues;/*console.log('Graph Data',graphData);*/
+                    graphData["xDataValues"] = xDataValues;console.log('xDataValues:',graphData);
                     callback(null, graphData);
                 });
             } else if(graphData.xDataType == 'Taluk') {
                 async.each(selectedIssues, function(issues, callback) {
-                    xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403, getRandomColor()]);
+                    xDataValues.push([issues.fields.customfield_10401.value, parseInt(issues.fields.customfield_10403), getRandomColor()]);
                     callback();
                 }, function(err){
                     graphData["xDataValues"] = xDataValues;
@@ -105,12 +108,15 @@ function generateBarGraph(req, res) {
 
     var graphData = {
         type:'bar',
+        id : req.param('id'),
         title : req.param('graph-title'),
         xLabel : req.param('horizontal-axis-label'),
         yLabel : req.param('vertical-axis-label'),
         xDataType : req.param('horizontal-data-type'),
         yDataType : req.param('vertical-data-type')
     };
+
+    console.log("ID........" + graphData.id);
     populateGraphData(graphData,'',function (err, graphData) {
         return res.json(graphData);
     });
