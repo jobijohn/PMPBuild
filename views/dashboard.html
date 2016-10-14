@@ -1139,8 +1139,7 @@
     });
 
     $('#save-dashboard').on('click', function (e) {
-        var ss= guid();
-        alert(ss);
+        //TODO: apply 1,2,3...instead of guid
 
         var graphinfo = "";
         var graphType = $("#graph-type").val();
@@ -1239,7 +1238,7 @@
             google.charts.load('current', {packages: ['corechart', 'bar']});
             google.charts.setOnLoadCallback(drawBasic);
             function drawBasic() {
-                for(var i=0; i < 2; i++){
+                for(var i=0; i < 10; i++){//TODO: change 10 as filtercount
                     var splits = [];
                     splits = xdatavalue[i].split(',');
                     var sliced= [];
@@ -1254,7 +1253,7 @@
                     }
 
                     var container = "ct-chart_"+ divId[i];
-                    var item
+                    var item;
                     var data = google.visualization.arrayToDataTable(sliced);
                     var options = {
                         title: title[i],
