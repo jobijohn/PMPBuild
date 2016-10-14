@@ -1942,7 +1942,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   content: "";
   position: absolute;
 }
-.card .ct-chart {
+.card .ct-chart, .card .ct-chart1 {
   margin: 30px 0 30px;
   height: 245px;
 }
