@@ -65,7 +65,7 @@ function populateGraphData(graphData, selectedIssues, callback) {
                     xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403, getRandomColor()]);
                     callback();
                 }, function(err){
-                    graphData["xDataValues"] = xDataValues;console.log('Graph Data',graphData);
+                    graphData["xDataValues"] = xDataValues;/*console.log('Graph Data',graphData);*/
                     callback(null, graphData);
                 });
             } else if(graphData.xDataType == 'Taluk') {
