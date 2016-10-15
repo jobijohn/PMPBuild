@@ -95,10 +95,11 @@
     	</div>
     </div>
 
-    <ul class="filterOption">
+    <ul class="filterOption col-sm-3">
 
         <a class="close">x</a>
         <form method="post" id="formBarGraph" class="table-form disable">
+            <h3>Bar Graph</h3>
             <li>
                 <div class="form-group">
                     <input type="text" class="form-control" id="graph-title" name="graph-title" placeholder="Enter Tittle">
@@ -152,6 +153,7 @@
 
 
         <form method="post" id="formPieChart" class="table-form disable">
+            <h3>Pie Chart</h3>
             <li>
                 <div class="form-group">
                     <input id="graph-title-pie" name="graph-title-pie" type="text" class="form-control" placeholder="Enter Tittle">
@@ -199,6 +201,7 @@
         </form>
 
         <form method="post" id="formLineGraph" class="table-form disable">
+            <h3>Line Graph</h3>
             <li>
                 <div class="form-group">
                     <input id="graph-title-line" type="text" class="form-control" placeholder="Enter Tittle">
@@ -245,7 +248,10 @@
     <div class="col-sm-3 addFilter">
 
         <ul class="membes-on">
-            <div class="col-sm-12 pull-right">
+            <div class="col-sm-10 p0">
+                <h3>Select Filter</h3>
+            </div>
+            <div class="col-sm-2 pull-right">
                 <a class="close">x</a>
             </div>
             <div class="clearfix"></div>
@@ -1310,6 +1316,17 @@
                 }
 
             }
+
+        //detect click
+        $('body').click(function() {
+            //Hide the menus if visible
+            $('.addFilter').removeClass('active');
+            $('.filterOption').removeClass('visible')
+        });
+
+        $('.addFilter, .addFilterBtn, .chosen-container, .filterOption').click(function(event){
+            event.stopPropagation();
+        });
     });
 
 </script>
