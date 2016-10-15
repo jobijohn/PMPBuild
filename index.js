@@ -279,10 +279,10 @@ function saveToDashboard(req, res) {
         if(txtData) {
             var txtSplitData = txtData.split("|");
             var filterCount = txtSplitData.length + 1;
-            console.log('filters', filters);
             filters = 'id=' + filterCount + '&&' + filters;
             saveData = txtData + '|' + filters;
         } else {
+            filters = 'id=1&&' + filters;
             saveData = filters;
         }
         fs.writeFile('savedfilters.txt', saveData, function (err) {
