@@ -13,7 +13,20 @@ function getRandomColor() {
     return color;
 }
 
+function RemoveDuplicates(xDataValues) {
+    var sum = {},result;
 
+    for (var i=0,c;c=xDataValues[i];++i) {
+        if ( undefined === sum[c[0]] ) {
+            sum[c[0]] = c;
+        }
+        else {
+            sum[c[0]][1] += c[1];
+        }
+    }
+    result = Object.keys(sum).map(function(val) { return sum[val]});
+    return result;
+}
 function populateGraphData(graphData, selectedIssues, callback) {
     //console.log('#################');
     //console.log(graphData);
@@ -26,7 +39,7 @@ function populateGraphData(graphData, selectedIssues, callback) {
                         xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403, getRandomColor()]);
                         callback();
                     }, function(err){
-                        graphData["xDataValues"] = xDataValues;
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
                         callback(null, graphData);
                     });
                 } else if(graphData.xDataType == 'Taluk') {
@@ -68,7 +81,7 @@ function populateGraphData(graphData, selectedIssues, callback) {
                     xDataValues.push([issues.fields.customfield_10400.value, parseInt(issues.fields.customfield_10403), getRandomColor()]);
                     callback();
                 }, function(err){
-                    graphData["xDataValues"] = xDataValues;//console.log('xDataValues:',graphData);
+                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
                     callback(null, graphData);
                 });
             } else if(graphData.xDataType == 'Taluk') {
