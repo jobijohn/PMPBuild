@@ -1942,9 +1942,13 @@ body > .navbar-collapse[data-color="purple"]:after {
   content: "";
   position: absolute;
 }
-.card .ct-chart, .card .ct-chart1 {
+.card .ct-chart {
   margin: 30px 0 30px;
   height: 245px;
+}
+.card .ct-chart1 {
+    height: 162px;
+    margin: 30px 0 30px;
 }
 .card .table tbody td:first-child,
 .card .table thead th:first-child {

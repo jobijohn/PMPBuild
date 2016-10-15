@@ -793,14 +793,16 @@
                 //check tab
             });
             $('#save-dashboard').on('click', function(){
-                reset();
+                location.reload();
                 showDashboard();
             });
 
             $('#reset').on('click', function(){
                 $('input[type="text"]').val('');
                 $('select').val('');
-                $('.settings-panel .test').html('')
+                $('.settings-panel .test').html('');
+                $('.chosen-select-filterPan').val('').trigger('chosen:updated');
+                $('.chosen-select').val('').trigger('chosen:updated');
 
             });
             function reset(){
@@ -811,6 +813,8 @@
                 $('.settings-panel .test').html('')
                 $('#divChart').html('');
                 $('#lblAcreValues').html('');
+                $('.chosen-select-filterPan').val('').trigger('chosen:updated');
+                $('.chosen-select').val('').trigger('chosen:updated');
             }
 
             function showSettings (){
