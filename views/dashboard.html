@@ -411,7 +411,7 @@
                             <input type="hidden" id="chart-yLabel" class="chart-yLabel" value="{{graphData.yLabel}}">
                             <input type="hidden" id="chart-xDataValues" class="chart-xDataValues" value="{{graphData.xDataValues}}">
                             <input type="hidden" id="divId" class="divId" value="{{graphData.id}}">
-
+                            <input type="hidden" id="chart-type" class="chart-type" value="{{graphData.type}}">
 
 
 
@@ -1165,12 +1165,20 @@
         }
         if(filters["districts"])
             var district = filters["districts"].split(',');
+        else
+            var district ='';
         if(filters["taluks"])
             var taluk = filters["taluks"].split(',');
+        else
+            var taluk ='';
         if(filters["issuetype"])
             var issuetype = filters["issuetype"];
+        else
+            var issuetype='';
         if(filters["acres"])
             var acres = filters["acres"].split(',');
+        else
+            var acres;
         $.post('/filter-issues', { issuetype:issuetype,
                                     district: district,
                                     taluk:taluk,
@@ -1250,6 +1258,7 @@
         var ylabel = [];
         var xdatavalue = [];
         var divId = [];
+        var type = [];
         $(".chart-title").each(function(){
             var title1 = $(this).val();
             title.push(title1)
@@ -1271,22 +1280,37 @@
             divId.push(divId1);
         });
 
-
-            google.charts.load('current', {packages: ['corechart', 'bar']});
+        $('.chart-type').each(function(){
+            var type1 = $(this).val();
+            type.push(type1);
+        });
+            google.charts.load('current', {packages: ['corechart']});
             google.charts.setOnLoadCallback(drawBasic);
             function drawBasic() {
                 for(var i=0; i < 10; i++){//TODO: change 10 as filtercount
                     var splits = [];
                     splits = xdatavalue[i].split(',');
                     var sliced= [];
-                    sliced.push(['test', xlabel[i], { role: 'style' }]);
-                    for(var s = 0; s < splits.length; s+=3) {
-                        sliced.push(splits.slice(s, s+3));
-                    }
+                    if(type[i] === 'bar') {
+                        sliced.push(['test', xlabel[i], {role: 'style'}]);
+                        for (var s = 0; s < splits.length; s += 3) {
+                            sliced.push(splits.slice(s, s + 3));
+                        }
 
-                    var len = sliced.length;
-                    for(var m = 1; m < len; m++) {
-                        sliced[m][1] = parseInt(sliced[m][1]);
+                        var len = sliced.length;
+                        for (var m = 1; m < len; m++) {
+                            sliced[m][1] = parseInt(sliced[m][1]);
+                        }
+                    } else if(type[i] === 'pie') {
+                        sliced.push(['District', 'Acres']);
+                        for (var s = 0; s < splits.length; s += 2) {
+                            sliced.push(splits.slice(s, s + 2));
+                        }
+
+                        var len = sliced.length;
+                        for (var m = 1; m < len; m++) {
+                            sliced[m][1] = parseInt(sliced[m][1]);
+                        }
                     }
 
                     var container = "ct-chart_"+ divId[i];
@@ -1305,7 +1329,10 @@
                             title: ylabel[i]
                         }
                     };
-                    var chart = new google.visualization.ColumnChart(document.getElementById(container));
+                    if(type[i] === 'bar')
+                        var chart = new google.visualization.ColumnChart(document.getElementById(container));
+                    else if(type[i] === 'pie')
+                        var chart = new google.visualization.PieChart(document.getElementById(container));
                     chart.draw(data, options);
                 }
 

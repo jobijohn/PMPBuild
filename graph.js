@@ -33,9 +33,9 @@ function populateGraphData(graphData, selectedIssues, callback) {
     if(selectedIssues == "") {
         common.readJsonFile('filteredissues.json', function(err, selectedIssues){
             if(graphData.type == "bar") {
-                var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
+                var xDataValues = [];
                 if(graphData.xDataType == 'District') {
-                    async.each(selectedIssues, function(issues, callback) {
+                    async.eachSeries(selectedIssues, function(issues, callback) {
                         xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403, getRandomColor()]);
                         callback();
                     }, function(err){
@@ -43,30 +43,30 @@ function populateGraphData(graphData, selectedIssues, callback) {
                         callback(null, graphData);
                     });
                 } else if(graphData.xDataType == 'Taluk') {
-                    async.each(selectedIssues, function(issues, callback) {
+                    async.eachSeries(selectedIssues, function(issues, callback) {
                         xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403, getRandomColor()]);
                         callback();
                     }, function(err){
-                        graphData["xDataValues"] = xDataValues;
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
                         callback(null, graphData);
                     });
                 }
             } else if(graphData.type == "pie") {
-                var xDataValues = [['District', 'Acres']];
+                var xDataValues = [];
                 if (graphData.xDataType == 'District') {
-                    async.each(selectedIssues, function(issues, callback) {
+                    async.eachSeries(selectedIssues, function(issues, callback) {
                         xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403]);
                         callback();
                     }, function(err){
-                        graphData["xDataValues"] = xDataValues;
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
                         callback(null, graphData);
                     });
                 } else if (graphData.xDataType == 'Taluk') {
-                    async.each(selectedIssues, function(issues, callback) {
+                    async.eachSeries(selectedIssues, function(issues, callback) {
                         xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403]);
                         callback();
                     }, function(err){
-                        graphData["xDataValues"] = xDataValues;
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
                         callback(null, graphData);
                     });
                 }
@@ -89,7 +89,7 @@ function populateGraphData(graphData, selectedIssues, callback) {
                     xDataValues.push([issues.fields.customfield_10401.value, parseInt(issues.fields.customfield_10403), getRandomColor()]);
                     callback();
                 }, function(err){
-                    graphData["xDataValues"] = xDataValues;
+                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
                     callback(null, graphData);
                 });
             }
@@ -100,7 +100,7 @@ function populateGraphData(graphData, selectedIssues, callback) {
                     xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403]);
                     callback();
                 }, function(err){
-                    graphData["xDataValues"] = xDataValues;
+                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
                     callback(null, graphData);
                 });
             } else if (graphData.xDataType == 'Taluk') {
@@ -108,7 +108,7 @@ function populateGraphData(graphData, selectedIssues, callback) {
                     xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403]);
                     callback();
                 }, function(err){
-                    graphData["xDataValues"] = xDataValues;
+                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
                     callback(null, graphData);
                 });
             }

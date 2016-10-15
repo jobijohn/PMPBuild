@@ -199,11 +199,20 @@ function filterIssues (req, res){
  * @param savedFilters
  * @param callback
  */
-function getIssuesByFilters(savedFilters, callback) {
-    var district = savedFilters.districts.split(',');
-    var taluk = savedFilters.taluks.split(',');
-    var issuetype = savedFilters.issuetype;
-    var acres = savedFilters.acres.split(',');
+function getIssuesByFilters(savedFilters, callback) {console.log(savedFilters);
+    if (savedFilters.hasOwnProperty('districts') ) {
+        var district = savedFilters.districts.split(',');
+    }
+    if (savedFilters.hasOwnProperty('taluks') ) {
+        var taluk = savedFilters.taluks.split(',');
+    }
+    if (savedFilters.hasOwnProperty('issuetype') ) {
+        var issuetype = savedFilters.issuetype;
+    }
+    if (savedFilters.hasOwnProperty('acres') ) {
+        var acres = savedFilters.acres.split(',');
+    }
+
     var districtFilter, talukFilter, acreFilter, issuetypeFilter;
     var filter="";
 
@@ -248,7 +257,6 @@ function getIssuesByFilters(savedFilters, callback) {
         }
         filter = filter + '&&' + acreFilter;
     }
-
     var issueJsonFile = 'jiraissues.json';
     common.readJsonFile(issueJsonFile, function (err, issueData) {
         var issues = issueData.issues;
