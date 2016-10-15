@@ -50,6 +50,14 @@ function populateGraphData(graphData, selectedIssues, callback) {
                         graphData["xDataValues"] = RemoveDuplicates(xDataValues);
                         callback(null, graphData);
                     });
+                } else if(graphData.xDataType == 'Status') {
+                    async.eachSeries(selectedIssues, function(issues, callback) {
+                        xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403, getRandomColor()]);
+                        callback();
+                    }, function(err){
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
                 }
             } else if(graphData.type == "pie") {
                 var xDataValues = [['District', 'Acres']];
@@ -64,6 +72,14 @@ function populateGraphData(graphData, selectedIssues, callback) {
                 } else if (graphData.xDataType == 'Taluk') {
                     async.eachSeries(selectedIssues, function(issues, callback) {
                         xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403]);
+                        callback();
+                    }, function(err){
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                } else if(graphData.xDataType == 'Status') {
+                    async.eachSeries(selectedIssues, function(issues, callback) {
+                        xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403]);
                         callback();
                     }, function(err){
                         graphData["xDataValues"] = RemoveDuplicates(xDataValues);
@@ -92,6 +108,14 @@ function populateGraphData(graphData, selectedIssues, callback) {
                     graphData["xDataValues"] = RemoveDuplicates(xDataValues);
                     callback(null, graphData);
                 });
+            } else if(graphData.xDataType == 'Status') {
+                async.eachSeries(selectedIssues, function(issues, callback) {
+                    xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403, getRandomColor()]);
+                    callback();
+                }, function(err){
+                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                    callback(null, graphData);
+                });
             }
         } else if(graphData.type == "pie") {
             var xDataValues = [['District', 'Acres']];
@@ -106,6 +130,14 @@ function populateGraphData(graphData, selectedIssues, callback) {
             } else if (graphData.xDataType == 'Taluk') {
                 async.each(selectedIssues, function(issues, callback) {
                     xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403]);
+                    callback();
+                }, function(err){
+                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                    callback(null, graphData);
+                });
+            } else if(graphData.xDataType == 'Status') {
+                async.eachSeries(selectedIssues, function(issues, callback) {
+                    xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403]);
                     callback();
                 }, function(err){
                     graphData["xDataValues"] = RemoveDuplicates(xDataValues);
