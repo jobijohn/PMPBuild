@@ -227,7 +227,7 @@ function editGraph(req, res){
             callback(err, null);
         }
         var savedfilters = txtData.split("|");
-        for(var i in savedfilters) {
+        /*for(var i in savedfilters) {
             for(var j in savedfilters) {
                 if(savedfilters[j].indexOf("id="+id)){
                     var index = savedfilters[j].toString().indexOf("issuetype=");//console.log("#" + index);
@@ -237,9 +237,67 @@ function editGraph(req, res){
                     break;
                 }
             }
-        }
+        }*/
 
-        var removedFiltersArray = [];
+        var data = {};
+        async.eachSeries(savedfilters, function(savedfilter, callback) {
+            //xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403, getRandomColor()]);
+
+            if(savedfilter.indexOf("id="+id) !== -1){
+               //console.log('found');
+                var index = savedfilter.indexOf("issuetype=");//console.log("#" + index);
+                data.filters = savedfilter.substring(index);//console.log("#" + filters);
+                var removedFilters = savedfilter.substring(0,index); //console.log('@@'+removedFilters);
+
+                var removedFiltersArray = [];
+                removedFiltersArray = removedFilters.split("&&");
+
+
+                async.eachSeries(removedFiltersArray, function(removedFilter, callback) {
+                    var valueFilter = [];
+                    var splitArray = removedFilter.split("=");//console.log('%%'+splitArray);
+                    if(splitArray[0].toString() === 'type'){
+                        data.type = splitArray[1].toString();
+                    }
+                    if(data.type === 'bar' || data.type === 'line') {
+                        if (splitArray[0].toString() === 'title') {
+                            data.title = splitArray[1].toString();
+                        }
+                        if (splitArray[0].toString() === 'xLabel') {
+                            data.xLabel = splitArray[1].toString();
+                        }
+                        if (splitArray[0].toString() === 'yLabel') {
+                            data.yLabel = splitArray[1].toString();
+                        }
+                        if (splitArray[0].toString() === 'xDataType') {
+                            data.xDataType = splitArray[1].toString();
+                        }
+                        if (splitArray[0].toString() === 'yDataType') {
+                            data.yDataType = splitArray[1].toString();
+                        }
+                        if (splitArray[0].toString() === 'head') {
+                            data.head = splitArray[1].toString();
+                        }
+                    } else if(data.type === 'pie') {
+                        if (splitArray[0].toString() === 'title') {
+                            data.title = splitArray[1].toString();
+                        }
+                        if (splitArray[0].toString() === 'dataType') {
+                            data.dataType = splitArray[1].toString();
+                        }
+                    }
+
+                    if(splitArray[0].toString() === 'head'){
+                        data.head = splitArray[1].toString();
+                    }
+                    callback();
+                });
+
+            }
+            callback();
+        });
+
+        /*var removedFiltersArray = [];
         removedFiltersArray = removedFilters.split("&&");
 
         for(var i in removedFiltersArray) {
@@ -280,23 +338,22 @@ function editGraph(req, res){
                 var head = splitArray[1].toString();
             }
 
-        }
+        }*/
 
         //TODO:
         //Populate X Data values
         //
 
-
         return res.json({
-            filters: filters,
-            type: type,
-            title : title,
-            xLabel:xLabel,
-            yLabel : yLabel,
-            xDataType : xDataType,
-            yDataType : yDataType,
-            head : head,
-            dataType : dataType
+            filters: data.filters,
+            type: data.type,
+            title : data.title,
+            xLabel: data.xLabel,
+            yLabel : data.yLabel,
+            xDataType : data.xDataType,
+            yDataType : data.yDataType,
+            head : data.head,
+            dataType : data.dataType
         });
     });
 
