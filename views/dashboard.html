@@ -128,6 +128,8 @@
                 <div class="form-group">
                     <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
                         <option value="">Select X Data</option>
+                        <option value="District">District</option>
+                        <option value="Taluk">Taluk</option>
                     </select>
                 </div>
             </li>
@@ -136,6 +138,7 @@
                 <div class="form-group">
                     <select id="vertical-data-type" name="vertical-data-type" class="form-control">
                         <option value="">Select Y Data</option>
+                        <option value="">No. of Acres</option>
                     </select>
                 </div>
             </li>
@@ -163,6 +166,8 @@
                 <div class="form-group">
                     <select class="form-control" id="data-name-pie" name="data-name-pie">
                         <option value="">Select Data</option>
+                        <option value="District">District</option>
+                        <option value="Taluk">Taluk</option>
                     </select>
                 </div>
             </li>
@@ -1174,18 +1179,18 @@
             else
                 $('#graph-filters').val('districts=' + _district) ;
 
-            if (!$("#horizontal-data-type option[value='District']").length) {
-                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
-            }
-
-            if (!$("#horizontal-data-type-line option[value='District']").length) {
-                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type-line'));
-            }
-
-
-            if (!$("#data-name-pie option[value='District']").length) {
-                $('<option>').val('District').text('District').appendTo($('#data-name-pie'));
-            }
+//            if (!$("#horizontal-data-type option[value='District']").length) {
+//                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
+//            }
+//
+//            if (!$("#horizontal-data-type-line option[value='District']").length) {
+//                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type-line'));
+//            }
+//
+//
+//            if (!$("#data-name-pie option[value='District']").length) {
+//                $('<option>').val('District').text('District').appendTo($('#data-name-pie'));
+//            }
 
             if($('.membes-on').hasClass('hide')){
                 $('.membes-on').removeClass('hide');
@@ -1208,17 +1213,17 @@
             else
                 $('#graph-filters').val('taluks=' + _taluk) ;
 
-            if (!$("#horizontal-data-type option[value='Taluk']").length) {
-                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
-            }
-
-            if (!$("#horizontal-data-type-line option[value='Taluk']").length) {
-                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type-line'));
-            }
-
-            if (!$("#data-name-pie option[value='Taluk']").length) {
-                $('<option>').val('Taluk').text('Taluk').appendTo($('#data-name-pie'));
-            }
+//            if (!$("#horizontal-data-type option[value='Taluk']").length) {
+//                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
+//            }
+//
+//            if (!$("#horizontal-data-type-line option[value='Taluk']").length) {
+//                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type-line'));
+//            }
+//
+//            if (!$("#data-name-pie option[value='Taluk']").length) {
+//                $('<option>').val('Taluk').text('Taluk').appendTo($('#data-name-pie'));
+//            }
 
             if($('.membes-on').hasClass('hide')){
                 $('.membes-on').removeClass('hide');
@@ -1258,13 +1263,13 @@
                 $('#graph-filters').val('acres=' + $('#lblAcreValues').text()) ;
 
 
-            if (!$("#vertical-data-type option[value='No. of Acres']").length) {
-                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
-            }
-
-            if (!$("#vertical-data-type-line option[value='No. of Acres']").length) {
-                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type-line'));
-            }
+//            if (!$("#vertical-data-type option[value='No. of Acres']").length) {
+//                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
+//            }
+//
+//            if (!$("#vertical-data-type-line option[value='No. of Acres']").length) {
+//                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type-line'));
+//            }
 
             if($('.membes-on').hasClass('hide')){
                 $('.membes-on').removeClass('hide');

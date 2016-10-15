@@ -199,7 +199,7 @@ function filterIssues (req, res){
  * @param savedFilters
  * @param callback
  */
-function getIssuesByFilters(savedFilters, callback) {console.log(savedFilters);
+function getIssuesByFilters(savedFilters, callback) {
     if (savedFilters.hasOwnProperty('districts') ) {
         var district = savedFilters.districts.split(',');
     }

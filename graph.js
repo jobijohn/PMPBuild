@@ -30,12 +30,10 @@ function RemoveDuplicates(xDataValues) {
     return result;
 }
 function populateGraphData(graphData, selectedIssues, callback) {
-    //console.log('#################');
-    console.log(graphData);
     if(selectedIssues == "") {
         common.readJsonFile('filteredissues.json', function(err, selectedIssues){
             if(graphData.type == "bar") {
-                var xDataValues = [];
+                var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
                 if(graphData.xDataType == 'District') {
                     async.eachSeries(selectedIssues, function(issues, callback) {
                         xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403, getRandomColor()]);
@@ -54,7 +52,7 @@ function populateGraphData(graphData, selectedIssues, callback) {
                     });
                 }
             } else if(graphData.type == "pie") {
-                var xDataValues = [];
+                var xDataValues = [['District', 'Acres']];
                 if (graphData.xDataType == 'District') {
                     async.eachSeries(selectedIssues, function(issues, callback) {
                         xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403]);
@@ -76,7 +74,7 @@ function populateGraphData(graphData, selectedIssues, callback) {
         });
     } else {
         if(graphData.type == "bar") {
-            var xDataValues = [];
+            var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
             //xDataValues.push([["'" + 'test' + "'", "'" + graphData.xLabel + "'", { role: 'style' } ]]);
             if(graphData.xDataType == 'District') {
                 async.each(selectedIssues, function(issues, callback) {
@@ -131,7 +129,7 @@ function generateBarGraph(req, res) {
         yDataType : req.param('vertical-data-type')
     };
 
-    //console.log("ID........" + graphData.id);
+    // console.log("ID........" + graphData.id);
     populateGraphData(graphData,'',function (err, graphData) {
         return res.json(graphData);
     });
