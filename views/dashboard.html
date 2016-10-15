@@ -441,7 +441,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12">
-                            <button class="btn btn-info btn-fill pull-right"><i class="pe-7s-edit"> Settings</i></button>
+                            <button class="btn btn-info btn-fill pull-right settignBtn" id="{{graphData.id}}"><i class="pe-7s-edit"> Settings</i></button>
                         </div>
 
                     </div>
@@ -795,6 +795,12 @@
             $('#save-dashboard').on('click', function(){
                 location.reload();
                 showDashboard();
+            });
+
+            $('.settignBtn').on('click', function(){
+                var id = $(this).attr('id');
+                alert(id);
+                showSettings();
             });
 
             $('#reset').on('click', function(){
@@ -1233,6 +1239,7 @@
         $(".ct-chart").each(function(i) {
             $(this).attr('id', "ct-chart_" + (i + 1));
         });
+
     });
 </script>
 
