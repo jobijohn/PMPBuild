@@ -29,6 +29,7 @@ function RemoveDuplicates(xDataValues) {
     result = Object.keys(sum).map(function(val) { return sum[val]});
     return result;
 }
+
 function populateGraphData(graphData, selectedIssues, callback) {
     if(selectedIssues == "") {
         common.readJsonFile('filteredissues.json', function(err, selectedIssues){
@@ -227,17 +228,6 @@ function editGraph(req, res){
             callback(err, null);
         }
         var savedfilters = txtData.split("|");
-        /*for(var i in savedfilters) {
-            for(var j in savedfilters) {
-                if(savedfilters[j].indexOf("id="+id)){
-                    var index = savedfilters[j].toString().indexOf("issuetype=");//console.log("#" + index);
-                    var filters = savedfilters[j].toString().substring(index);//console.log("#" + filters);
-
-                    var removedFilters = savedfilters[j].toString().substring(0,index); console.log('@@'+removedFilters);
-                    break;
-                }
-            }
-        }*/
 
         var data = {};
         async.eachSeries(savedfilters, function(savedfilter, callback) {
@@ -297,48 +287,7 @@ function editGraph(req, res){
             callback();
         });
 
-        /*var removedFiltersArray = [];
-        removedFiltersArray = removedFilters.split("&&");
 
-        for(var i in removedFiltersArray) {
-            var valueFilter = [];
-            var splitArray = removedFiltersArray[i].toString().split("=");console.log('%%'+splitArray);
-            if(splitArray[0].toString() === 'type'){
-                var type = splitArray[1].toString();
-            }
-            if(type === 'bar' || type === 'line') {
-                if (splitArray[0].toString() === 'title') {
-                    var title = splitArray[1].toString();
-                }
-                if (splitArray[0].toString() === 'xLabel') {
-                    var xLabel = splitArray[1].toString();
-                }
-                if (splitArray[0].toString() === 'yLabel') {
-                    var yLabel = splitArray[1].toString();
-                }
-                if (splitArray[0].toString() === 'xDataType') {
-                    var xDataType = splitArray[1].toString();
-                }
-                if (splitArray[0].toString() === 'yDataType') {
-                    var yDataType = splitArray[1].toString();
-                }
-                if (splitArray[0].toString() === 'head') {
-                    var head = splitArray[1].toString();
-                }
-            } else if(type === 'pie') {
-                if (splitArray[0].toString() === 'title') {
-                    var title = splitArray[1].toString();
-                }
-                if (splitArray[0].toString() === 'dataType') {
-                    var dataType = splitArray[1].toString();
-                }
-            }
-
-            if(splitArray[0].toString() === 'head'){
-                var head = splitArray[1].toString();
-            }
-
-        }*/
 
         //TODO:
         //Populate X Data values
@@ -359,8 +308,16 @@ function editGraph(req, res){
 
 }
 
+function getGraphData(req,res) {
+    var graphData = req.param('graphdata');
+    populateGraphData(graphData,'', function (err, data) {
+        return res.json({data:data })
+    })
+}
+
 exports.generateBarGraph = generateBarGraph;
 exports.generateLineGraph = generateLineGraph;
 exports.generatePieChart = generatePieChart;
 exports.populateGraphData = populateGraphData;
 exports.editGraph = editGraph;
+exports.getGraphData = getGraphData;
