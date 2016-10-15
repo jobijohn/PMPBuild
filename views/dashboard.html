@@ -1272,7 +1272,7 @@
                     var splits = [];
                     splits = xdatavalue[i].split(',');
                     var sliced= [];
-                    sliced.push(['test', 'District', { role: 'style' }]);
+                    sliced.push(['test', xlabel[i], { role: 'style' }]);
                     for(var s = 0; s < splits.length; s+=3) {
                         sliced.push(splits.slice(s, s+3));
                     }
@@ -1291,11 +1291,11 @@
                         /*width: 435,
                         height: 220,*/
                         hAxis: {
-                            title: $("#chart-xLabel").val(),
+                            title: xlabel[i],
                             minValue: 0
                         },
                         vAxis: {
-                            title: $("#chart-yLabel").val()
+                            title: ylabel[i]
                         }
                     };
                     var chart = new google.visualization.ColumnChart(document.getElementById(container));
