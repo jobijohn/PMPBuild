@@ -809,7 +809,7 @@
             });
 
             $('.settignBtn').on('click', function(){
-                var id = $(this).attr('id');
+                var id = $(this).attr('id'); alert(id);
                 //alert(id);
                 $.get('/graph/edit', {id: id})
                 .done(function (result) {
@@ -820,8 +820,8 @@
                         applyFilter();
 
                         if(result.type === 'bar'){
-                            $("#graph-title").val(result.title);
-                            $("#horizontal-axis-label").val(result.xLabel);
+                            $("#graph-title").val(result.title);  alert(result.title)
+                            $("#horizontal-axis-label").val(result.xLabel); alert(result.xLabel)
                             $("#vertical-axis-label").val(result.yLabel);
 
                             $("#horizontal-data-type").val(result.xDataType);
