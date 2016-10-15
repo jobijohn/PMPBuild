@@ -3487,7 +3487,7 @@ ul.filterOption {
     left: 240px;
     bottom: 0px;
     z-index: 0;
-    width: 300px;
+   /* width: 300px;*/
     transition: all 0.2s ease-in;
     -ms-transition: all 0.2s ease-in;
     -moz-transition: all 0.2s ease-in;
@@ -3894,6 +3894,17 @@ table .test td {
 }
 .card .footer .legend {
     padding: 5px 15px
+}
+.filterOption h3, .membes-on h3 {
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    font-weight: 400;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 5px;
+}
+.membes-on h3 {
+    margin: 0 0 5px 0;
+    padding: 0 0 5px 0;
 }
 /*** ux **/
 .dashboard_panel {
