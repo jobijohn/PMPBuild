@@ -2,7 +2,9 @@
  * Created by jobi on 10/4/16.
  */
 var common = require('./common'),
-    async = require('async');
+    async = require('async'),
+    index = require("./index"),
+    fs = require('fs');
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
@@ -16,7 +18,7 @@ function getRandomColor() {
 
 function populateGraphData(graphData, selectedIssues, callback) {
     //console.log('#################');
-    //console.log(graphData);
+    console.log(graphData);
     if(selectedIssues == "") {
         common.readJsonFile('filteredissues.json', function(err, selectedIssues){
             if(graphData.type == "bar") {
@@ -173,7 +175,92 @@ function generateLineGraph(req, res) {
         yDataValues : yDataValues
     });
 }
+
+function editGraph(req, res){
+    var id= req.param('id');
+
+    fs.readFile('savedfilters.txt', 'utf8', function (err, txtData) {
+        if (err) {
+            callback(err, null);
+        }
+        var savedfilters = txtData.split("|");
+        for(var i in savedfilters) {
+            for(var j in savedfilters) {
+                if(savedfilters[j].indexOf("id="+id)){
+                    var index = savedfilters[j].toString().indexOf("issuetype=");//console.log("#" + index);
+                    var filters = savedfilters[j].toString().substring(index);//console.log("#" + filters);
+
+                    var removedFilters = savedfilters[j].toString().substring(0,index); console.log('@@'+removedFilters);
+                    break;
+                }
+            }
+        }
+
+        var removedFiltersArray = [];
+        removedFiltersArray = removedFilters.split("&&");
+
+        for(var i in removedFiltersArray) {
+            var valueFilter = [];
+            var splitArray = removedFiltersArray[i].toString().split("=");console.log('%%'+splitArray);
+            if(splitArray[0].toString() === 'type'){
+                var type = splitArray[1].toString();
+            }
+            if(type === 'bar' || type === 'line') {
+                if (splitArray[0].toString() === 'title') {
+                    var title = splitArray[1].toString();
+                }
+                if (splitArray[0].toString() === 'xLabel') {
+                    var xLabel = splitArray[1].toString();
+                }
+                if (splitArray[0].toString() === 'yLabel') {
+                    var yLabel = splitArray[1].toString();
+                }
+                if (splitArray[0].toString() === 'xDataType') {
+                    var xDataType = splitArray[1].toString();
+                }
+                if (splitArray[0].toString() === 'yDataType') {
+                    var yDataType = splitArray[1].toString();
+                }
+                if (splitArray[0].toString() === 'head') {
+                    var head = splitArray[1].toString();
+                }
+            } else if(type === 'pie') {
+                if (splitArray[0].toString() === 'title') {
+                    var title = splitArray[1].toString();
+                }
+                if (splitArray[0].toString() === 'dataType') {
+                    var dataType = splitArray[1].toString();
+                }
+            }
+
+            if(splitArray[0].toString() === 'head'){
+                var head = splitArray[1].toString();
+            }
+
+        }
+
+        //TODO:
+        //Populate X Data values
+        //
+
+
+        return res.json({
+            filters: filters,
+            type: type,
+            title : title,
+            xLabel:xLabel,
+            yLabel : yLabel,
+            xDataType : xDataType,
+            yDataType : yDataType,
+            head : head,
+            dataType : dataType
+        });
+    });
+
+}
+
 exports.generateBarGraph = generateBarGraph;
 exports.generateLineGraph = generateLineGraph;
 exports.generatePieChart = generatePieChart;
 exports.populateGraphData = populateGraphData;
+exports.editGraph = editGraph;

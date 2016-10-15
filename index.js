@@ -367,3 +367,4 @@ exports.getOAuthCallback = getOAuthCallback;
 exports.getJsonFromJira = getJsonFromJira;
 exports.filterIssues = filterIssues;
 exports.saveToDashboard = saveToDashboard;
+exports.getSavedGraphAndIssuesFilter = getSavedGraphAndIssuesFilter;

@@ -799,8 +799,120 @@
 
             $('.settignBtn').on('click', function(){
                 var id = $(this).attr('id');
-                alert(id);
-                showSettings();
+                //alert(id);
+                $.get('/graph/edit', {id: id})
+                .done(function (result) {
+                    if(result) { alert(result.filters);
+                        $("#graph-filters").val(result.filters);
+                        $("#save-title").val(result.head);
+
+                        applyFilter();
+
+                        if(result.type === 'bar'){
+                            $("#graph-title").val(result.title);
+                            $("#horizontal-axis-label").val(result.xLabel);
+                            $("#vertical-axis-label").val(result.yLabel);
+
+                            $("#horizontal-data-type").val(result.xDataType);
+                            $("#vertical-data-type").val(result.yDataType);
+
+                            google.charts.load('current', {packages: ['corechart', 'bar']});
+                            google.charts.setOnLoadCallback(drawBasic);
+                            function drawBasic(){
+                                var data = google.visualization.arrayToDataTable([
+                                    ['Year', 'Visitations', { role: 'style' } ],
+                                    ['2010', 10, 'color: gray'],
+                                    ['2020', 14, 'color: #76A7FA'],
+                                    ['2030', 16, 'opacity: 0.2'],
+                                    ['2040', 22, 'stroke-color: #703593; stroke-width: 4; fill-color: #C5A5CF'],
+                                    ['2050', 28, 'stroke-color: #871B47; stroke-opacity: 0.6; stroke-width: 8; fill-color: #BC5679; fill-opacity: 0.2']]);
+                                var options = {
+                                    title: result.title,
+                                    //chartArea: {height: '200'},
+                                    width: 435,
+                                    height: 220,
+                                    hAxis: {
+                                        title: result.xLabel,
+                                        minValue: 0
+                                    },
+                                    vAxis: {
+                                        title: result.yLabel
+                                    }
+                                };
+                                var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+                                chart.draw(data, options);
+
+                            }
+
+
+                        } else if(result.type === 'line'){
+                            $("#graph-title-line").val(result.title);
+                            $("#horizontal-axis-label-line").val(result.xLabel);
+                            $("#vertical-axis-label-line").val(result.yLabel);
+                            $("#horizontal-data-type-line").val(result.xDataType);
+                            $("#vertical-data-type-line").val(result.yDataType);
+
+                            google.charts.load('current', {'packages': ['line']});
+                            google.charts.setOnLoadCallback(drawChart);
+
+                            function drawChart() {
+                                var data = new google.visualization.DataTable();
+                                data.addColumn('number', result.xLabel);
+                                data.addColumn('number', result.yLabel);
+                                data.addRows([
+                                 [1,  37.8, 80.8, 41.8],
+                                 [2,  30.9, 69.5, 32.4],
+                                 [3,  25.4,   57, 25.7],
+                                 [4,  11.7, 18.8, 10.5],
+                                 [5,  11.9, 17.6, 10.4],
+                                 [6,   8.8, 13.6,  7.7],
+                                 [7,   7.6, 12.3,  9.6],
+                                 [8,  12.3, 29.2, 10.6],
+                                 [9,  16.9, 42.9, 14.8],
+                                 [10, 12.8, 30.9, 11.6],
+                                 [11,  5.3,  7.9,  4.7],
+                                 [12,  6.6,  8.4,  5.2],
+                                 [13,  4.8,  6.3,  3.6],
+                                 [14,  4.2,  6.2,  3.4]
+                                 ]);
+                                data.addRows(
+                                        result.xDataValues);
+                                var options = {
+                                    chart: {
+                                        title: result.title
+                                    }
+                                };
+                                var chart = new google.charts.Line(document.getElementById('divChart'));
+                                chart.draw(data, options);
+                            }
+
+                        }if(result.type === 'pie'){
+                            $("#graph-title-pie").val(result.title);
+                            $("#data-name-pie").val(result.dataType);
+
+                            google.charts.load('current', {'packages': ['corechart']});
+                            google.charts.setOnLoadCallback(drawChart);
+                            function drawChart() {
+                                var data = google.visualization.arrayToDataTable([
+                                    ['Task', 'Hours per Day'],
+                                    ['Work',     11],
+                                    ['Eat',      2],
+                                    ['Commute',  2],
+                                    ['Watch TV', 2],
+                                    ['Sleep',    7]
+                                ]);
+
+                                var options = {
+                                    title: result.title
+                                };
+
+                                var chart = new google.visualization.PieChart(document.getElementById('divChart'));
+                                chart.draw(data, options);
+                            }
+                        }
+                        showSettings();
+                    }
+                });
             });
 
             $('#reset').on('click', function(){
@@ -1156,6 +1268,10 @@
     });
 
     $('#test-button').click(function() {
+        applyFilter();
+    });
+
+    function applyFilter(){
         var filters= {};
         var filterText = $('#graph-filters').val();
         var splitFilterText = filterText.split("&&");
@@ -1172,21 +1288,21 @@
         if(filters["acres"])
             var acres = filters["acres"].split(',');
         $.post('/filter-issues', { issuetype:issuetype,
-                                    district: district,
-                                    taluk:taluk,
-                                    acres:acres})
+            district: district,
+            taluk:taluk,
+            acres:acres})
                 .done(function (result) {
                     if(result.success){
                         $('.test').empty();
                         for (var data in result.filteredIssues) {
                             $('.test').append('<tr>' +
-                                    /*'<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +*/
+                                /*'<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +*/
                                     '<td>' + result.filteredIssues[data].fields.summary +'</td>' +
                                     '</tr>');
                         }
                     }
                 });
-    });
+    }
 
     $('#save-dashboard').on('click', function (e) {
         //TODO: apply 1,2,3...instead of guid
