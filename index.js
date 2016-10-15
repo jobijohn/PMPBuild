@@ -277,6 +277,10 @@ function saveToDashboard(req, res) {
             callback(err, null);
         }
         if(txtData) {
+            var txtSplitData = txtData.split("|");
+            var filterCount = txtSplitData.length + 1;
+            console.log('filters', filters);
+            filters = 'id=' + filterCount + '&&' + filters;
             saveData = txtData + '|' + filters;
         } else {
             saveData = filters;

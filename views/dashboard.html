@@ -1144,7 +1144,6 @@
         var graphinfo = "";
         var graphType = $("#graph-type").val();
         if (graphType === 'bar') {
-            graphinfo += "id="+ guid() +"&&";
             graphinfo += "type=bar&&";
             graphinfo += "title=" + $("#graph-title").val() + "&&";
             graphinfo += "xLabel=" + $("#horizontal-axis-label").val() + "&&";
@@ -1152,7 +1151,6 @@
             graphinfo += "xDataType=" + $("#horizontal-data-type").val() + "&&";
             graphinfo += "yDataType=" + $("#vertical-data-type").val() + "&&";
         } else if (graphType === 'line') {
-            graphinfo += "id="+ guid() +"&&";
             graphinfo += "type=line&&"
             graphinfo += "title=" + $("#graph-title-line").val() + "&&";
             graphinfo += "xLabel=" + $("#horizontal-axis-label-line").val() + "&&";
@@ -1160,7 +1158,6 @@
             graphinfo += "xDataType=" + $("#horizontal-data-type-line").val() + "&&";
             graphinfo += "yDataType=" + $("#vertical-data-type-line").val() + "&&";
         } else if (graphType === 'pie') {
-            graphinfo += "id="+ guid() +"&&";
             graphinfo += "type=pie&&"
             graphinfo += "title=" + $("#graph-title-pie").val() + "&&";
             graphinfo += "dataType=" + $("#data-name-pie").val() + "&&";
@@ -1185,18 +1182,7 @@
                     }
                 });
     });
-
-    function guid() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                    .toString(16)
-                    .substring(1);
-        }
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-                s4() + '-' + s4() + s4() + s4();
-    }
-
-
+    
 </script>
 <script>
     $(document).ready(function() {
