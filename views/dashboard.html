@@ -449,7 +449,7 @@
                 {{/each}}
                 <div class="col-sm-12">
                     <div class="newGraphBtn p0 m0">
-                        <button class="btn btn-info btn-fill text-center"><i class="pe-7s-graph1"> Create New Graph</i></button>
+                        <button class="btn btn-info btn-fill text-center" id="createGraphFromDashboard"><i class="pe-7s-graph1"> Create New Graph</i></button>
                     </div>
 
                 </div>
@@ -787,12 +787,52 @@
                 }
             });
 
+            $('#createGraphFromDashboard').on('click', function(){
+                reset();
+                showSettings();
+                //check tab
+            });
+            $('#save-dashboard').on('click', function(){
+                reset();
+                showDashboard();
+            });
+
             $('#reset').on('click', function(){
                 $('input[type="text"]').val('');
                 $('select').val('');
                 $('.settings-panel .test').html('')
 
             });
+            function reset(){
+                var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+                chart.clearChart();
+                $('input[type="text"]').val('');
+                $('select').val('');
+                $('.settings-panel .test').html('')
+                $('#divChart').html('');
+                $('#lblAcreValues').html('');
+            }
+
+            function showSettings (){
+                $('.main-panel').removeClass('dashboard-active');
+                $('.dashboard_panel').addClass('disable');
+                if($('.settings-panel').hasClass('disable')){
+                    $('.content').removeClass('disable');
+                }
+                if($('.sidebar-wrapper').hasClass('disable')){
+                    $('.sidebar-wrapper').removeClass('disable');
+                }
+                if($('.sidebar').hasClass('disable')){
+                    $('.sidebar').removeClass('disable');
+                }
+            }
+            function showDashboard(){
+                $('.main-panel').addClass('dashboard-active');
+                $('.dashboard_panel').removeClass('disable');
+                $('.settings-panel').addClass('disable');
+                $('.sidebar-wrapper').addClass('disable');
+                $('.sidebar').addClass('disable')
+            }
 
             $('#graph-type').on('change', function(){
                 var value = $(this).val();
