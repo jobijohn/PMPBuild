@@ -537,10 +537,10 @@
                                        <!-- <i class="fa fa-circle text-info"></i> Tesla Model S
                                         <i class="fa fa-circle text-danger"></i> BMW 5 Series-->
                                     </div>
-                                    <hr>
-                                    <div class="stats">
-                                        <i class="fa fa-history"></i> Updated 3 minutes ago
-                                    </div>
+                                    <!--<hr>-->
+                                    <!--<div class="stats">-->
+                                        <!--<i class="fa fa-history"></i> Updated 3 minutes ago-->
+                                    <!--</div>-->
                                 </div>
                             </div>
                         </div>
@@ -658,10 +658,10 @@
                                 </div>
 
                                 <div class="footer">
-                                    <hr>
-                                    <div class="stats">
-                                        <i class="fa fa-history"></i> Updated 3 minutes ago
-                                    </div>
+                                    <!--<hr>-->
+                                    <!--<div class="stats">-->
+                                        <!--<i class="fa fa-history"></i> Updated 3 minutes ago-->
+                                    <!--</div>-->
                                 </div>
                             </div>
                         </div>
@@ -942,7 +942,7 @@
                                 });
                         }, 2000);
 
-
+                        $("#save-dashboard").html('Update Filters');
                         showSettings();
                     }
                 });
@@ -980,8 +980,7 @@
                 if($('.sidebar').hasClass('disable')){
                     $('.sidebar').removeClass('disable');
                 }
-//                $('#save-dashboard').text('Update Filters');
-                $("#save-dashboard").html('Update Filters');
+
             }
             function showDashboard(){
                 $('.main-panel').addClass('dashboard-active');
