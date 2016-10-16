@@ -31,10 +31,11 @@
     <link href="/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 </head>
 <body>
-<input type="text" id="graphData" value="{{indexData.savedFilterData}}">
+<!--<input type="text" id="graphData" value="{{indexData.savedFilterData}}">-->
 <div class="wrapper">
     <div class="sidebar disable" data-color="purple" data-image="img/sidebar-5.jpg">
 
@@ -94,10 +95,11 @@
     	</div>
     </div>
 
-    <ul class="filterOption">
+    <ul class="filterOption col-sm-3">
 
         <a class="close">x</a>
         <form method="post" id="formBarGraph" class="table-form disable">
+            <h3>Bar Graph</h3>
             <li>
                 <div class="form-group">
                     <input type="text" class="form-control" id="graph-title" name="graph-title" placeholder="Enter Tittle">
@@ -126,6 +128,9 @@
                 <div class="form-group">
                     <select id="horizontal-data-type" name="horizontal-data-type" class="form-control">
                         <option value="">Select X Data</option>
+                        <option value="District">District</option>
+                        <option value="Taluk">Taluk</option>
+                        <option value="Status">Issue Status</option>
                     </select>
                 </div>
             </li>
@@ -134,6 +139,7 @@
                 <div class="form-group">
                     <select id="vertical-data-type" name="vertical-data-type" class="form-control">
                         <option value="">Select Y Data</option>
+                        <option value="">No. of Acres</option>
                     </select>
                 </div>
             </li>
@@ -151,6 +157,7 @@
 
 
         <form method="post" id="formPieChart" class="table-form disable">
+            <h3>Pie Chart</h3>
             <li>
                 <div class="form-group">
                     <input id="graph-title-pie" name="graph-title-pie" type="text" class="form-control" placeholder="Enter Tittle">
@@ -160,6 +167,9 @@
                 <div class="form-group">
                     <select class="form-control" id="data-name-pie" name="data-name-pie">
                         <option value="">Select Data</option>
+                        <option value="District">District</option>
+                        <option value="Taluk">Taluk</option>
+                        <option value="Status">Issue Status</option>
                     </select>
                 </div>
             </li>
@@ -198,6 +208,7 @@
         </form>
 
         <form method="post" id="formLineGraph" class="table-form disable">
+            <h3>Line Graph</h3>
             <li>
                 <div class="form-group">
                     <input id="graph-title-line" type="text" class="form-control" placeholder="Enter Tittle">
@@ -244,7 +255,10 @@
     <div class="col-sm-3 addFilter">
 
         <ul class="membes-on">
-            <div class="col-sm-12 pull-right">
+            <div class="col-sm-10 p0">
+                <h3>Select Filter</h3>
+            </div>
+            <div class="col-sm-2 pull-right">
                 <a class="close">x</a>
             </div>
             <div class="clearfix"></div>
@@ -400,12 +414,23 @@
                 <div class="col-md-6">
                     <div class="card ">
                         <div class="header">
-                            <h4 class="title">{{graphData.title}}</h4>
+                            <h4 class="title">{{graphData.head}}</h4>
                            <!-- <p class="category">All products including Taxes</p>-->
                         </div>
                         <div class="content">
-                            <div id="dash-chart" class="ct-chart"></div>
 
+                            <input type="hidden" id="chart-title" class="chart-title" value="{{graphData.title}}">
+                            <input type="hidden" id="chart-xLabel" class="chart-xLabel" value="{{graphData.xLabel}}">
+                            <input type="hidden" id="chart-yLabel" class="chart-yLabel" value="{{graphData.yLabel}}">
+                            <input type="hidden" id="chart-xDataValues" class="chart-xDataValues" value="{{graphData.xDataValues}}">
+                            <input type="hidden" id="divId" class="divId" value="{{graphData.id}}">
+                            <input type="hidden" id="chart-type" class="chart-type" value="{{graphData.type}}">
+
+
+
+                            <div id="dash-chart" class="ct-chart">
+
+                            </div>
 
                         </div>
 
@@ -429,7 +454,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12">
-                            <button class="btn btn-info btn-fill pull-right"><i class="pe-7s-edit"> Settings</i></button>
+                            <button class="btn btn-info btn-fill pull-right settignBtn" id="{{graphData.id}}"><i class="pe-7s-edit"> Settings</i></button>
                         </div>
 
                     </div>
@@ -437,7 +462,7 @@
                 {{/each}}
                 <div class="col-sm-12">
                     <div class="newGraphBtn p0 m0">
-                        <button class="btn btn-info btn-fill text-center"><i class="pe-7s-graph1"> Create New Graph</i></button>
+                        <button class="btn btn-info btn-fill text-center" id="createGraphFromDashboard"><i class="pe-7s-graph1"> Create New Graph</i></button>
                     </div>
 
                 </div>
@@ -505,7 +530,7 @@
                                 <!--<p class="category">All products including Taxes</p>-->
                             </div>
                             <div class="content">
-                                <div id="divChart" class="ct-chart"></div>
+                                <div id="divChart" class="ct-chart1"></div>
 
                                 <div class="footer">
                                     <div class="legend">
@@ -723,7 +748,6 @@
 <link rel="stylesheet" href="http://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="/js/chosen.jquery.min.js" type="text/javascript"></script>
 
 <!--CDN js for DataTable-->
@@ -776,12 +800,171 @@
                 }
             });
 
+            $('#createGraphFromDashboard').on('click', function(){
+                reset();
+                showSettings();
+                //check tab
+            });
+            $('#save-dashboard').on('click', function(){
+                location.reload();
+                showDashboard();
+            });
+
+            $('.settignBtn').on('click', function(){
+                var id = $(this).attr('id');
+                $.get('/graph/edit', {id: id})
+                .done(function (result) {
+                    if(result) {
+                        $("#graph-filters").val(result.filters);
+                        $("#save-title").val(result.head);
+
+                        applyFilter();
+                        setTimeout(function(){
+                        $.get('/graph/edit/get-data',{graphdata:result})
+                                .done(function (result1) {
+                                    if(result.type === 'bar'){
+                                        $("#graph-title").val(result.title);
+                                        $("#horizontal-axis-label").val(result.xLabel);
+                                        $("#vertical-axis-label").val(result.yLabel);
+
+                                        $("#horizontal-data-type").val(result.xDataType);
+                                        $("#vertical-data-type").val(result.yDataType);
+
+                                        google.charts.load('current', {packages: ['corechart', 'bar']});
+                                        google.charts.setOnLoadCallback(drawBasic);
+                                        function drawBasic(){
+                                            var data = google.visualization.arrayToDataTable(result1.data.xDataValues);
+                                            var options = {
+                                                title: result.title,
+                                                //chartArea: {height: '200'},
+                                                width: 435,
+                                                height: 220,
+                                                hAxis: {
+                                                    title: result.xLabel,
+                                                    minValue: 0
+                                                },
+                                                vAxis: {
+                                                    title: result.yLabel
+                                                }
+                                            };
+                                            var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+                                            chart.draw(data, options);
+
+                                        }
+
+
+                                    } else if(result.type === 'line'){
+                                        $("#graph-title-line").val(result.title);
+                                        $("#horizontal-axis-label-line").val(result.xLabel);
+                                        $("#vertical-axis-label-line").val(result.yLabel);
+                                        $("#horizontal-data-type-line").val(result.xDataType);
+                                        $("#vertical-data-type-line").val(result.yDataType);
+
+                                        google.charts.load('current', {'packages': ['line']});
+                                        google.charts.setOnLoadCallback(drawChart);
+
+                                        function drawChart() {
+                                            var data = new google.visualization.DataTable();
+                                            data.addColumn('number', result.xLabel);
+                                            data.addColumn('number', result.yLabel);
+                                            data.addRows([
+                                                [1,  37.8, 80.8, 41.8],
+                                                [2,  30.9, 69.5, 32.4],
+                                                [3,  25.4,   57, 25.7],
+                                                [4,  11.7, 18.8, 10.5],
+                                                [5,  11.9, 17.6, 10.4],
+                                                [6,   8.8, 13.6,  7.7],
+                                                [7,   7.6, 12.3,  9.6],
+                                                [8,  12.3, 29.2, 10.6],
+                                                [9,  16.9, 42.9, 14.8],
+                                                [10, 12.8, 30.9, 11.6],
+                                                [11,  5.3,  7.9,  4.7],
+                                                [12,  6.6,  8.4,  5.2],
+                                                [13,  4.8,  6.3,  3.6],
+                                                [14,  4.2,  6.2,  3.4]
+                                            ]);
+                                            data.addRows(
+                                                    result.xDataValues);
+                                            var options = {
+                                                chart: {
+                                                    title: result.title
+                                                }
+                                            };
+                                            var chart = new google.charts.Line(document.getElementById('divChart'));
+                                            chart.draw(data, options);
+                                        }
+
+                                    }if(result.type === 'pie'){
+                                        $("#graph-title-pie").val(result.title);
+                                        $("#data-name-pie").val(result.dataType);
+
+                                        google.charts.load('current', {'packages': ['corechart']});
+                                        google.charts.setOnLoadCallback(drawChart);
+                                        function drawChart() {
+                                            var data = google.visualization.arrayToDataTable(result1.data.xDataValues);
+
+                                            var options = {
+                                                title: result.title
+                                            };
+
+                                            var chart = new google.visualization.PieChart(document.getElementById('divChart'));
+                                            chart.draw(data, options);
+                                        }
+                                    }
+
+
+
+
+                                });
+                        }, 1000);
+
+
+                        showSettings();
+                    }
+                });
+            });
+
             $('#reset').on('click', function(){
                 $('input[type="text"]').val('');
                 $('select').val('');
-                $('.settings-panel .test').html('')
+                $('.settings-panel .test').html('');
+                $('.chosen-select-filterPan').val('').trigger('chosen:updated');
+                $('.chosen-select').val('').trigger('chosen:updated');
 
             });
+            function reset(){
+                var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+                chart.clearChart();
+                $('input[type="text"]').val('');
+                $('select').val('');
+                $('.settings-panel .test').html('')
+                $('#divChart').html('');
+                $('#lblAcreValues').html('');
+                $('.chosen-select-filterPan').val('').trigger('chosen:updated');
+                $('.chosen-select').val('').trigger('chosen:updated');
+            }
+
+            function showSettings (){
+                $('.main-panel').removeClass('dashboard-active');
+                $('.dashboard_panel').addClass('disable');
+                if($('.settings-panel').hasClass('disable')){
+                    $('.content').removeClass('disable');
+                }
+                if($('.sidebar-wrapper').hasClass('disable')){
+                    $('.sidebar-wrapper').removeClass('disable');
+                }
+                if($('.sidebar').hasClass('disable')){
+                    $('.sidebar').removeClass('disable');
+                }
+                $('#save-dashboard').text('Update Filters');
+            }
+            function showDashboard(){
+                $('.main-panel').addClass('dashboard-active');
+                $('.dashboard_panel').removeClass('disable');
+                $('.settings-panel').addClass('disable');
+                $('.sidebar-wrapper').addClass('disable');
+                $('.sidebar').addClass('disable')
+            }
 
             $('#graph-type').on('change', function(){
                 var value = $(this).val();
@@ -826,7 +1009,6 @@
             var button = $('.filterMainBtn');
             button.click(function(){
                 var id = this.getAttribute('id');
-                console.log(id);
                 if(id === 'districtBtn') {
                     $('.membes-on').addClass('hide');
                     $('.district').addClass('active')
@@ -841,7 +1023,6 @@
             $('.filterContentClose').click(function(){
                 if($('.membes-on').hasClass('hide')){
                     $('.membes-on').removeClass('hide');
-                    console.log($(this));
                     $(this).parent().parent().removeClass('active');
                     $('.addFilter').removeClass('active')
                 }
@@ -851,6 +1032,16 @@
 
 
 <script>
+    $('#reset').on('click', function(){
+        var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+        chart.clearChart();
+        $('input[type="text"]').val('');
+        $('select').val('');
+        $('.settings-panel .test').html('')
+        $('#divChart').html('');
+        $('#lblAcreValues').html('');
+    });
+    
     $('#formBarGraph').on('click', '#btnBarGraph',  function (e) {
         var selectedIssues = $('#filteredIssues').val();
         $.post('/graph/bar', $('#formBarGraph').serialize())
@@ -881,12 +1072,7 @@
             });
     });
 
-    $('#reset').on('click', function(){
-        var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
-        chart.clearChart();
-        $('#divChart').html('');
-        $('#lblAcreValues').html('');
-    });
+
 </script>
 
 
@@ -992,18 +1178,18 @@
             else
                 $('#graph-filters').val('districts=' + _district) ;
 
-            if (!$("#horizontal-data-type option[value='District']").length) {
-                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
-            }
-
-            if (!$("#horizontal-data-type-line option[value='District']").length) {
-                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type-line'));
-            }
-
-
-            if (!$("#data-name-pie option[value='District']").length) {
-                $('<option>').val('District').text('District').appendTo($('#data-name-pie'));
-            }
+//            if (!$("#horizontal-data-type option[value='District']").length) {
+//                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type'));
+//            }
+//
+//            if (!$("#horizontal-data-type-line option[value='District']").length) {
+//                $('<option>').val('District').text('District').appendTo($('#horizontal-data-type-line'));
+//            }
+//
+//
+//            if (!$("#data-name-pie option[value='District']").length) {
+//                $('<option>').val('District').text('District').appendTo($('#data-name-pie'));
+//            }
 
             if($('.membes-on').hasClass('hide')){
                 $('.membes-on').removeClass('hide');
@@ -1026,17 +1212,17 @@
             else
                 $('#graph-filters').val('taluks=' + _taluk) ;
 
-            if (!$("#horizontal-data-type option[value='Taluk']").length) {
-                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
-            }
-
-            if (!$("#horizontal-data-type-line option[value='Taluk']").length) {
-                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type-line'));
-            }
-
-            if (!$("#data-name-pie option[value='Taluk']").length) {
-                $('<option>').val('Taluk').text('Taluk').appendTo($('#data-name-pie'));
-            }
+//            if (!$("#horizontal-data-type option[value='Taluk']").length) {
+//                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type'));
+//            }
+//
+//            if (!$("#horizontal-data-type-line option[value='Taluk']").length) {
+//                $('<option>').val('Taluk').text('Taluk').appendTo($('#horizontal-data-type-line'));
+//            }
+//
+//            if (!$("#data-name-pie option[value='Taluk']").length) {
+//                $('<option>').val('Taluk').text('Taluk').appendTo($('#data-name-pie'));
+//            }
 
             if($('.membes-on').hasClass('hide')){
                 $('.membes-on').removeClass('hide');
@@ -1076,13 +1262,13 @@
                 $('#graph-filters').val('acres=' + $('#lblAcreValues').text()) ;
 
 
-            if (!$("#vertical-data-type option[value='No. of Acres']").length) {
-                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
-            }
-
-            if (!$("#vertical-data-type-line option[value='No. of Acres']").length) {
-                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type-line'));
-            }
+//            if (!$("#vertical-data-type option[value='No. of Acres']").length) {
+//                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type'));
+//            }
+//
+//            if (!$("#vertical-data-type-line option[value='No. of Acres']").length) {
+//                $('<option>').val('No. of Acres').text('No. of Acres').appendTo($('#vertical-data-type-line'));
+//            }
 
             if($('.membes-on').hasClass('hide')){
                 $('.membes-on').removeClass('hide');
@@ -1092,6 +1278,10 @@
     });
 
     $('#test-button').click(function() {
+        applyFilter();
+    });
+
+    function applyFilter(){
         var filters= {};
         var filterText = $('#graph-filters').val();
         var splitFilterText = filterText.split("&&");
@@ -1101,34 +1291,44 @@
         }
         if(filters["districts"])
             var district = filters["districts"].split(',');
+        else
+            var district ='';
         if(filters["taluks"])
             var taluk = filters["taluks"].split(',');
+        else
+            var taluk ='';
         if(filters["issuetype"])
             var issuetype = filters["issuetype"];
+        else
+            var issuetype='';
         if(filters["acres"])
             var acres = filters["acres"].split(',');
+        else
+            var acres;
         $.post('/filter-issues', { issuetype:issuetype,
-                                    district: district,
-                                    taluk:taluk,
-                                    acres:acres})
+            district: district,
+            taluk:taluk,
+            acres:acres})
                 .done(function (result) {
                     if(result.success){
                         $('.test').empty();
                         for (var data in result.filteredIssues) {
                             $('.test').append('<tr>' +
-                                    /*'<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +*/
+                                /*'<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +*/
                                     '<td>' + result.filteredIssues[data].fields.summary +'</td>' +
                                     '</tr>');
                         }
                     }
                 });
-    });
+    }
 
     $('#save-dashboard').on('click', function (e) {
+        //TODO: apply 1,2,3...instead of guid
+
         var graphinfo = "";
         var graphType = $("#graph-type").val();
         if (graphType === 'bar') {
-            graphinfo += "type=bar&&"
+            graphinfo += "type=bar&&";
             graphinfo += "title=" + $("#graph-title").val() + "&&";
             graphinfo += "xLabel=" + $("#horizontal-axis-label").val() + "&&";
             graphinfo += "yLabel=" + $("#vertical-axis-label").val() + "&&";
@@ -1147,7 +1347,6 @@
             graphinfo += "dataType=" + $("#data-name-pie").val() + "&&";
             //TODO:add pie fields
         }
-
         var saveTitle = $("#save-title").val();
         if (!saveTitle) {
             alert('Please enter title!');
@@ -1159,36 +1358,124 @@
             alert('No Filters!');
             return;
         }
-
         $.post('/save-to-dashboard', {filtersNew: filtersNew})
                 .done(function (result) {
                     if (result) {
-                        alert('ok');
+                        alert('Saved to dashboard');
                     }
                 });
     });
 
-/*$('#reset').on('click', function (e) {
-    e.preventDefault();
-    var pageRef = $(this).attr('href');
-    callPage(pageRef);
-});
+</script>
+<script>
+    $(document).ready(function() {
+        $(".ct-chart").each(function(i) {
+            $(this).attr('id', "ct-chart_" + (i + 1));
+        });
 
-function callPage(pageRefInput){
-    $.ajax({
-        url: pageRefInput,
-        type: 'GET',
-        dataType: 'text',
-        success:function(response){
-            console.log('the page was loded', response);
-        },
-        error:function(error){
-            console.log('page was not loaded', error)
-        }
     });
-}*/
+</script>
 
+<script>
+    $(document).ready(function() {
+        var title = [];
+        var xlabel = [];
+        var ylabel = [];
+        var xdatavalue = [];
+        var divId = [];
+        var type = [];
+        $(".chart-title").each(function(){
+            var title1 = $(this).val();
+            title.push(title1)
+        });
+        $('.chart-xLabel').each(function(){
+            var xlabel1 = $(this).val()
+            xlabel.push(xlabel1);
+        });
+        $('.chart-yLabel').each(function(){
+            var ylabel1 = $(this).val()
+            ylabel.push(ylabel1);
+        });
+        $('.chart-xDataValues').each(function(){
+            var xdataVlaues1 = $(this).val();
+            xdatavalue.push(xdataVlaues1);
+        });
+        $('.divId').each(function(){
+            var divId1 = $(this).val();
+            divId.push(divId1);
+        });
+
+        $('.chart-type').each(function(){
+            var type1 = $(this).val();
+            type.push(type1);
+        });
+            google.charts.load('current', {packages: ['corechart']});
+            google.charts.setOnLoadCallback(drawBasic);
+            function drawBasic() {
+                for(var i=0; i < 10; i++){//TODO: change 10 as filtercount
+                    var splits = [];
+                    splits = xdatavalue[i].split(',');
+                    var sliced= [];
+                    if(type[i] === 'bar') {
+                        sliced.push(['test', xlabel[i], {role: 'style'}]);
+                        for (var s = 0; s < splits.length; s += 3) {
+                            sliced.push(splits.slice(s, s + 3));
+                        }
+
+                        var len = sliced.length;
+                        for (var m = 1; m < len; m++) {
+                            sliced[m][1] = parseInt(sliced[m][1]);
+                        }
+                    } else if(type[i] === 'pie') {
+                        sliced.push(['District', 'Acres']);
+                        for (var s = 0; s < splits.length; s += 2) {
+                            sliced.push(splits.slice(s, s + 2));
+                        }
+
+                        var len = sliced.length;
+                        for (var m = 1; m < len; m++) {
+                            sliced[m][1] = parseInt(sliced[m][1]);
+                        }
+                    }
+
+                    var container = "ct-chart_"+ divId[i];
+                    var item;
+                    var data = google.visualization.arrayToDataTable(sliced);
+                    var options = {
+                        title: title[i],
+                        //chartArea: {height: '200'},
+                        /*width: 435,
+                        height: 220,*/
+                        hAxis: {
+                            title: xlabel[i],
+                            minValue: 0
+                        },
+                        vAxis: {
+                            title: ylabel[i]
+                        }
+                    };
+                    if(type[i] === 'bar')
+                        var chart = new google.visualization.ColumnChart(document.getElementById(container));
+                    else if(type[i] === 'pie')
+                        var chart = new google.visualization.PieChart(document.getElementById(container));
+                    chart.draw(data, options);
+                }
+
+            }
+
+        //detect click
+        $('body').click(function() {
+            //Hide the menus if visible
+            $('.addFilter').removeClass('active');
+            $('.filterOption').removeClass('visible')
+        });
+
+        $('.addFilter, .addFilterBtn, .chosen-container, .filterOption').click(function(event){
+            event.stopPropagation();
+        });
+    });
 
 </script>
+
 
 </html>

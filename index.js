@@ -32,7 +32,7 @@ function indexPage(req, res) {
                         indexData.allIssues = allIssues;
                         getSavedGraphAndIssuesFilter(function(err, savedFilters) {
                             getDataForSavedGraphAndIssuesFilter(savedFilters, function (err, savedFilterData) {
-                                indexData.savedFilterData = savedFilterData;
+                                indexData.savedFilterData = savedFilterData;//console.log('***************',savedFilterData)
                                 res.render('dashboard', {indexData:indexData});
                             });
                         });
@@ -200,10 +200,19 @@ function filterIssues (req, res){
  * @param callback
  */
 function getIssuesByFilters(savedFilters, callback) {
-    var district = savedFilters.districts.split(',');
-    var taluk = savedFilters.taluks.split(',');
-    var issuetype = savedFilters.issuetype;
-    var acres = savedFilters.acres.split(',');
+    if (savedFilters.hasOwnProperty('districts') ) {
+        var district = savedFilters.districts.split(',');
+    }
+    if (savedFilters.hasOwnProperty('taluks') ) {
+        var taluk = savedFilters.taluks.split(',');
+    }
+    if (savedFilters.hasOwnProperty('issuetype') ) {
+        var issuetype = savedFilters.issuetype;
+    }
+    if (savedFilters.hasOwnProperty('acres') ) {
+        var acres = savedFilters.acres.split(',');
+    }
+
     var districtFilter, talukFilter, acreFilter, issuetypeFilter;
     var filter="";
 
@@ -248,7 +257,6 @@ function getIssuesByFilters(savedFilters, callback) {
         }
         filter = filter + '&&' + acreFilter;
     }
-
     var issueJsonFile = 'jiraissues.json';
     common.readJsonFile(issueJsonFile, function (err, issueData) {
         var issues = issueData.issues;
@@ -277,8 +285,12 @@ function saveToDashboard(req, res) {
             callback(err, null);
         }
         if(txtData) {
+            var txtSplitData = txtData.split("|");
+            var filterCount = txtSplitData.length + 1;
+            filters = 'id=' + filterCount + '&&' + filters;
             saveData = txtData + '|' + filters;
         } else {
+            filters = 'id=1&&' + filters;
             saveData = filters;
         }
         fs.writeFile('savedfilters.txt', saveData, function (err) {
@@ -363,3 +375,4 @@ exports.getOAuthCallback = getOAuthCallback;
 exports.getJsonFromJira = getJsonFromJira;
 exports.filterIssues = filterIssues;
 exports.saveToDashboard = saveToDashboard;
+exports.getSavedGraphAndIssuesFilter = getSavedGraphAndIssuesFilter;
