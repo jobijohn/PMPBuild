@@ -844,7 +844,11 @@
                                                 },
                                                 vAxis: {
                                                     title: result.yLabel
-                                                }
+                                                },
+                                                bar: {
+                                                    groupWidth: 20
+                                                },
+                                                legend: {position: 'none'}
                                             };
                                             var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
                                             chart.draw(data, options);
