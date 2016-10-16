@@ -1350,7 +1350,7 @@
         } else if (graphType === 'pie') {
             graphinfo += "type=pie&&"
             graphinfo += "title=" + $("#graph-title-pie").val() + "&&";
-            graphinfo += "dataType=" + $("#data-name-pie").val() + "&&";
+            graphinfo += "xDataType=" + $("#data-name-pie").val() + "&&";
             //TODO:add pie fields
         }
         var saveTitle = $("#save-title").val();
@@ -1367,23 +1367,22 @@
             return;
         }
 
-        if(btnName == "Save to Dashboard") {alert('save');
+        if(btnName == "Save to Dashboard") {
             $.post('/save-to-dashboard', {filtersNew: filtersNew})
                     .done(function (result) {
                         if (result) {
-
+                            alert('Filter Saved');
                         }
                     });
-        } else if(btnName == "Update Filters"){alert('update');
+        } else if(btnName == "Update Filters"){
             var id = $('#edit-id').val();
             $.post('/graph/edit/update', {filter:editFilter, id:id})
                     .done(function (result) {
                         if (result.success) {
+                            alert('Filter Updated');
                             $('#save-dashboard').text('Save to Dashboard');
                         }
                     });
-        } else {
-            alert('else');
         }
 
     });
