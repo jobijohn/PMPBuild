@@ -526,7 +526,7 @@
                     <div class="col-md-6">
                         <div class="card ">
                             <div class="header">
-                                <h4 class="title">Wassan Graph</h4>
+                                <h4 class="title">Graph</h4>
                                 <!--<p class="category">All products including Taxes</p>-->
                             </div>
                             <div class="content">
@@ -820,6 +820,28 @@
                         $("#edit-id").val(id);
                         applyFilter();
                         setTimeout(function(){
+                            var issueTypeObj = result.filters;
+                            var barType = result.type;
+                            var issueType = issueTypeObj.split('&&');
+                            //console.log(issueType);
+                            if(issueType[0] === 'issuetype=Member on-boarding') {
+                                $('#issuetype').val('Member on-boarding');
+                                $('#issuetype').trigger('chosen:updated');
+                            } else {
+                                $('#issuetype').val('Seed Distribution');
+                                $('#issuetype').trigger('chosen:updated');
+                            }
+
+                            if(barType === 'bar'){
+                                $('#graph-type').val('bar');
+                                $('#graph-type').trigger('chosen:updated');
+                            } else if(barType === 'line') {
+                                $('#graph-type').val('line');
+                                $('#graph-type').trigger('chosen:updated');
+                            } else {
+                                $('#graph-type').val('pie');
+                                $('#graph-type').trigger('chosen:updated');
+                            }
                         $.get('/graph/edit/get-data',{graphdata:result})
                                 .done(function (result1) {
                                     if(result.type == 'bar'){
