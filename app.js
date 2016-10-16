@@ -65,6 +65,7 @@ function launchApp() {
     app.post('/save-to-dashboard', index.saveToDashboard);
     app.get('/graph/edit', graph.editGraph);
     app.get('/graph/edit/get-data', graph.getGraphData);
+    app.post('/graph/edit/update', graph.updateGraph);
 
     var port = app.get('port') || 1337;
     app.listen(port);

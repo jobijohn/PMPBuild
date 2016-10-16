@@ -315,9 +315,47 @@ function getGraphData(req,res) {
     })
 }
 
+function updateGraph(req, res) {
+    var filter = req.param('filter');
+    var id = req.param('id');
+    var newFilter = "";
+    fs.readFile('savedfilters.txt', 'utf8', function (err, txtData) {
+        if (err) {
+            callback(err, null);
+        }
+        var splitTxtData = txtData.split("|");
+        async.eachSeries(splitTxtData, function (splitTxt, callback) {
+                if(splitTxt.indexOf("id="+id) !== -1) {
+                    var index = splitTxt.indexOf("head=");
+                    var filters = splitTxt.substring(index);
+                    var replcedFilter = splitTxt.replace(filters, filter);
+                    console.log('res',replcedFilter);
+                    if(newFilter == "")
+                        newFilter = replcedFilter;
+                    else
+                        newFilter = newFilter + "|" + replcedFilter;
+                    callback();
+                } else {
+                    if(newFilter == "")
+                        newFilter = splitTxt;
+                    else
+                        newFilter = newFilter + "|" + splitTxt;
+                    callback();
+                }
+            },
+            function (err, result) {
+                fs.writeFile('savedfilters.txt',newFilter, function (err) {
+                    if (err) return console.log(err);
+                    res.send({success:'success'});
+                })
+            });
+    });
+
+}
 exports.generateBarGraph = generateBarGraph;
 exports.generateLineGraph = generateLineGraph;
 exports.generatePieChart = generatePieChart;
 exports.populateGraphData = populateGraphData;
 exports.editGraph = editGraph;
 exports.getGraphData = getGraphData;
+exports.updateGraph = updateGraph;

@@ -35,7 +35,7 @@
 
 </head>
 <body>
-<!--<input type="text" id="graphData" value="{{indexData.savedFilterData}}">-->
+<input type="hidden" id="edit-id" value="">
 <div class="wrapper">
     <div class="sidebar disable" data-color="purple" data-image="img/sidebar-5.jpg">
 
@@ -817,7 +817,7 @@
                     if(result) {
                         $("#graph-filters").val(result.filters);
                         $("#save-title").val(result.head);
-
+                        $("#edit-id").val(id);
                         applyFilter();
                         setTimeout(function(){
                         $.get('/graph/edit/get-data',{graphdata:result})
@@ -829,7 +829,6 @@
 
                                         $("#horizontal-data-type").val(result.xDataType);
                                         $("#vertical-data-type").val(result.yDataType);
-
                                         google.charts.load('current', {packages: ['corechart', 'bar']});
                                         google.charts.setOnLoadCallback(drawBasic);
                                         function drawBasic(){
@@ -1353,17 +1352,30 @@
             return;
         }
         var filtersNew = $("#graph-filters").val();
+        var editFilter = $("#graph-filters").val();
         filtersNew = graphinfo + "head=" + saveTitle + "&&" + filtersNew;
         if (!filtersNew) {
             alert('No Filters!');
             return;
         }
-        $.post('/save-to-dashboard', {filtersNew: filtersNew})
-                .done(function (result) {
-                    if (result) {
-                        alert('Saved to dashboard');
-                    }
-                });
+        var btnName =  $(this).text();
+        if(btnName === "Save to Dashboard") {alert('saved filter');
+            $.post('/save-to-dashboard', {filtersNew: filtersNew})
+                    .done(function (result) {
+                        if (result) {
+                            alert('Saved to dashboard');
+                        }
+                    });
+        } else {
+            var id = $('#edit-id').val();
+            $.post('/graph/edit/update', {filter:editFilter, id:id})
+                    .done(function (result) {
+                        if (result.success) {
+                            alert('filter Updated');
+                        }
+                    });
+        }
+
     });
 
 </script>
