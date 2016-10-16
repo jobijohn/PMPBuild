@@ -90,7 +90,7 @@ function populateGraphData(graphData, selectedIssues, callback) {
             }
         });
     } else {
-        if(graphData.type == "bar") {console.log("bar");
+        if(graphData.type == "bar") {
             var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
             //xDataValues.push([["'" + 'test' + "'", "'" + graphData.xLabel + "'", { role: 'style' } ]]);
             if(graphData.xDataType == 'District') {
@@ -118,9 +118,9 @@ function populateGraphData(graphData, selectedIssues, callback) {
                     callback(null, graphData);
                 });
             }
-        } else if(graphData.type == "pie") {console.log("pie", graphData);
+        } else if(graphData.type == "pie") {
             var xDataValues = [['District', 'Acres']];
-            if (graphData.xDataType == 'District') {console.log("pie district");
+            if (graphData.xDataType == 'District') {
                 async.each(selectedIssues, function(issues, callback) {
                     xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403]);
                     callback();

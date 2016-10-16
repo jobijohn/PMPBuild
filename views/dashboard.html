@@ -893,9 +893,9 @@
                                             chart.draw(data, options);
                                         }
 
-                                    }if(result.type === 'pie'){
+                                    }else if(result.type === 'pie'){alert(result.type);
                                         $("#graph-title-pie").val(result.title);
-                                        $("#data-name-pie").val(result.dataType);
+                                        $("#data-name-pie").val(result.xDataType);
 
                                         google.charts.load('current', {'packages': ['corechart']});
                                         google.charts.setOnLoadCallback(drawChart);
@@ -910,7 +910,6 @@
                                             chart.draw(data, options);
                                         }
                                     }
-
 
 
 
