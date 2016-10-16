@@ -1383,7 +1383,7 @@
             return;
         }
         var filtersNew = $("#graph-filters").val();
-        var editFilter = $("#graph-filters").val();
+//        var editFilter = $("#graph-filters").val();
         filtersNew = graphinfo + "head=" + saveTitle + "&&" + filtersNew;
         editFilter =  "head=" + saveTitle + "&&" + editFilter;
         if (!filtersNew) {
@@ -1400,7 +1400,7 @@
                     });
         } else if(btnName == "Update Filters"){
             var id = $('#edit-id').val();
-            $.post('/graph/edit/update', {filter:editFilter, id:id})
+            $.post('/graph/edit/update', {filter:filtersNew, id:id})
                     .done(function (result) {
                         if (result.success) {
                             alert('Filter Updated');
