@@ -272,8 +272,8 @@ function editGraph(req, res){
                         if (splitArray[0].toString() === 'title') {
                             data.title = splitArray[1].toString();
                         }
-                        if (splitArray[0].toString() === 'dataType') {
-                            data.dataType = splitArray[1].toString();
+                        if (splitArray[0].toString() === 'xDataType') {
+                            data.xDataType = splitArray[1].toString();
                         }
                     }
 
@@ -301,8 +301,7 @@ function editGraph(req, res){
             yLabel : data.yLabel,
             xDataType : data.xDataType,
             yDataType : data.yDataType,
-            head : data.head,
-            dataType : data.dataType
+            head : data.head
         });
     });
 

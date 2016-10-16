@@ -822,7 +822,7 @@
                         setTimeout(function(){
                         $.get('/graph/edit/get-data',{graphdata:result})
                                 .done(function (result1) {
-                                    if(result.type === 'bar'){
+                                    if(result.type == 'bar'){
                                         $("#graph-title").val(result.title);
                                         $("#horizontal-axis-label").val(result.xLabel);
                                         $("#vertical-axis-label").val(result.yLabel);
@@ -856,7 +856,7 @@
                                         }
 
 
-                                    } else if(result.type === 'line'){
+                                    } else if(result.type == 'line'){
                                         $("#graph-title-line").val(result.title);
                                         $("#horizontal-axis-label-line").val(result.xLabel);
                                         $("#vertical-axis-label-line").val(result.yLabel);
@@ -897,7 +897,7 @@
                                             chart.draw(data, options);
                                         }
 
-                                    }else if(result.type === 'pie'){alert(result.type);
+                                    }else if(result.type == 'pie'){
                                         $("#graph-title-pie").val(result.title);
                                         $("#data-name-pie").val(result.xDataType);
 
@@ -918,7 +918,7 @@
 
 
                                 });
-                        }, 1000);
+                        }, 2000);
 
 
                         showSettings();
