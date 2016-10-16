@@ -1061,7 +1061,11 @@
                             },
                             vAxis: {
                                 title: result.yLabel
-                            }
+                            },
+                            bar: {
+                                groupWidth: 20
+                            },
+                            legend: {position: 'none'}
                         };
                         var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
                         chart.draw(data, options);
@@ -1134,7 +1138,8 @@
 
                             var options = {
                                 title: result.title
-                            };
+                                //legend: {position: 'none'}
+                            }
 
                             var chart = new google.visualization.PieChart(document.getElementById('divChart'));
                             chart.draw(data, options);
@@ -1453,23 +1458,44 @@
                     var container = "ct-chart_"+ divId[i];
                     var item;
                     var data = google.visualization.arrayToDataTable(sliced);
-                    var options = {
-                        title: title[i],
-                        //chartArea: {height: '200'},
-                        /*width: 435,
-                        height: 220,*/
-                        hAxis: {
-                            title: xlabel[i],
-                            minValue: 0
-                        },
-                        vAxis: {
-                            title: ylabel[i]
-                        }
-                    };
-                    if(type[i] === 'bar')
+
+                    if(type[i] === 'bar') {
+                        var options = {
+                            title: title[i],
+                            //chartArea: {height: '200'},
+                            /*width: 435,
+                             height: 220,*/
+                            hAxis: {
+                                title: xlabel[i],
+                                minValue: 0
+                            },
+                            vAxis: {
+                                title: ylabel[i]
+                            },
+                            bar: {
+                                groupWidth: 20
+                            },
+                            legend: {position: 'none'}
+                        };
                         var chart = new google.visualization.ColumnChart(document.getElementById(container));
-                    else if(type[i] === 'pie')
+                    }
+                    else if(type[i] === 'pie') {
+                        var options = {
+                            title: title[i],
+                            //chartArea: {height: '200'},
+                            /*width: 435,
+                             height: 220,*/
+                            hAxis: {
+                                title: xlabel[i],
+                                minValue: 0
+                            },
+                            vAxis: {
+                                title: ylabel[i]
+                            }
+
+                        };
                         var chart = new google.visualization.PieChart(document.getElementById(container));
+                    }
                     chart.draw(data, options);
                 }
 
