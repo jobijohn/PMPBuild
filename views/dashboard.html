@@ -139,7 +139,8 @@
                 <div class="form-group">
                     <select id="vertical-data-type" name="vertical-data-type" class="form-control">
                         <option value="">Select Y Data</option>
-                        <option value="">No. of Acres</option>
+                        <option value="No. of Acres">No. of Acres</option>
+                        <option value="No. of Issues">No. of Issues</option>
                     </select>
                 </div>
             </li>
@@ -173,36 +174,15 @@
                     </select>
                 </div>
             </li>
-            <!--<li>
+           <li>
                 <div class="form-group">
-                    <textarea style="height: 50px" class="form-control" id="data-names-pie">Kurnool&#13;&#10;Anantapur&#13;&#10;Vizianagaram</textarea>
-                </div>
-            </li>-->
-           <!-- <li>
-                <div class="form-group">
-                    <select class="form-control" id="data-value-pie">
-                        <option value="">Select Value</option>
-                        <option value="">No. of Acres</option>
-                        <option value="">District</option>
-                        <option value="">Taluk</option>
+                    <select class="form-control" id="data-value-pie" name="data-value-pie">
+                        <option value="">Select Y Data</option>
+                        <option value="No. of Acres">No. of Acres</option>
+                        <option value="No. of Issues">No. of Issues</option>
                     </select>
                 </div>
-            </li>-->
-            <!--<li>
-                <div class="form-group">
-                    <textarea style="height: 50px" class="form-control" id="data-values-pie">50&#13;&#10;100&#13;&#10;150</textarea>
-                </div>
-            </li>-->
-            <!--<li>
-                <div class="form-group">
-                    <select class="form-control" id="slice-text-pie">
-                        <option value="">Percentage</option>
-                        <option value="">Names</option>
-                        <option value="">Values</option>
-                        <option value="">None</option>
-                    </select>
-                </div>
-            </li>-->
+            </li>
             <input type="button" class="btn btn-info btn-fill pull-right createGraphBtn" name="btnPieChart" id="btnPieChart" value="Create Pie Chart">
 
         </form>
@@ -1375,6 +1355,7 @@
             graphinfo += "type=pie&&"
             graphinfo += "title=" + $("#graph-title-pie").val() + "&&";
             graphinfo += "xDataType=" + $("#data-name-pie").val() + "&&";
+            graphinfo += "yDataType=" + $("#data-value-pie").val() + "&&";
             //TODO:add pie fields
         }
         var saveTitle = $("#save-title").val();
