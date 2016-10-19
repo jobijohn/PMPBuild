@@ -1348,7 +1348,7 @@
             taluk:taluk,
             acres:acres})
                 .done(function (result) {
-                    if(result.success){
+                    if(result.success == 'success') {
                         $('.test').empty();
                         for (var data in result.filteredIssues) {
                             $('.test').append('<tr>' +
@@ -1356,6 +1356,15 @@
                                     '<td>' + result.filteredIssues[data].fields.summary +'</td>' +
                                     '</tr>');
                         }
+                        $('#graph-type').prop('disabled', false).trigger("chosen:updated");
+                    } else if(result.success == 'failed') {
+                        $(".test").empty();
+                        $('.test').append('<tr>' +
+                                /*'<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +*/
+                                '<td> No issues or tasks available</td>' +
+                                '</tr>');
+//                        $('#graph-type').prop('disabled', true).trigger("liszt:updated");
+                        $('#graph-type').prop('disabled', true).trigger("chosen:updated");
                     }
                 });
     }
