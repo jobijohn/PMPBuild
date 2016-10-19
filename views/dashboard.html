@@ -251,8 +251,8 @@
                 <h1>Filter Popup</h1>
                 <div class="filterContentClose">x</div>
                 <div class="col-sm-12 mT15">
-                    <select data-placeholder="Select Districts" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
-                        <option value=""></option>
+                    <select data-placeholder="Select Districts" id="districtFilter" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
+                        <option value="0"></option>
                         {{#indexData.districts}}
                         <option value="{{districts}}">{{districts}}</option>
                         {{/indexData.districts}}
@@ -298,7 +298,11 @@
                         </select>
                         <input type="text" value="" id="acreValue">
                         <button id="addAcreSingle">Add</button>
-                        <label id="lblAcreValues" class="disable"></label>
+                        <div class="acrelbl disable">
+                            <span>x</span>
+                            <label id="lblAcreValues" class="disable"></label>
+                        </div>
+
                     </ul>
                 </div>
 
@@ -790,6 +794,48 @@
             showDashboard();
         });
 
+        $('.acrelbl span').click(function(){
+            $('.acrelbl').addClass('disable');
+            $('#lblAcreValues').html('');
+        });
+
+
+        function addFilter(filter){
+            var filters= {};
+            var filterText = filter;
+            var splitFilterText = filterText.split("&&");
+            for(var i in splitFilterText) {
+                var splitFilterTextEach = splitFilterText[i].split("=");
+                filters[splitFilterTextEach[0]] = splitFilterTextEach[1];
+            }
+            if(filters['districts']){
+                var district = filters["districts"].split(',');
+                /*for(var m = 0; m < district.length; m++){
+                    console.log('#districtFilter option[value="'+district[m]+'"]');
+                    $('#districtFilter option[value="'+district[m]+'"]').removeAttr("selected");
+                }*/
+                for(var i = 0; i < district.length; i++){
+                    console.log('#districtFilter option[value="'+district[i]+'"]');
+                    //$('#districtFilter option[value="'+district[i]+'"]').attr("selected", "selected").trigger('chosen:updated');
+                    $('#districtFilter').val(['Chittoor,Visakhapatnam']).trigger('chosen:updated');
+
+                }
+            } else {
+                var district = '';
+                $('#districtFilter').val('0');
+                $('#districtFilter').trigger('chosen:updated');
+            }
+
+            if(filters['acres']){
+                $('#lblAcreValues').html('');
+                var acres = filters['acres'];
+                $('.acrelbl').removeClass('disable');
+                $('#lblAcreValues').html(acres).removeClass('disable');
+            }
+            console.log(filters);
+
+        }
+
         $('.settignBtn').on('click', function(){
             var id = $(this).attr('id');
             $.get('/graph/edit', {id: id})
@@ -804,6 +850,7 @@
                                 var barType = result.type;
                                 var issueType = issueTypeObj.split('&&');
                                 //console.log(issueType);
+                                addFilter(issueTypeObj);
                                 if(issueType[0] === 'issuetype=Member on-boarding') {
                                     $('#issuetype').val('Member on-boarding');
                                     $('#issuetype').trigger('chosen:updated');
@@ -1269,6 +1316,7 @@
             $('#lblAcreValues').text(_acre);
         }
         $("#acreValue").val("");
+        $('.acrelbl').removeClass('disable');
 
     });
 
