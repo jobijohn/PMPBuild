@@ -181,16 +181,24 @@ function filterIssues (req, res){
         var filteredIssues = issues.filter(function (e) {
             return eval(filter);
         });
-        fs.writeFile('filteredissues.json', "", function (err) {
-            if (err) return console.log(err);
-            fs.writeFile('filteredissues.json', JSON.stringify(filteredIssues), function (err) {
+        if(filteredIssues.length>0) {
+            fs.writeFile('filteredissues.json', "", function (err) {
                 if (err) return console.log(err);
-                return res.json({
-                    success: 'success',
-                    filteredIssues: filteredIssues
+                fs.writeFile('filteredissues.json', JSON.stringify(filteredIssues), function (err) {
+                    if (err) return console.log(err);
+                    return res.json({
+                        success: 'success',
+                        filteredIssues: filteredIssues
+                    });
                 });
             });
-        });
+        } else {
+            return res.json({
+                success: 'failed',
+                message: 'No issues or task available for this filter'
+            });
+        }
+
     });
 }
 

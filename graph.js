@@ -35,115 +35,226 @@ function populateGraphData(graphData, selectedIssues, callback) {
         common.readJsonFile('filteredissues.json', function(err, selectedIssues){
             if(graphData.type == "bar") {
                 var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
-                if(graphData.xDataType == 'District') {
-                    async.eachSeries(selectedIssues, function(issues, callback) {
-                        xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403, getRandomColor()]);
-                        callback();
-                    }, function(err){
-                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                        callback(null, graphData);
-                    });
-                } else if(graphData.xDataType == 'Taluk') {
-                    async.eachSeries(selectedIssues, function(issues, callback) {
-                        xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403, getRandomColor()]);
-                        callback();
-                    }, function(err){
-                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                        callback(null, graphData);
-                    });
-                } else if(graphData.xDataType == 'Status') {
-                    async.eachSeries(selectedIssues, function(issues, callback) {
-                        xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403, getRandomColor()]);
-                        callback();
-                    }, function(err){
-                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                        callback(null, graphData);
-                    });
+                if(graphData.yDataType == 'No. of Acres') {
+                    if (graphData.xDataType == 'District') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403, getRandomColor()]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    } else if (graphData.xDataType == 'Taluk') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403, getRandomColor()]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    } else if (graphData.xDataType == 'Status') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403, getRandomColor()]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    }
+                } else if (graphData.yDataType == 'No. of Issues') {
+                    if (graphData.xDataType == 'District') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.customfield_10400.value, 1, getRandomColor()]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    } else if (graphData.xDataType == 'Taluk') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.customfield_10401.value, 1, getRandomColor()]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    } else if (graphData.xDataType == 'Status') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.status.name, 1, getRandomColor()]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    }
                 }
             } else if(graphData.type == "pie") {
                 var xDataValues = [['District', 'Acres']];
-                if (graphData.xDataType == 'District') {
-                    async.eachSeries(selectedIssues, function(issues, callback) {
-                        xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403]);
-                        callback();
-                    }, function(err){
-                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                        callback(null, graphData);
-                    });
-                } else if (graphData.xDataType == 'Taluk') {
-                    async.eachSeries(selectedIssues, function(issues, callback) {
-                        xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403]);
-                        callback();
-                    }, function(err){
-                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                        callback(null, graphData);
-                    });
-                } else if(graphData.xDataType == 'Status') {
-                    async.eachSeries(selectedIssues, function(issues, callback) {
-                        xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403]);
-                        callback();
-                    }, function(err){
-                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                        callback(null, graphData);
-                    });
+                if (graphData.yDataType == 'No. of Acres') {
+                    if (graphData.xDataType == 'District') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    } else if (graphData.xDataType == 'Taluk') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    } else if (graphData.xDataType == 'Status') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    }
+                } else if (graphData.yDataType == 'No. of Issues') {
+                    if (graphData.xDataType == 'District') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.customfield_10400.value, 1]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    } else if (graphData.xDataType == 'Taluk') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.customfield_10401.value, 1]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    } else if (graphData.xDataType == 'Status') {
+                        async.eachSeries(selectedIssues, function (issues, callback) {
+                            xDataValues.push([issues.fields.status.name, 1]);
+                            callback();
+                        }, function (err) {
+                            graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                            callback(null, graphData);
+                        });
+                    }
                 }
             }
         });
     } else {
         if(graphData.type == "bar") {
             var xDataValues = [ ['', graphData.xLabel, { role: 'style' } ]];
-            //xDataValues.push([["'" + 'test' + "'", "'" + graphData.xLabel + "'", { role: 'style' } ]]);
-            if(graphData.xDataType == 'District') {
-                async.each(selectedIssues, function(issues, callback) {
-                    xDataValues.push([issues.fields.customfield_10400.value, parseInt(issues.fields.customfield_10403), getRandomColor()]);
-                    callback();
-                }, function(err){
-                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                    callback(null, graphData);
-                });
-            } else if(graphData.xDataType == 'Taluk') {
-                async.each(selectedIssues, function(issues, callback) {
-                    xDataValues.push([issues.fields.customfield_10401.value, parseInt(issues.fields.customfield_10403), getRandomColor()]);
-                    callback();
-                }, function(err){
-                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                    callback(null, graphData);
-                });
-            } else if(graphData.xDataType == 'Status') {
-                async.eachSeries(selectedIssues, function(issues, callback) {
-                    xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403, getRandomColor()]);
-                    callback();
-                }, function(err){
-                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                    callback(null, graphData);
-                });
+            if(graphData.yDataType == 'No. of Acres') {
+                if (graphData.xDataType == 'District') {
+                    async.each(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10400.value, parseInt(issues.fields.customfield_10403), getRandomColor()]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                } else if (graphData.xDataType == 'Taluk') {
+                    async.each(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10401.value, parseInt(issues.fields.customfield_10403), getRandomColor()]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                } else if (graphData.xDataType == 'Status') {
+                    async.eachSeries(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403, getRandomColor()]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                }
+            } else if (graphData.yDataType == 'No. of Issues') {
+                if (graphData.xDataType == 'District') {
+                    async.each(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10400.value, 1, getRandomColor()]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                } else if (graphData.xDataType == 'Taluk') {
+                    async.each(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10401.value, 1, getRandomColor()]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                } else if (graphData.xDataType == 'Status') {
+                    async.eachSeries(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.status.name, 1, getRandomColor()]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                }
             }
         } else if(graphData.type == "pie") {
             var xDataValues = [['District', 'Acres']];
-            if (graphData.xDataType == 'District') {
-                async.each(selectedIssues, function(issues, callback) {
-                    xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403]);
-                    callback();
-                }, function(err){
-                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                    callback(null, graphData);
-                });
-            } else if (graphData.xDataType == 'Taluk') {
-                async.each(selectedIssues, function(issues, callback) {
-                    xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403]);
-                    callback();
-                }, function(err){
-                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                    callback(null, graphData);
-                });
-            } else if(graphData.xDataType == 'Status') {
-                async.eachSeries(selectedIssues, function(issues, callback) {
-                    xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403]);
-                    callback();
-                }, function(err){
-                    graphData["xDataValues"] = RemoveDuplicates(xDataValues);
-                    callback(null, graphData);
-                });
+            if(graphData.yDataType == 'No. of Acres') {
+                if (graphData.xDataType == 'District') {
+                    async.each(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                } else if (graphData.xDataType == 'Taluk') {
+                    async.each(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10401.value, issues.fields.customfield_10403]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                } else if (graphData.xDataType == 'Status') {
+                    async.eachSeries(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.status.name, issues.fields.customfield_10403]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                }
+            } else if (graphData.yDataType == 'No. of Issues') {
+                if (graphData.xDataType == 'District') {
+                    async.each(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10400.value, 1]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                } else if (graphData.xDataType == 'Taluk') {
+                    async.each(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.customfield_10401.value, 1]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                } else if (graphData.xDataType == 'Status') {
+                    async.eachSeries(selectedIssues, function (issues, callback) {
+                        xDataValues.push([issues.fields.status.name, 1]);
+                        callback();
+                    }, function (err) {
+                        graphData["xDataValues"] = RemoveDuplicates(xDataValues);
+                        callback(null, graphData);
+                    });
+                }
             }
         }
     }
@@ -176,7 +287,7 @@ function generatePieChart(req, res) {
         xLabel : '',
         yLabel : '',
         xDataType : req.param('data-name-pie'),
-        yDataType : ''
+        yDataType : req.param('data-value-pie')
     };
     populateGraphData(graphData,'', function (err, graphData) {
         return res.json(graphData);
@@ -274,6 +385,9 @@ function editGraph(req, res){
                         }
                         if (splitArray[0].toString() === 'xDataType') {
                             data.xDataType = splitArray[1].toString();
+                        }
+                        if (splitArray[0].toString() === 'yDataType') {
+                            data.yDataType = splitArray[1].toString();
                         }
                     }
 

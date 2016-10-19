@@ -86,7 +86,7 @@
                         <select id="graph-type" class="chosen-select-filterPan">
                             <option value="">- Select Graph Type -</option>
                             <option value="bar">Bar Graph</option>
-                            <option value="line">Line Graph</option>
+                            <!--<option value="line">Line Graph</option>-->
                             <option value="pie">Pie Chart</option>
                         </select>
                     </div>
@@ -741,6 +741,7 @@
         $(".chosen-select").chosen({width: "100%"});
         $('.chosen-select-filterPan').chosen({width: '100%',disable_search: true})
         $('#myTable').DataTable();
+        $('#graph-type').prop('disabled', true).trigger("chosen:updated");
     });
 </script>
 <script type="text/javascript">
@@ -949,7 +950,7 @@
                                             }else if(result.type == 'pie'){
                                                 $("#graph-title-pie").val(result.title);
                                                 $("#data-name-pie").val(result.xDataType);
-
+                                                $("#data-value-pie").val(result.yDataType);
                                                 google.charts.load('current', {'packages': ['corechart']});
                                                 google.charts.setOnLoadCallback(drawChart);
                                                 function drawChart() {
@@ -981,7 +982,7 @@
             $('.settings-panel .test').html('');
             $('.chosen-select-filterPan').val('').trigger('chosen:updated');
             $('.chosen-select').val('').trigger('chosen:updated');
-
+            $("#save-dashboard").html('Save to Dashboard');
         });
         function reset(){
             var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
@@ -1396,7 +1397,7 @@
             taluk:taluk,
             acres:acres})
                 .done(function (result) {
-                    if(result.success){
+                    if(result.success == 'success') {
                         $('.test').empty();
                         for (var data in result.filteredIssues) {
                             $('.test').append('<tr>' +
@@ -1404,6 +1405,15 @@
                                     '<td>' + result.filteredIssues[data].fields.summary +'</td>' +
                                     '</tr>');
                         }
+                        $('#graph-type').prop('disabled', false).trigger("chosen:updated");
+                    } else if(result.success == 'failed') {
+                        $(".test").empty();
+                        $('.test').append('<tr>' +
+                                /*'<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +*/
+                                '<td> No issues or tasks available</td>' +
+                                '</tr>');
+//                        $('#graph-type').prop('disabled', true).trigger("liszt:updated");
+                        $('#graph-type').prop('disabled', true).trigger("chosen:updated");
                     }
                 });
     }
