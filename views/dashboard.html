@@ -902,7 +902,7 @@
                                             }else if(result.type == 'pie'){
                                                 $("#graph-title-pie").val(result.title);
                                                 $("#data-name-pie").val(result.xDataType);
-
+                                                $("#data-value-pie").val(result.yDataType);
                                                 google.charts.load('current', {'packages': ['corechart']});
                                                 google.charts.setOnLoadCallback(drawChart);
                                                 function drawChart() {

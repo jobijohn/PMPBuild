@@ -386,6 +386,9 @@ function editGraph(req, res){
                         if (splitArray[0].toString() === 'xDataType') {
                             data.xDataType = splitArray[1].toString();
                         }
+                        if (splitArray[0].toString() === 'yDataType') {
+                            data.yDataType = splitArray[1].toString();
+                        }
                     }
 
                     if(splitArray[0].toString() === 'head'){
