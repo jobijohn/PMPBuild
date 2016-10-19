@@ -86,7 +86,7 @@
                         <select id="graph-type" class="chosen-select-filterPan">
                             <option value="">- Select Graph Type -</option>
                             <option value="bar">Bar Graph</option>
-                            <option value="line">Line Graph</option>
+                            <!--<option value="line">Line Graph</option>-->
                             <option value="pie">Pie Chart</option>
                         </select>
                     </div>
@@ -737,6 +737,7 @@
         $(".chosen-select").chosen({width: "100%"});
         $('.chosen-select-filterPan').chosen({width: '100%',disable_search: true})
         $('#myTable').DataTable();
+        $('#graph-type').prop('disabled', true).trigger("chosen:updated");
     });
 </script>
 <script type="text/javascript">
