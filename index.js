@@ -28,15 +28,18 @@ function indexPage(req, res) {
                 indexData.districts = districts;
                 common.getAllUniqueTaluks(issueData, function (err, taluks) {
                     indexData.taluks = taluks;
-                    common.getAllIssues(issueData, function (err, allIssues) {
-                        indexData.allIssues = allIssues;
-                        getSavedGraphAndIssuesFilter(function(err, savedFilters) {
-                            getDataForSavedGraphAndIssuesFilter(savedFilters, function (err, savedFilterData) {
-                                indexData.savedFilterData = savedFilterData;
-                                res.render('dashboard', {indexData:indexData});
+                    common.getAllUniqueIssueStatus(issueData, function (err, status) {
+                        indexData.status = status;
+                        common.getAllIssues(issueData, function (err, allIssues) {
+                            indexData.allIssues = allIssues;
+                            getSavedGraphAndIssuesFilter(function(err, savedFilters) {
+                                getDataForSavedGraphAndIssuesFilter(savedFilters, function (err, savedFilterData) {
+                                    indexData.savedFilterData = savedFilterData;
+                                    res.render('dashboard', {indexData:indexData});
+                                });
                             });
                         });
-                    });
+                    })
                 });
             });
         });
@@ -127,10 +130,11 @@ function getJsonFromJira(req, res) {
 function filterIssues (req, res){
     var district = req.param('district');
     var taluk = req.param('taluk');
+    var status = req.param('status');
     var issuetype = req.param('issuetype');
     var acres = req.param('acres');
     var filter= "";
-    var districtFilter, talukFilter, issuetypeFilter, acreFilter;
+    var districtFilter, talukFilter, statusFilter, issuetypeFilter, acreFilter;
 
     if(issuetype) {
         issuetypeFilter = "e.fields.issuetype.name == '"+ issuetype +"'";
@@ -159,6 +163,18 @@ function filterIssues (req, res){
             }
         }
         filter = filter + '&&' + talukFilter;
+    }
+
+    if(status) {
+        statusFilter = "(e.fields.status.name != null &&  (";
+        for (i = 0; i < status.length; i++) {
+            if (i != status.length - 1) {
+                statusFilter += 'e.fields.status.name == "' + status[i] + '"||';
+            } else {
+                statusFilter += 'e.fields.status.name == "' + status[i] + '"))';
+            }
+        }
+        filter = filter + '&&' + statusFilter;
     }
 
 

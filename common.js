@@ -102,6 +102,35 @@ function getAllUniqueTaluks(jsonJiraProject, callback) {
     callback(null, uniqueTaluks);
 }
 
+
+
+//issues.fields.status.name
+/**
+ * Function to get all unique taluks from the json
+ * @type {readJsonFile}
+ */
+function getAllUniqueIssueStatus(jsonJiraProject, callback) {
+    var totalJiraIssues,
+        istatus = [],
+        uniqueStatus = [];
+
+    totalJiraIssues = jsonJiraProject.maxResults;
+    for (var i = 0; i < totalJiraIssues; i++) {
+        if(jsonJiraProject.issues[i].fields.status.name) {
+            istatus.push(jsonJiraProject.issues[i].fields.status.name);
+        }
+    }
+
+    uniqueStatus = istatus.filter(function (elem, index, self) {         // To get unique issue types from all issues
+        return index == self.indexOf(elem);
+    });
+
+    for (var j = 0;j<uniqueStatus.length;j++) {
+        uniqueStatus[j] = {status:uniqueStatus[j]};
+    }
+    callback(null, uniqueStatus);
+}
+
 /**
  * Function to get all jira issues
  * @param jsonJiraProject
@@ -151,8 +180,10 @@ function getAllIssues(jsonJiraProject, callback) {
     callback(null, issuesselectedFields);
 }
 
+
 exports.readJsonFile = readJsonFile;
 exports.getAllUniqueIssueTypes = getAllUniqueIssueTypes;
 exports.getAllUniqueDistricts = getAllUniqueDistricts;
 exports.getAllUniqueTaluks = getAllUniqueTaluks;
+exports.getAllUniqueIssueStatus = getAllUniqueIssueStatus;
 exports.getAllIssues = getAllIssues;

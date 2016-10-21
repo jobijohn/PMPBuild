@@ -244,6 +244,7 @@
             <div class="clearfix"></div>
             <li class="district filterMainBtn" id="districtBtn">District</li>
             <li class="taluk filterMainBtn" id="talukBtn">Taluk</li>
+            <li class="status filterMainBtn" id="statusBtn">Issue Status</li>
             <li class="acres filterMainBtn" id="acresBtn">No. of Acres</li>
         </ul>
         <div class="sub-filter filterGroup district">
@@ -251,7 +252,7 @@
                 <h1>Filter Popup</h1>
                 <div class="filterContentClose">x</div>
                 <div class="col-sm-12 mT15">
-                    <select data-placeholder="Select Districts" id="districtFilter" name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
+                    <select data-placeholder="Select Districts"  name="district" class="chosen-select" multiple  style="width:100%;" id="district" tabindex="4">
                         <option value="0"></option>
                         {{#indexData.districts}}
                         <option value="{{districts}}">{{districts}}</option>
@@ -280,6 +281,26 @@
 
                 <div class="col-sm-12">
                     <button type="button" id="addTaluk" class="btn btn-info btn-fill pull-right">Add this filter</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="sub-filter-status filterGroup status">
+            <div class="content">
+                <h1>Filter Popup</h1>
+                <div class="filterContentClose">x</div>
+                <div class="col-sm-12 mT15">
+                    <select data-placeholder="Select Issue Status" name="status" class="chosen-select" multiple style="width: 100%;" id="status">
+                        <option value=""></option>
+                        {{#indexData.status}}
+                        <option value="{{status}}">{{status}}</option>
+                        {{/indexData.status}}
+                    </select>
+                </div>
+
+                <div class="col-sm-12">
+                    <button type="button" id="addStatus" class="btn btn-info btn-fill pull-right">Add this filter</button>
                 </div>
 
             </div>
@@ -855,7 +876,7 @@
                             var issueTypeObj = result.data.filters;
                                 var barType = result.graphInfo.type;
                                 var issueType = issueTypeObj.split('&&');
-                            addFilter(issueTypeObj);
+                            addFilter(issueTypeObj);//correct this on edit filter load
                             if(issueType[0] === 'issuetype=Member on-boarding') {
                                 $('#issuetype').val('Member on-boarding');
                                 $('#issuetype').trigger('chosen:updated');
@@ -1085,7 +1106,10 @@
             } else if(id === 'talukBtn'){
                 $('.membes-on').addClass('hide');
                 $('.taluk').addClass('active')
-            } else {
+            } else if(id === 'statusBtn'){
+                $('.membes-on').addClass('hide');
+                $('.status').addClass('active')
+            }else {
                 $('.membes-on').addClass('hide');
                 $('.acres').addClass('active')
             }
@@ -1241,12 +1265,12 @@
     $('#addDistrict').click(function () {
         var _district = $("#district").val();
         if(_district) {
-            var districtFilters = $('#districtFilters').val();
-            if(districtFilters){
-                $('#districtFilters').val($('#districtFilters').val() + ',' + _district);
-            } else {
-                $('#districtFilters').val(_district);
-            }
+//            var districtFilters = $('#districtFilters').val();
+//            if(districtFilters){
+//                $('#districtFilters').val($('#districtFilters').val() + ',' + _district);
+//            } else {
+//                $('#districtFilters').val(_district);
+//            }
 
             var filter = $('#graph-filters').val();
             if(filter) {
@@ -1283,12 +1307,12 @@
     $('#addTaluk').click(function () {
         var _taluk = $("#taluk").val();
         if(_taluk) {
-            var talukFilters = $('#talukFilters').val();
-            if(talukFilters){
-                $('#talukFilters').val($('#talukFilters').val() + ',' + _taluk);
-            } else {
-                $('#talukFilters').val(_taluk);
-            }
+//            var talukFilters = $('#talukFilters').val();
+//            if(talukFilters){
+//                $('#talukFilters').val($('#talukFilters').val() + ',' + _taluk);
+//            } else {
+//                $('#talukFilters').val(_taluk);
+//            }
 
             var filter = $('#graph-filters').val();
             if(filter) {
@@ -1322,6 +1346,49 @@
         }
     });
 
+    $('#addStatus').click(function () {
+        var _status = $("#status").val();
+        if(_status) {
+//            var statusFilters = $('#statusFilters').val();
+//            if(statusFilters){
+//                $('#statusFilters').val($('#statusFilters').val() + ',' + _status);
+//            } else {
+//                $('#statusFilters').val(_status);
+//            }
+
+            var filter = $('#graph-filters').val();
+            if(filter) {
+                if (filter.indexOf("status") !== -1) {
+                    var splitFilter = filter.split("&&");
+                    var newFilter ="";
+                    for(var split in splitFilter) {
+                        if(splitFilter[split].indexOf("status=")  !== -1) {
+                            splitFilter[split] =  'status=' + _status;
+                        }
+                        if(newFilter){
+                            newFilter = newFilter + '&&' + splitFilter[split];
+                        } else {
+                            newFilter = splitFilter[split];
+                        }
+                    }
+                    $('#graph-filters').val(newFilter);
+                } else {
+                    $('#graph-filters').val(filter + '&&status=' + _status) ;
+                }
+            }
+            else {
+                $('#graph-filters').val('status=' + _status) ;
+            }
+
+
+            if($('.membes-on').hasClass('hide')){
+                $('.membes-on').removeClass('hide');
+                $('.status').removeClass('active')
+            }
+        }
+    });
+
+
     $('#addAcreSingle').click(function () {
         var _acreSymbol = $("#acreSymbol").val();
         var _acreValue = $("#acreValue").val();
@@ -1341,12 +1408,12 @@
 
     $('#addAcre').click(function () {
         if ($('#lblAcreValues').text()) {
-            var acreFilters = $('#acreFilters').val();
-            if (acreFilters) {
-                $('#acreFilters').val($('#acreFilters').val() + ',' + $('#lblAcreValues').text());
-            } else {
-                $('#acreFilters').val($('#lblAcreValues').text());
-            }
+//            var acreFilters = $('#acreFilters').val();
+//            if (acreFilters) {
+//                $('#acreFilters').val($('#acreFilters').val() + ',' + $('#lblAcreValues').text());
+//            } else {
+//                $('#acreFilters').val($('#lblAcreValues').text());
+//            }
 
             var filter = $('#graph-filters').val();
             if(filter) {
@@ -1402,6 +1469,10 @@
             var taluk = filters["taluks"].split(',');
         else
             var taluk ='';
+        if(filters["status"])
+            var status = filters["status"].split(',');
+        else
+            var status ='';
         if(filters["issuetype"])
             var issuetype = filters["issuetype"];
         else
@@ -1413,6 +1484,7 @@
         $.post('/filter-issues', { issuetype:issuetype,
             district: district,
             taluk:taluk,
+            status:status,
             acres:acres})
                 .done(function (result) {
                     if(result.success == 'success') {
