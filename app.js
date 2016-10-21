@@ -67,6 +67,12 @@ function launchApp() {
 
     app.get('/graph/edit-filter', graph.editFilter);
 
+    /////
+    app.get('/jira1', jiraIssue.getOAuth);
+    app.get('/jira1/callback', jiraIssue.getOAuthCallback);
+    app.get('/AddIssue', jiraIssue.AddIssue);
+    /////////
+
     var port = app.get('port') || 1337;
     app.listen(port);
 }
