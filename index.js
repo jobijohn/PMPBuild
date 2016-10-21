@@ -32,7 +32,7 @@ function indexPage(req, res) {
                         indexData.allIssues = allIssues;
                         getSavedGraphAndIssuesFilter(function(err, savedFilters) {
                             getDataForSavedGraphAndIssuesFilter(savedFilters, function (err, savedFilterData) {
-                                indexData.savedFilterData = savedFilterData;//console.log('***************',savedFilterData)
+                                indexData.savedFilterData = savedFilterData;
                                 res.render('dashboard', {indexData:indexData});
                             });
                         });
@@ -352,7 +352,7 @@ function getSavedGraphAndIssuesFilter(callback) {
 
 function getDataForSavedGraphAndIssuesFilter(savedFilters, callback) {
     var savedFiltersData = [];
-    async.each(savedFilters, function(filter, callback) {
+    async.eachSeries(savedFilters, function(filter, callback) {
         var dummy = {};
         async.waterfall([
             function(callback) {
@@ -367,7 +367,7 @@ function getDataForSavedGraphAndIssuesFilter(savedFilters, callback) {
                     callback(null, dummy);
                 });
             }
-        ], function (err, result) {
+        ], function (err, result) {console.log(result);
             savedFiltersData.push(result);
             callback();
         });
