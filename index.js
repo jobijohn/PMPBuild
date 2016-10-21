@@ -367,7 +367,7 @@ function getDataForSavedGraphAndIssuesFilter(savedFilters, callback) {
                     callback(null, dummy);
                 });
             }
-        ], function (err, result) {console.log(result);
+        ], function (err, result) {
             savedFiltersData.push(result);
             callback();
         });
