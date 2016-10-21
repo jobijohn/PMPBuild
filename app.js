@@ -63,9 +63,9 @@ function launchApp() {
 
     app.post('/filter-issues', index.filterIssues);
     app.post('/save-to-dashboard', index.saveToDashboard);
-    app.get('/graph/edit', graph.editGraph);
-    app.get('/graph/edit/get-data', graph.getGraphData);
     app.post('/graph/edit/update', graph.updateGraph);
+
+    app.get('/graph/edit-filter', graph.editFilter);
 
     var port = app.get('port') || 1337;
     app.listen(port);

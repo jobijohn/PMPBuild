@@ -837,144 +837,153 @@
 
         }
 
-        $('.settignBtn').on('click', function(){
-            var id = $(this).attr('id');
-            $.get('/graph/edit', {id: id})
+        $('.settignBtn').on('click', function () {
+            var filterId = $(this).attr('id');
+            $.get('/graph/edit-filter', {filterId:filterId})
                     .done(function (result) {
                         if(result) {
-                            $("#graph-filters").val(result.filters);
-                            $("#save-title").val(result.head);
-                            $("#edit-id").val(id);
-                            applyFilter();
-                            setTimeout(function(){
-                                var issueTypeObj = result.filters;
-                                var barType = result.type;
+                            $("#graph-filters").val(result.data.filters);
+                            $("#save-title").val(result.graphInfo.head);
+                            $("#edit-id").val(filterId);
+                            var issueTypeObj = result.data.filters;
+                                var barType = result.graphInfo.type;
                                 var issueType = issueTypeObj.split('&&');
-                                //console.log(issueType);
-                                addFilter(issueTypeObj);
-                                if(issueType[0] === 'issuetype=Member on-boarding') {
-                                    $('#issuetype').val('Member on-boarding');
-                                    $('#issuetype').trigger('chosen:updated');
-                                } else {
-                                    $('#issuetype').val('Seed Distribution');
-                                    $('#issuetype').trigger('chosen:updated');
+                            addFilter(issueTypeObj);
+                            if(issueType[0] === 'issuetype=Member on-boarding') {
+                                $('#issuetype').val('Member on-boarding');
+                                $('#issuetype').trigger('chosen:updated');
+                            } else {
+                                $('#issuetype').val('Seed Distribution');
+                                $('#issuetype').trigger('chosen:updated');
+                            }
+
+                            if(barType === 'bar'){
+                                $('#graph-type').val('bar');
+                                $('#graph-type').trigger('chosen:updated');
+                            } else if(barType === 'line') {
+                                $('#graph-type').val('line');
+                                $('#graph-type').trigger('chosen:updated');
+                            } else {
+                                $('#graph-type').val('pie');
+                                $('#graph-type').trigger('chosen:updated');
+                            }
+                            if(result.graphInfo.type == 'bar'){
+                                $("#graph-title").val(result.graphInfo.title);
+                                $("#horizontal-axis-label").val(result.graphInfo.xLabel);
+                                $("#vertical-axis-label").val(result.graphInfo.yLabel);
+
+                                $("#horizontal-data-type").val(result.graphInfo.xDataType);
+                                $("#vertical-data-type").val(result.graphInfo.yDataType);
+                                google.charts.load('current', {packages: ['corechart', 'bar']});
+                                google.charts.setOnLoadCallback(drawBasic);
+                                function drawBasic(){
+                                    var data = google.visualization.arrayToDataTable(result.graphInfo.xDataValues);
+                                    var options = {
+                                        title: result.graphInfo.title,
+                                        //chartArea: {height: '200'},
+                                        width: 435,
+                                        height: 220,
+                                        hAxis: {
+                                            title: result.graphInfo.xLabel,
+                                            minValue: 0
+                                        },
+                                        vAxis: {
+                                            title: result.graphInfo.yLabel
+                                        },
+                                        bar: {
+                                            groupWidth: 20
+                                        },
+                                        legend: {position: 'none'}
+                                    };
+                                    var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
+                                    chart.draw(data, options);
+
                                 }
 
-                                if(barType === 'bar'){
-                                    $('#graph-type').val('bar');
-                                    $('#graph-type').trigger('chosen:updated');
-                                } else if(barType === 'line') {
-                                    $('#graph-type').val('line');
-                                    $('#graph-type').trigger('chosen:updated');
-                                } else {
-                                    $('#graph-type').val('pie');
-                                    $('#graph-type').trigger('chosen:updated');
+
+                            } else if(result.graphInfo.type == 'line'){
+                                $("#graph-title-line").val(result.graphInfo.title);
+                                $("#horizontal-axis-label-line").val(result.graphInfo.xLabel);
+                                $("#vertical-axis-label-line").val(result.graphInfo.yLabel);
+                                $("#horizontal-data-type-line").val(result.graphInfo.xDataType);
+                                $("#vertical-data-type-line").val(result.graphInfo.yDataType);
+
+                                google.charts.load('current', {'packages': ['line']});
+                                google.charts.setOnLoadCallback(drawChart);
+
+                                function drawChart() {
+                                    var data = new google.visualization.DataTable();
+                                    data.addColumn('number', result.graphInfo.xLabel);
+                                    data.addColumn('number', result.graphInfo.yLabel);
+                                    data.addRows([
+                                        [1,  37.8, 80.8, 41.8],
+                                        [2,  30.9, 69.5, 32.4],
+                                        [3,  25.4,   57, 25.7],
+                                        [4,  11.7, 18.8, 10.5],
+                                        [5,  11.9, 17.6, 10.4],
+                                        [6,   8.8, 13.6,  7.7],
+                                        [7,   7.6, 12.3,  9.6],
+                                        [8,  12.3, 29.2, 10.6],
+                                        [9,  16.9, 42.9, 14.8],
+                                        [10, 12.8, 30.9, 11.6],
+                                        [11,  5.3,  7.9,  4.7],
+                                        [12,  6.6,  8.4,  5.2],
+                                        [13,  4.8,  6.3,  3.6],
+                                        [14,  4.2,  6.2,  3.4]
+                                    ]);
+                                    data.addRows(
+                                            result.graphInfo.xDataValues);
+                                    var options = {
+                                        chart: {
+                                            title: result.title
+                                        }
+                                    };
+                                    var chart = new google.charts.Line(document.getElementById('divChart'));
+                                    chart.draw(data, options);
                                 }
-                                $.get('/graph/edit/get-data',{graphdata:result})
-                                        .done(function (result1) {
-                                            if(result.type == 'bar'){
-                                                $("#graph-title").val(result.title);
-                                                $("#horizontal-axis-label").val(result.xLabel);
-                                                $("#vertical-axis-label").val(result.yLabel);
 
-                                                $("#horizontal-data-type").val(result.xDataType);
-                                                $("#vertical-data-type").val(result.yDataType);
-                                                google.charts.load('current', {packages: ['corechart', 'bar']});
-                                                google.charts.setOnLoadCallback(drawBasic);
-                                                function drawBasic(){
-                                                    var data = google.visualization.arrayToDataTable(result1.data.xDataValues);
-                                                    var options = {
-                                                        title: result.title,
-                                                        //chartArea: {height: '200'},
-                                                        width: 435,
-                                                        height: 220,
-                                                        hAxis: {
-                                                            title: result.xLabel,
-                                                            minValue: 0
-                                                        },
-                                                        vAxis: {
-                                                            title: result.yLabel
-                                                        },
-                                                        bar: {
-                                                            groupWidth: 20
-                                                        },
-                                                        legend: {position: 'none'}
-                                                    };
-                                                    var chart = new google.visualization.ColumnChart(document.getElementById('divChart'));
-                                                    chart.draw(data, options);
+                            }else if(result.graphInfo.type == 'pie'){
+                                $("#graph-title-pie").val(result.graphInfo.title);
+                                $("#data-name-pie").val(result.graphInfo.xDataType);
+                                $("#data-value-pie").val(result.graphInfo.yDataType);
+                                google.charts.load('current', {'packages': ['corechart']});
+                                google.charts.setOnLoadCallback(drawChart);
+                                function drawChart() {
+                                    var data = google.visualization.arrayToDataTable(result.graphInfo.xDataValues);
 
-                                                }
+                                    var options = {
+                                        title: result.graphInfo.title
+                                    };
 
+                                    var chart = new google.visualization.PieChart(document.getElementById('divChart'));
+                                    chart.draw(data, options);
+                                }
+                            }
 
-                                            } else if(result.type == 'line'){
-                                                $("#graph-title-line").val(result.title);
-                                                $("#horizontal-axis-label-line").val(result.xLabel);
-                                                $("#vertical-axis-label-line").val(result.yLabel);
-                                                $("#horizontal-data-type-line").val(result.xDataType);
-                                                $("#vertical-data-type-line").val(result.yDataType);
-
-                                                google.charts.load('current', {'packages': ['line']});
-                                                google.charts.setOnLoadCallback(drawChart);
-
-                                                function drawChart() {
-                                                    var data = new google.visualization.DataTable();
-                                                    data.addColumn('number', result.xLabel);
-                                                    data.addColumn('number', result.yLabel);
-                                                    data.addRows([
-                                                        [1,  37.8, 80.8, 41.8],
-                                                        [2,  30.9, 69.5, 32.4],
-                                                        [3,  25.4,   57, 25.7],
-                                                        [4,  11.7, 18.8, 10.5],
-                                                        [5,  11.9, 17.6, 10.4],
-                                                        [6,   8.8, 13.6,  7.7],
-                                                        [7,   7.6, 12.3,  9.6],
-                                                        [8,  12.3, 29.2, 10.6],
-                                                        [9,  16.9, 42.9, 14.8],
-                                                        [10, 12.8, 30.9, 11.6],
-                                                        [11,  5.3,  7.9,  4.7],
-                                                        [12,  6.6,  8.4,  5.2],
-                                                        [13,  4.8,  6.3,  3.6],
-                                                        [14,  4.2,  6.2,  3.4]
-                                                    ]);
-                                                    data.addRows(
-                                                            result.xDataValues);
-                                                    var options = {
-                                                        chart: {
-                                                            title: result.title
-                                                        }
-                                                    };
-                                                    var chart = new google.charts.Line(document.getElementById('divChart'));
-                                                    chart.draw(data, options);
-                                                }
-
-                                            }else if(result.type == 'pie'){
-                                                $("#graph-title-pie").val(result.title);
-                                                $("#data-name-pie").val(result.xDataType);
-                                                $("#data-value-pie").val(result.yDataType);
-                                                google.charts.load('current', {'packages': ['corechart']});
-                                                google.charts.setOnLoadCallback(drawChart);
-                                                function drawChart() {
-                                                    var data = google.visualization.arrayToDataTable(result1.data.xDataValues);
-
-                                                    var options = {
-                                                        title: result.title
-                                                    };
-
-                                                    var chart = new google.visualization.PieChart(document.getElementById('divChart'));
-                                                    chart.draw(data, options);
-                                                }
-                                            }
-
-
-
-                                        });
-                            }, 2000);
-
+                            if(result.data.isFilteredIssues) {
+                                $('.test').empty();
+                                for (var data in result.filteredIssues) {
+                                    $('.test').append('<tr>' +
+                                            /*'<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +*/
+                                            '<td>' + result.filteredIssues[data].fields.summary +'</td>' +
+                                            '</tr>');
+                                }
+                                $('#graph-type').prop('disabled', false).trigger("chosen:updated");
+                            } else {
+                                $(".test").empty();
+                                $('.test').append('<tr>' +
+                                        /*'<td>' +'<img src = "/img/dot.png" width="18px" height="18px" />' +'</td>' +*/
+                                        '<td> No issues or tasks available</td>' +
+                                        '</tr>');
+                                $('#graph-type').prop('disabled', true).trigger("chosen:updated");
+                            }
                             $("#save-dashboard").html('Update Filters');
+                            $('#graph-type').prop('disabled', false).trigger("chosen:updated");
                             showSettings();
                         }
                     });
         });
+
 
         $('#reset').on('click', function(){
             $('input[type="text"]').val('');

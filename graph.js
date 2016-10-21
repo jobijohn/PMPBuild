@@ -331,95 +331,6 @@ function generateLineGraph(req, res) {
     });
 }
 
-function editGraph(req, res){
-    var id= req.param('id');
-
-    fs.readFile('savedfilters.txt', 'utf8', function (err, txtData) {
-        if (err) {
-            callback(err, null);
-        }
-        var savedfilters = txtData.split("|");
-
-        var data = {};
-        async.eachSeries(savedfilters, function(savedfilter, callback) {
-            //xDataValues.push([issues.fields.customfield_10400.value, issues.fields.customfield_10403, getRandomColor()]);
-
-            if(savedfilter.indexOf("id="+id) !== -1){
-               //console.log('found');
-                var index = savedfilter.indexOf("issuetype=");//console.log("#" + index);
-                data.filters = savedfilter.substring(index);//console.log("#" + filters);
-                var removedFilters = savedfilter.substring(0,index); //console.log('@@'+removedFilters);
-
-                var removedFiltersArray = [];
-                removedFiltersArray = removedFilters.split("&&");
-
-
-                async.eachSeries(removedFiltersArray, function(removedFilter, callback) {
-                    var valueFilter = [];
-                    var splitArray = removedFilter.split("=");//console.log('%%'+splitArray);
-                    if(splitArray[0].toString() === 'type'){
-                        data.type = splitArray[1].toString();
-                    }
-                    if(data.type === 'bar' || data.type === 'line') {
-                        if (splitArray[0].toString() === 'title') {
-                            data.title = splitArray[1].toString();
-                        }
-                        if (splitArray[0].toString() === 'xLabel') {
-                            data.xLabel = splitArray[1].toString();
-                        }
-                        if (splitArray[0].toString() === 'yLabel') {
-                            data.yLabel = splitArray[1].toString();
-                        }
-                        if (splitArray[0].toString() === 'xDataType') {
-                            data.xDataType = splitArray[1].toString();
-                        }
-                        if (splitArray[0].toString() === 'yDataType') {
-                            data.yDataType = splitArray[1].toString();
-                        }
-                        if (splitArray[0].toString() === 'head') {
-                            data.head = splitArray[1].toString();
-                        }
-                    } else if(data.type === 'pie') {
-                        if (splitArray[0].toString() === 'title') {
-                            data.title = splitArray[1].toString();
-                        }
-                        if (splitArray[0].toString() === 'xDataType') {
-                            data.xDataType = splitArray[1].toString();
-                        }
-                        if (splitArray[0].toString() === 'yDataType') {
-                            data.yDataType = splitArray[1].toString();
-                        }
-                    }
-
-                    if(splitArray[0].toString() === 'head'){
-                        data.head = splitArray[1].toString();
-                    }
-                    callback();
-                });
-
-            }
-            callback();
-        });
-
-
-
-        //TODO:
-        //Populate X Data values
-        //
-
-        return res.json({
-            filters: data.filters,
-            type: data.type,
-            title : data.title,
-            xLabel: data.xLabel,
-            yLabel : data.yLabel,
-            xDataType : data.xDataType,
-            yDataType : data.yDataType,
-            head : data.head
-        });
-    });
-
-}
 
 function getGraphData(req,res) {
     var graphData = req.param('graphdata');
@@ -442,7 +353,6 @@ function updateGraph(req, res) {
                     var index = splitTxt.indexOf("head=");
                     var filters = splitTxt.substring(index);
                     var replcedFilter = splitTxt.replace(filters, filter);
-                    console.log('res',replcedFilter);
                     if(newFilter == "")
                         newFilter = replcedFilter;
                     else
@@ -465,10 +375,183 @@ function updateGraph(req, res) {
     });
 
 }
+
+function editFilter(req, res) {
+    var filterId = req.param('filterId');
+
+    async.waterfall([
+        function(callback) {
+            fs.readFile('savedfilters.txt', 'utf8', function (err, txtData) {
+                if (err) {
+                    callback(err, null);
+                }
+                var savedfilters = txtData.split("|");
+                var data = {};
+                async.eachSeries(savedfilters, function(savedfilter, callback) {
+                    if(savedfilter.indexOf("id="+filterId) !== -1) {
+                        var index = savedfilter.indexOf("issuetype=");
+                        data.filters = savedfilter.substring(index);
+                        data.graphFilter = savedfilter.substring(0, index);
+
+                        var graphInfoArray = data.graphFilter.split("&&");
+                        var graphInfo = {};
+                        async.eachSeries(graphInfoArray, function(eachInfo, callback) {
+                            var splitEachInfo = eachInfo.split("=");
+                            if(splitEachInfo[0].toString() === 'type'){
+                                graphInfo.type = splitEachInfo[1].toString();
+                            }
+                            if(graphInfo.type === 'bar' || graphInfo.type === 'line') {
+                                if (splitEachInfo[0].toString() === 'title') {
+                                    graphInfo.title = splitEachInfo[1].toString();
+                                }
+                                if (splitEachInfo[0].toString() === 'xLabel') {
+                                    graphInfo.xLabel = splitEachInfo[1].toString();
+                                }
+                                if (splitEachInfo[0].toString() === 'yLabel') {
+                                    graphInfo.yLabel = splitEachInfo[1].toString();
+                                }
+                                if (splitEachInfo[0].toString() === 'xDataType') {
+                                    graphInfo.xDataType = splitEachInfo[1].toString();
+                                }
+                                if (splitEachInfo[0].toString() === 'yDataType') {
+                                    graphInfo.yDataType = splitEachInfo[1].toString();
+                                }
+                                if (splitEachInfo[0].toString() === 'head') {
+                                    graphInfo.head = splitEachInfo[1].toString();
+                                }
+                            } else if(graphInfo.type === 'pie') {
+                                if (splitEachInfo[0].toString() === 'title') {
+                                    graphInfo.title = splitEachInfo[1].toString();
+                                }
+                                if (splitEachInfo[0].toString() === 'xDataType') {
+                                    graphInfo.xDataType = splitEachInfo[1].toString();
+                                }
+                                if (splitEachInfo[0].toString() === 'yDataType') {
+                                    graphInfo.yDataType = splitEachInfo[1].toString();
+                                }
+                            }
+
+                            if(splitEachInfo[0].toString() === 'head'){
+                                graphInfo.head = splitEachInfo[1].toString();
+                            }
+                            data.graphInfo = graphInfo;
+                            callback();
+                        });
+                        callback();
+                    } else {
+                        callback();
+                    }
+                });
+
+                callback(null, data);
+            });
+        },
+        function(data, callback) {
+            var filterArray = data.filters.split("&&");
+            var filters = {};
+            async.eachSeries(filterArray, function(eachFilter, callback) {
+                var splitEachFilter = eachFilter.split("=");
+                filters[splitEachFilter[0]] = splitEachFilter[1];
+            });
+            callback(null, data, filters);
+        },
+        function(data, filters, callback) {
+            if(filters["districts"])
+                data.district = filters["districts"].split(',');
+            else
+                data.district = '';
+            if(filters["taluks"])
+                data.taluk = filters["taluks"].split(',');
+            else
+                data.taluk = '';
+            if(filters["issuetype"])
+                data.issuetype = filters["issuetype"];
+            else
+                data.issuetype = '';
+            if(filters["acres"])
+                data.acres = filters["acres"].split(',');
+            else
+                data.acres = '';
+            callback(null, data);
+        },
+        function (data, callback) {
+            var filter= "";
+            var districtFilter, talukFilter, issuetypeFilter, acreFilter;
+            if(data.issuetype) {
+                issuetypeFilter = "e.fields.issuetype.name == '"+ data.issuetype +"'";
+                filter = issuetypeFilter;
+            }
+
+            if(data.district) {
+                districtFilter = "(e.fields.customfield_10400 != null)&&(";
+                for (i = 0; i < data.district.length; i++) {
+                    if (i != data.district.length - 1) {
+                        districtFilter += 'e.fields.customfield_10400.value == "' + data.district[i] + '"||';
+                    } else {
+                        districtFilter += 'e.fields.customfield_10400.value == "' + data.district[i] + '")';
+                    }
+                }
+                filter = filter + '&&' + districtFilter;
+            }
+
+            if(data.taluk) {
+                talukFilter = "(e.fields.customfield_10401 != null &&  (";
+                for (i = 0; i < data.taluk.length; i++) {
+                    if (i != data.taluk.length - 1) {
+                        talukFilter += 'e.fields.customfield_10401.value == "' + data.taluk[i] + '"||';
+                    } else {
+                        talukFilter += 'e.fields.customfield_10401.value == "' + data.taluk[i] + '"))';
+                    }
+                }
+                filter = filter + '&&' + talukFilter;
+            }
+
+
+
+            if(data.acres) {
+                acreFilter = "(e.fields.customfield_10403 != null)&&(";
+                for (i = 0; i < data.acres.length; i++) {
+                    if (i != data.acres.length - 1) {
+                        acreFilter += 'e.fields.customfield_10403' + data.acres[i] + '&&';
+                    } else {
+                        acreFilter += 'e.fields.customfield_10403' + data.acres[i] + ')';
+                    }
+                }
+                filter = filter + '&&' + acreFilter;
+            }
+            var issueJsonFile = 'jiraissues.json';
+            common.readJsonFile(issueJsonFile, function (err, issueData) {
+                var issues = issueData.issues;
+                var filteredIssues = issues.filter(function (e) {
+                    return eval(filter);
+                });
+                if(filteredIssues.length>0) {
+                    data.filteredIssues = filteredIssues;
+                    data.isFilteredIssues = true;
+                    callback(null, data);
+                } else {
+                    data.isFilteredIssues = false;
+                }
+            });
+        },
+        function (data, callback) {
+            populateGraphData(data.graphInfo, data.filteredIssues, function (err, graphData) {
+                data.graphInfo = graphData;
+                callback(null, data);
+            });
+        }
+    ], function (err, data) {
+        return res.json({
+            data:data,
+            graphInfo:data.graphInfo,
+            filteredIssues:data.filteredIssues});
+    });
+}
 exports.generateBarGraph = generateBarGraph;
 exports.generateLineGraph = generateLineGraph;
 exports.generatePieChart = generatePieChart;
 exports.populateGraphData = populateGraphData;
-exports.editGraph = editGraph;
+// exports.editGraph = editGraph;
 exports.getGraphData = getGraphData;
 exports.updateGraph = updateGraph;
+exports.editFilter = editFilter;
