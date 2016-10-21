@@ -3462,12 +3462,33 @@ body > .navbar-collapse[data-color="purple"]:after {
 .dashboard_panel .card .content, .dashboard_panel .card .footer {
     float: left;
     width: 50%;
+  opacity:1;
+  -webkit-transition: opacity 0.4s ease-in;
+  -moz-transition: opacity 0.4s ease-in;
+  -ms-transition: opacity 0.4s ease-in;
+  -o-transition: opacity 0.4s ease-in;
+  transition: opacity 0.4s ease-in;
+}
+.dashboard_panel .card .content.enable {
+  width: 100%;
+}
+.dashboard_panel .card .footer.disable {
+  opacity: 0;
+  width:0;
+  -webkit-transition: opacity 0.4s ease-in;
+  -moz-transition: opacity 0.4s ease-in;
+  -ms-transition: opacity 0.4s ease-in;
+  -o-transition: opacity 0.4s ease-in;
+  transition: opacity 0.4s ease-in;
 }
 .settings-panel .card .content {
     width: 100%;
 }
 .dashboard_panel .card .footer {
   border-left: 1px solid #ccc;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 0 16px -2px rgba(0, 0, 0, 0.3);
 }
 .dashboard_panel .card .footer .stats {
     height: 260px;
@@ -3961,7 +3982,20 @@ table .test td {
     margin: 0 0 5px 0;
     font-size: 10px;
 }
-
+.refreshBtn {
+  text-align: right;
+  color: #333;
+  line-height: 50px;
+}
+.refreshBtn a {
+  color: #5e5e5e;
+  cursor: pointer;
+}
+.task-issueToggle {
+  margin: 5px 0;
+  cursor: pointer;
+  text-align: right;
+}
 
 
 
