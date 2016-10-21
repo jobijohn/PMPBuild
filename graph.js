@@ -551,7 +551,6 @@ exports.generateBarGraph = generateBarGraph;
 exports.generateLineGraph = generateLineGraph;
 exports.generatePieChart = generatePieChart;
 exports.populateGraphData = populateGraphData;
-// exports.editGraph = editGraph;
 exports.getGraphData = getGraphData;
 exports.updateGraph = updateGraph;
 exports.editFilter = editFilter;
