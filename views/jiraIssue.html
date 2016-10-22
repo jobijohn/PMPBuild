@@ -21,8 +21,8 @@
                 <div class="form-group">
                     <select id="ap-issuetype" name="ap-issuetype" class="form-control" >
                         <option>Issue Type</option>
-                        <option value="member-on-boarding">Member On-boarding</option>
-                        <option value="seed-distribution">Seed Distribution</option>
+                        <option value="10002">Member On-boarding</option>
+                        <option value="10003">Seed Distribution</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -34,38 +34,27 @@
 
                 <div class="form-group">
                     <select id="ap-district" name="ap-district" class="form-control">
-                        <option>District</option>
-                        <option value="Adilabad">Adilabad</option>
-                        <option value="Anantapur">Anantapur</option>
-                        <option value="Chittoor">Chittoor</option>
-                        <option value="Cuddappah">Cuddappah</option>
-                        <option value="Guntur">Guntur</option>
-                        <option value="Karimnagar">Karimnagar</option>
-                        <option value="Karimnagar">Karimnagar</option>
-                        <option value="Krishna">Krishna</option>
-                        <option value="Kurnool">Kurnool</option>
-                        <option value="Mahaboob">Mahaboob</option>
-                        <option value="Medak">Medak</option>
+                        <option value="0">District</option>
+                        {{#indexData.districts}}
+                        <option value="{{districts}}">{{districts}}</option>
+                        {{/indexData.districts}}
                     </select>
                 </div>
                 <div class="form-group">
                     <select id="ap-taluk" name="ap-taluk" class="form-control">
-                        <option>Taluk</option>
-                        <option value="Agali">Agali</option>
-                        <option value="Amadagur">Amadagur</option>
-                        <option value="Amarapuram">Amarapuram</option>
-                        <option value="Gooty">Gooty</option>
-                        <option value="Guntur">Guntur</option>
-                        <option value="Irala">Irala</option>
-                        <option value="Kalakada">Kalakada</option>
-                        <option value="Kalikiri">Kalikiri</option>
-                        <option value="Kuppam">Kuppam</option>
-                        <option value="Puttur">Puttur</option>
-                        <option value="Badvel">Badvel</option>
+                        <option value="0">Taluk</option>
+                        {{#indexData.taluks}}
+                        <option value="{{taluks}}">{{taluks}}</option>
+                        {{/indexData.taluks}}
                     </select>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" id="ap-seed-name" name="seed-name" placeholder="Seed Name"/>
+                    <select id="ap-seed-name" name="ap-seed-name" class="form-control">
+                        <option>Seed Name</option>
+                        <option value="Wheat">Wheat</option>
+                        <option value="Rice">Rice</option>
+                        <option value="Barley">Barley</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="text" id="ap-seed-qty" name="seed-qty" placeholder="Seed Quantity"/>
@@ -101,9 +90,11 @@
         $.post('/CreateIssue', $('#form-create-task').serialize())
                 .done(function (result) {
                     if(result) {
-                        $("#display-msg").val = "SUCCESS"
+                        //$("#display-msg").val = "SUCCESS"
+                        alert('Created successfully')
                     } else {
-                        $("#display-msg").val = "FAILED"
+                        //$("#display-msg").val = "FAILED"
+                        alert('Failed to create ')
                     }
                 });
     });
