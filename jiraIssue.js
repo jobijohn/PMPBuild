@@ -3,7 +3,8 @@
  */
 
 var async =  require('async'),
-    fs = require('fs');
+    fs = require('fs'),
+    child_process = require('child_process');
 function renderForm(req, res) {
     res.render('jiraIssue');
 }
@@ -33,10 +34,22 @@ function createJiraIssue(req, res) {
         },
         function (randomFile, callback) {
             var obj = require("./"+ randomFile.toString());
-            obj.fields.summary = "asdsadsa";
+            obj.fields.summary = "Check Insert";
             fs.writeFile('./' + randomFile, JSON.stringify(obj), function (err) {
-                console.log(err);
+                callback(null, randomFile);
             });
+        },
+        function (randomFile, callback) {
+            function runCmd(cmd)
+            {
+                var resp = child_process.execSync(cmd);
+                var result = resp.toString('UTF8');
+                return result;
+            }
+
+            var cmd = "curl -u jobikjohn:jkjjkj -X POST --data @" + randomFile + "-H 'Content-Type: application/json' https://swarmact.atlassian.net/rest/api/2/issue/";
+            var result = runCmd(cmd);
+            callback(null, randomFile);
         },
         function (randomFile, callback) {
             // fs.unlink(randomFile, function (err) {
