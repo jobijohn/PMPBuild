@@ -378,7 +378,6 @@ function updateGraph(req, res) {
 
 function editFilter(req, res) {
     var filterId = req.param('filterId');
-
     async.waterfall([
         function(callback) {
             fs.readFile('savedfilters.txt', 'utf8', function (err, txtData) {
@@ -452,6 +451,7 @@ function editFilter(req, res) {
             async.eachSeries(filterArray, function(eachFilter, callback) {
                 var splitEachFilter = eachFilter.split("=");
                 filters[splitEachFilter[0]] = splitEachFilter[1];
+                callback();
             });
             callback(null, data, filters);
         },
@@ -505,8 +505,6 @@ function editFilter(req, res) {
                 }
                 filter = filter + '&&' + talukFilter;
             }
-
-
 
             if(data.acres) {
                 acreFilter = "(e.fields.customfield_10403 != null)&&(";
