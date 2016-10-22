@@ -3473,7 +3473,8 @@ body > .navbar-collapse[data-color="purple"]:after {
   width: 100%;
 }
 .dashboard_panel .card {
-  max-height:455px;
+  max-height:460px !important;
+  overflow: hidden;
 }
 .dashboard_panel .card .footer.disable {
   opacity: 0;
