@@ -3472,9 +3472,14 @@ body > .navbar-collapse[data-color="purple"]:after {
 .dashboard_panel .card .content.enable {
   width: 100%;
 }
+.dashboard_panel .card {
+  max-height:460px !important;
+  overflow: hidden;
+}
 .dashboard_panel .card .footer.disable {
   opacity: 0;
   width:0;
+  position: relative;
   -webkit-transition: opacity 0.4s ease-in;
   -moz-transition: opacity 0.4s ease-in;
   -ms-transition: opacity 0.4s ease-in;
@@ -3489,6 +3494,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   position: relative;
   background: #fff;
   box-shadow: 0 0 16px -2px rgba(0, 0, 0, 0.3);
+  float: right;
 }
 .dashboard_panel .card .footer .stats {
     height: 260px;
