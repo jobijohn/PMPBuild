@@ -73,7 +73,7 @@ function createJiraIssue(req, res) {
         function (randomFile, callback) {
             function runCmd(cmd)
             {
-                var resp = child_process.execSync(cmd);
+                var resp = child_process.exec(cmd);
                 var result = resp.toString('UTF8');
                 return result;
             }
@@ -82,7 +82,7 @@ function createJiraIssue(req, res) {
             var result = runCmd(cmd);
 
             console.log('randomFile:' + randomFile);
-            console.log('result:' + result);
+            console.log('result:' + JSON.stringify(result));
             callback(null, randomFile);
         },
         function (randomFile, callback) {
