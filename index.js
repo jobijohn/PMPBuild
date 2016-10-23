@@ -152,7 +152,7 @@ function getJsonFromJira(req, res) {
             })
         })
     }
-    consumer.get(base_url+"/rest/api/2/search?jql=project%20%3D%20MGM",
+    consumer.get(base_url+"/rest/api/2/search?jql=project%20%3D%20MGM&startAt=0&maxResults=500",
         req.session.oauth_access_token, //authtoken
         req.session.oauth_access_token_secret, //oauth secret
         callback);
