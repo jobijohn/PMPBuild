@@ -19,49 +19,49 @@
         <form method="post" id="form-create-task" class="form-create-task">
             <div class="container-fluid">
                 <div class="form-group">
-                    <select id="ap-issuetype" name="ap-issuetype" class="form-control" >
-                        <option>Issue Type</option>
+                    <select required id="ap-issuetype" name="ap-issuetype" class="form-control" >
+                        <option value="">Issue Type</option>
                         <option value="10002">Member On-boarding</option>
                         <option value="10003">Seed Distribution</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" id="ap-summary" name="ap-summary" placeholder="Summary"/>
+                    <input class="form-control" type="text" id="ap-summary" name="ap-summary" placeholder="Summary" required/>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" id="ap-name" name="ap-name" placeholder="Name"/>
+                    <input class="form-control" type="text" id="ap-name" name="ap-name" placeholder="Name" required/>
                 </div>
 
                 <div class="form-group">
-                    <select id="ap-district" name="ap-district" class="form-control">
-                        <option value="0">District</option>
+                    <select required id="ap-district" name="ap-district" class="form-control">
+                        <option value="">District</option>
                         {{#indexData.districts}}
                         <option value="{{districts}}">{{districts}}</option>
                         {{/indexData.districts}}
                     </select>
                 </div>
                 <div class="form-group">
-                    <select id="ap-taluk" name="ap-taluk" class="form-control">
-                        <option value="0">Taluk</option>
+                    <select required id="ap-taluk" name="ap-taluk" class="form-control">
+                        <option value="">Taluk</option>
                         {{#indexData.taluks}}
                         <option value="{{taluks}}">{{taluks}}</option>
                         {{/indexData.taluks}}
                     </select>
                 </div>
                 <div class="form-group">
-                    <select id="ap-seed-name" name="ap-seed-name" class="form-control">
-                        <option>Seed Name</option>
+                    <select required id="ap-seed-name" name="ap-seed-name" class="form-control">
+                        <option value="">Seed Name</option>
                         <option value="Wheat">Wheat</option>
                         <option value="Rice">Rice</option>
                         <option value="Barley">Barley</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" id="ap-seed-qty" name="seed-qty" placeholder="Seed Quantity"/>
+                    <input class="form-control" type="text" id="ap-seed-qty" name="seed-qty" placeholder="Seed Quantity" required/>
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control" type="text" id="ap-acres" name="ap-acres" placeholder="No. of Acres"/>
+                    <input class="form-control" type="text" id="ap-acres" name="ap-acres" placeholder="No. of Acres" required/>
                 </div>
 
                 <div class="form-group">

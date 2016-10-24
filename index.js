@@ -8,13 +8,23 @@ var fs = require('fs'),
     async = require('async');
 
 var base_url = "https://swarmact.atlassian.net"; //example https://test.atlassian.net
+// var consumer = new OAuth(
+//         base_url+"/plugins/servlet/oauth/request-token",
+//         base_url+"/plugins/servlet/oauth/access-token",
+//     "PMPBuildKey",
+//     fs.readFileSync('jira.pem', 'utf8'), //consumer secret, eg. fs.readFileSync('jira.pem', 'utf8')
+//     '1.0',
+//     "http://localhost:1337/jira/callback",
+//     "RSA-SHA1"
+// );
+
 var consumer = new OAuth(
-        base_url+"/plugins/servlet/oauth/request-token",
-        base_url+"/plugins/servlet/oauth/access-token",
+    base_url+"/plugins/servlet/oauth/request-token",
+    base_url+"/plugins/servlet/oauth/access-token",
     "PMPBuildKey",
     fs.readFileSync('jira.pem', 'utf8'), //consumer secret, eg. fs.readFileSync('jira.pem', 'utf8')
     '1.0',
-    "http://localhost:1337/jira/callback",
+    "http://54.255.168.92:8080/jira/callback",
     "RSA-SHA1"
 );
 
@@ -49,13 +59,34 @@ function indexPage(req, res) {
 
 }
 
+// function getOAuth(req, res) {
+//     var oa = new OAuth(base_url + "/plugins/servlet/oauth/request-token", //request token
+//         base_url + "/plugins/servlet/oauth/access-token", //access token
+//         "PMPBuildKey", //consumer key
+//         fs.readFileSync('jira.pem', 'utf8'), //consumer secret, eg. fs.readFileSync('jira.pem', 'utf8')
+//         '1.0', //OAuth version
+//         "http://localhost:1337/jira/callback", //callback url
+//         "RSA-SHA1");
+//     oa.getOAuthRequestToken(function (error, oauthToken, oauthTokenSecret) {
+//         if (error) {
+//             console.log(error.data);
+//             res.send('Error getting OAuth access token');
+//         } else {
+//             req.session.oa = oa;
+//             req.session.oauth_token = oauthToken;
+//             req.session.oauth_token_secret = oauthTokenSecret;
+//             return res.redirect(base_url + "/plugins/servlet/oauth/authorize?oauth_token=" + oauthToken);
+//         }
+//     });
+// }
+
 function getOAuth(req, res) {
     var oa = new OAuth(base_url + "/plugins/servlet/oauth/request-token", //request token
         base_url + "/plugins/servlet/oauth/access-token", //access token
         "PMPBuildKey", //consumer key
         fs.readFileSync('jira.pem', 'utf8'), //consumer secret, eg. fs.readFileSync('jira.pem', 'utf8')
         '1.0', //OAuth version
-        "http://localhost:1337/jira/callback", //callback url
+        "http://54.255.168.92:8080/jira/callback", //callback url
         "RSA-SHA1");
     oa.getOAuthRequestToken(function (error, oauthToken, oauthTokenSecret) {
         if (error) {
@@ -121,7 +152,7 @@ function getJsonFromJira(req, res) {
             })
         })
     }
-    consumer.get(base_url+"/rest/api/2/search?jql=project%20%3D%20MGM",
+    consumer.get(base_url+"/rest/api/2/search?jql=project%20%3D%20MGM&startAt=0&maxResults=500",
         req.session.oauth_access_token, //authtoken
         req.session.oauth_access_token_secret, //oauth secret
         callback);
