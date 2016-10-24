@@ -3476,6 +3476,15 @@ body > .navbar-collapse[data-color="purple"]:after {
   max-height:460px !important;
   overflow: hidden;
 }
+.dashboard_panel .card .footer table {
+    min-width: 279px;
+}
+.dashboard_panel .card.all-issue-table {
+    max-height: 800px !important;
+    overflow: visible;
+    height: auto;
+    float: left;
+}
 .dashboard_panel .card .footer.disable {
   opacity: 0;
   width:0;
