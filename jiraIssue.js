@@ -73,7 +73,7 @@ function createJiraIssue(req, res) {
         function (randomFile, callback) {
             function runCmd(cmd)
             {
-                var resp = child_process.exec(cmd);
+                var resp = child_process.execSync(cmd);
                 var result = resp.toString('UTF8');
                 return result;
             }
