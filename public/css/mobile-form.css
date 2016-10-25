@@ -51,6 +51,16 @@ body:before {
     outline: 0;
     padding: 8px;
 }
+.content #success-msg {
+    color: green;
+}
+.content #warning-msg {
+    color: orangered;
+}
+.content #error-msg {
+    color: red;
+}
+
 
 @media only screen
 and (min-width: 320px)

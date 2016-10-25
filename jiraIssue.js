@@ -44,7 +44,6 @@ function createJiraIssue(req, res) {
         function (callback) {
             fs.writeFile(randomFile, '{"fields":{"project":{"id":"10000"}}}', function (err) {
                 if (err) return console.log(err);
-                console.log('File Created -', randomFile);
                 callback(null, randomFile);
             });
         },
@@ -80,8 +79,6 @@ function createJiraIssue(req, res) {
 
             var cmd = "curl -u jobikjohn:jkjjkj -X POST --data @" + randomFile.toString() + " -H 'Content-Type: application/json' https://swarmact.atlassian.net/rest/api/2/issue/";
             var result = runCmd(cmd);
-
-            console.log('randomFile:' + randomFile);
             console.log('result:' + JSON.stringify(result));
             callback(null, randomFile);
         },

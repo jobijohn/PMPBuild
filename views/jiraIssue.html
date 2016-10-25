@@ -65,8 +65,10 @@
                 </div>
 
                 <div class="form-group">
-                    <button id="btn-create-task" name="btn-create-task">Create</button>
-                    <label id="display-msg"></label>
+                    <label id="success-msg"></label>
+                    <label id="warning-msg"></label>
+                    <label id="error-msg"></label>
+                    <button id="btn-create-task" name="btn-create-task">Create Issue</button>
                 </div>
             </div>
 
@@ -81,21 +83,74 @@
 </html>
 
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
         /*$(".chosen-select").chosen({width: "100%", disable_search: true});*/
     });
     $('#form-create-task').on('click', '#btn-create-task',  function (e) {
-        $.post('/CreateIssue', $('#form-create-task').serialize())
-                .done(function (result) {
-                    if(result) {
-                        //$("#display-msg").val = "SUCCESS"
-                        alert('Created successfully')
-                    } else {
-                        //$("#display-msg").val = "FAILED"
-                        alert('Failed to create ')
-                    }
-                });
+        e.preventDefault();
+        if(reqValidation()){
+            $.post('/CreateIssue', $('#form-create-task').serialize())
+                    .done(function (result) {
+                        if(result.success) {
+                            $("#success-msg").text("Issue Created Successfully");
+                            $("#warning-msg").text("");
+                            $("#error-msg").text("");
+                            document.getElementById("form-create-task").reset();
+                        } else {
+                            $("#error-msg").text("Error: Issue Creation Failed");
+                            $("#warning-msg").text("");
+                            $("#success-msg").text("");
+                        }
+                    });
+        } else {
+            $("#warning-msg").text("** Please fill all the fields");
+            $("#success-msg").text("");
+            $("#error-msg").text("");
+        }
+
     });
+    function reqValidation() {
+        var check = true;
+        var _issuetype = mapValidate('#ap-issuetype');
+        var _summary = mapValidate('#ap-summary');
+        var _name = mapValidate('#ap-name');
+        var _district = mapValidate('#ap-district');
+        var _taluk = mapValidate('#ap-taluk');
+        var _seedName = mapValidate('#ap-seed-name');
+        var _seedQty = mapValidate('#ap-seed-qty');
+        var _acres = mapValidate('#ap-acres');
+        if(_issuetype&&_summary&&_name&&_district&&_taluk&&_seedName&&_seedQty&&_acres) {
+            check = true;
+        } else {
+            check = false;
+        }
+        return check;
+    }
+
+
+
+    function mapValidate(elem) {
+        var check = true;
+        $(elem).val($.trim($(elem).val()));
+
+        if (!$(elem).val()) {
+            check = false;
+        } else {
+            check = true;
+        }
+        return check;
+    }
+
+//    function mapNumValidate(elem) {
+//        var check = true;
+//        $(elem).val($.trim($(elem).val()));
+//
+//        if (!$(elem).val() || isNaN($(elem).val()) || $(elem).val() < 1) {
+//            check = false;
+//        } else {
+//        }
+//        return check;
+//    }
 </script>
