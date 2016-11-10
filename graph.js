@@ -6,6 +6,10 @@ var common = require('./common'),
     index = require("./index"),
     fs = require('fs');
 
+/**
+ * Function to get a random color
+ * @returns {string} - a color in hexadecimal
+ */
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -15,6 +19,12 @@ function getRandomColor() {
     return color;
 }
 
+/**
+ * Function to remove all duplicate values by adding same type
+ * @param xDataValues - x values of the graph
+ * @returns {U[]|Array|*}
+ * @constructor
+ */
 function RemoveDuplicates(xDataValues) {
     var sum = {},result;
 
@@ -30,6 +40,12 @@ function RemoveDuplicates(xDataValues) {
     return result;
 }
 
+/**
+ * Function to populate data for the required graph
+ * @param graphData - Data related to the required graph
+ * @param selectedIssues - Issues filtered by given condition
+ * @param callback - Populated data for the required graph
+ */
 function populateGraphData(graphData, selectedIssues, callback) {
     if(selectedIssues == "") {
         common.readJsonFile('filteredissues.json', function(err, selectedIssues){
@@ -260,6 +276,11 @@ function populateGraphData(graphData, selectedIssues, callback) {
     }
 }
 
+/**
+ * Function to generate Bar graph
+ * @param req - contains details of the graph
+ * @param res - returns data related to the graph
+ */
 function generateBarGraph(req, res) {
     //TODO: validations
 
@@ -279,6 +300,11 @@ function generateBarGraph(req, res) {
     });
 }
 
+/**
+ * Function to generate Pie graph
+ * @param req - contains details of the graph
+ * @param res - returns data related to the graph
+ */
 function generatePieChart(req, res) {
     //TODO: validations
     var graphData = {
@@ -294,6 +320,11 @@ function generatePieChart(req, res) {
     });
 }
 
+/**
+ * Function to generate Line graph
+ * @param req - contains details of the graph
+ * @param res - returns data related to the graph
+ */
 function generateLineGraph(req, res) {
     //TODO: validations
     var title = req.param('graph-title-line');
@@ -331,7 +362,11 @@ function generateLineGraph(req, res) {
     });
 }
 
-
+/**
+ * Function to populate data for a particular graph
+ * @param req
+ * @param res
+ */
 function getGraphData(req,res) {
     var graphData = req.param('graphdata');
     populateGraphData(graphData,'', function (err, data) {
@@ -339,6 +374,11 @@ function getGraphData(req,res) {
     })
 }
 
+/**
+ * Function to update a graph with new filters
+ * @param req - contains filter and id of a particular graph
+ * @param res - send success if edit completed
+ */
 function updateGraph(req, res) {
     var filter = req.param('filter');
     var id = req.param('id');
@@ -376,6 +416,11 @@ function updateGraph(req, res) {
 
 }
 
+/**
+ * Function to edit a particular graph/filter
+ * @param req - contains id of the graph
+ * @param res - contains information related to the particular graph
+ */
 function editFilter(req, res) {
     var filterId = req.param('filterId');
     async.waterfall([

@@ -6,6 +6,12 @@ var common =  require('./common'),
     async =  require('async'),
     fs = require('fs'),
     child_process = require('child_process');
+
+/**
+ * Render jira issue creation form
+ * @param req
+ * @param res
+ */
 function renderForm(req, res) {
     var indexData = {};
     var issueJsonFile = 'jiraissues.json';
@@ -21,13 +27,20 @@ function renderForm(req, res) {
 
 }
 
+/**
+ * To get a random name for a file
+ * @returns {string}
+ */
 function randomFileName() {
-    // Math.random should be unique because of its seeding algorithm.
-    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-    // after the decimal.
     return '_' + Math.random().toString(36).substr(2, 9);
 };
 
+/**
+ * To Create issues in jira
+ * @param req
+ * @param res
+ * @returns {*}
+ */
 function createJiraIssue(req, res) {
     var issueType = req.param('ap-issuetype');
     var summary = req.param('ap-summary');

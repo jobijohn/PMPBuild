@@ -7,17 +7,9 @@ var fs = require('fs'),
     graph = require('./graph'),
     async = require('async');
 
-var base_url = "https://swarmact.atlassian.net"; //example https://test.atlassian.net
-// var consumer = new OAuth(
-//         base_url+"/plugins/servlet/oauth/request-token",
-//         base_url+"/plugins/servlet/oauth/access-token",
-//     "PMPBuildKey",
-//     fs.readFileSync('jira.pem', 'utf8'), //consumer secret, eg. fs.readFileSync('jira.pem', 'utf8')
-//     '1.0',
-//     "http://localhost:1337/jira/callback",
-//     "RSA-SHA1"
-// );
+var base_url = "https://swarmact.atlassian.net"; //base URL - for example https://test.atlassian.net
 
+// Contains oauth information to authenticate access to the jira
 var consumer = new OAuth(
     base_url+"/plugins/servlet/oauth/request-token",
     base_url+"/plugins/servlet/oauth/access-token",
@@ -28,6 +20,11 @@ var consumer = new OAuth(
     "RSA-SHA1"
 );
 
+/**
+ * Get data for loading home page
+ * @param req
+ * @param res
+ */
 function indexPage(req, res) {
     var issueJsonFile = 'jiraissues.json';
     var indexData = {};
@@ -55,31 +52,13 @@ function indexPage(req, res) {
         });
 
     });
-    //res.render('dashboard', {data:issueTypes, data1:districts, data2:taluks});
-
 }
 
-// function getOAuth(req, res) {
-//     var oa = new OAuth(base_url + "/plugins/servlet/oauth/request-token", //request token
-//         base_url + "/plugins/servlet/oauth/access-token", //access token
-//         "PMPBuildKey", //consumer key
-//         fs.readFileSync('jira.pem', 'utf8'), //consumer secret, eg. fs.readFileSync('jira.pem', 'utf8')
-//         '1.0', //OAuth version
-//         "http://localhost:1337/jira/callback", //callback url
-//         "RSA-SHA1");
-//     oa.getOAuthRequestToken(function (error, oauthToken, oauthTokenSecret) {
-//         if (error) {
-//             console.log(error.data);
-//             res.send('Error getting OAuth access token');
-//         } else {
-//             req.session.oa = oa;
-//             req.session.oauth_token = oauthToken;
-//             req.session.oauth_token_secret = oauthTokenSecret;
-//             return res.redirect(base_url + "/plugins/servlet/oauth/authorize?oauth_token=" + oauthToken);
-//         }
-//     });
-// }
-
+/**
+ * To authenticate jira using jira login details
+ * @param req
+ * @param res - redirected to jira for login
+ */
 function getOAuth(req, res) {
     var oa = new OAuth(base_url + "/plugins/servlet/oauth/request-token", //request token
         base_url + "/plugins/servlet/oauth/access-token", //access token
@@ -101,6 +80,11 @@ function getOAuth(req, res) {
     });
 }
 
+/**
+ * After authentication callback comes to here
+ * @param req
+ * @param res
+ */
 function getOAuthCallback (req, res) {
     var oa = new OAuth(req.session.oa._requestUrl,
         req.session.oa._accessUrl,
@@ -132,17 +116,12 @@ function getOAuthCallback (req, res) {
         });
 }
 
+/**
+ * To get the json data from jira by giving project url
+ * @param req
+ * @param res
+ */
 function getJsonFromJira(req, res) {
-    /*var consumer = new OAuth(
-        base_url+"/plugins/servlet/oauth/request-token",
-        base_url+"/plugins/servlet/oauth/access-token",
-        "PMPBuildKey",
-        fs.readFileSync('jira.pem', 'utf8'), //consumer secret, eg. fs.readFileSync('jira.pem', 'utf8')
-        '1.0',
-        "http://localhost:1337/jira/callback",
-        "RSA-SHA1"
-    );*/
-
     function callback(error, data, resp) {
         fs.writeFile('jiraissues.json',"", function (err) {
             if (err) return console.log(err);
@@ -158,6 +137,11 @@ function getJsonFromJira(req, res) {
         callback);
 }
 
+/**
+ * Function to filter issues using different filters
+ * @param req - contains filters
+ * @param res - success result after saving filtered issues to  a json
+ */
 function filterIssues (req, res){
     var district = req.param('district');
     var taluk = req.param('taluk');
@@ -359,8 +343,8 @@ function saveToDashboard(req, res) {
 }
 
 /**
- * Function to get saved filters
- * @param callback
+ * Function to get saved filters in a text file
+ * @param callback - contains all the saved filters
  */
 function getSavedFilters(callback) {
     fs.readFile('savedfilters.txt', 'utf8', function (err, txtData) {
@@ -372,7 +356,7 @@ function getSavedFilters(callback) {
 }
 
 /**
- * Functo get All saved graph and filters
+ * Function to   get All saved graph and filters
  * @param callback
  */
 function getSavedGraphAndIssuesFilter(callback) {
@@ -397,6 +381,11 @@ function getSavedGraphAndIssuesFilter(callback) {
     }) ;
 }
 
+/**
+ * Function to populate data for saved graph
+ * @param savedFilters
+ * @param callback
+ */
 function getDataForSavedGraphAndIssuesFilter(savedFilters, callback) {
     var savedFiltersData = [];
     async.eachSeries(savedFilters, function(filter, callback) {
