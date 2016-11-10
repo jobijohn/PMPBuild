@@ -2,8 +2,11 @@
  * Created by appu on 4/10/16.
  */
 var fs = require('fs');
+
 /**
- * Function to read jsonissues file
+ * Function to read issues from json file
+ * @param jsonFileName - Name of the json file whick contains issues
+ * @param callback - Callback issues from the given file
  */
 function readJsonFile(jsonFileName, callback){
     fs.readFile(jsonFileName, 'utf8', function (err, jsonData) {
@@ -21,8 +24,8 @@ function readJsonFile(jsonFileName, callback){
 }
 
 /**
- * Function to get all unique issues from the json
- * @param jsonJiraProject - json returned from rest api
+ * Function to get all unique issues type from the json
+ * @param jsonJiraProject - Issues that read from json file
  * @returns {Array} - unique Issue Types
  */
 function getAllUniqueIssueTypes(jsonJiraProject, callback) {
@@ -47,10 +50,11 @@ function getAllUniqueIssueTypes(jsonJiraProject, callback) {
     callback(null, uniqueIssueTypes);
 }
 
+
 /**
  * Function to get all unique districts from the json
- * @param jsonJiraProject - json returned from rest api
- * @returns {Array} - unique Issue Types
+ * @param jsonJiraProject - Issues that read from json file
+ * @returns {Array} - unique Districts
  */
 function getAllUniqueDistricts(jsonJiraProject, callback) {
     var totalJiraIssues,
@@ -65,7 +69,7 @@ function getAllUniqueDistricts(jsonJiraProject, callback) {
         }
     }
 
-    uniqueDistricts = districts.filter(function (elem, index, self) {         // To get unique issue types from all issues
+    uniqueDistricts = districts.filter(function (elem, index, self) {         // To get unique districts from all issues
         return index == self.indexOf(elem);
     });
 
@@ -77,7 +81,8 @@ function getAllUniqueDistricts(jsonJiraProject, callback) {
 
 /**
  * Function to get all unique taluks from the json
- * @type {readJsonFile}
+ * @param jsonJiraProject - Issues that read from json file
+ * @returns {Array} - unique Taluks
  */
 function getAllUniqueTaluks(jsonJiraProject, callback) {
     var totalJiraIssues,
@@ -103,9 +108,9 @@ function getAllUniqueTaluks(jsonJiraProject, callback) {
 }
 
 /**
- * Function to get all jira issues
- * @param jsonJiraProject
- * @param callback
+ * Function to get all jira issues from the json
+ * @param jsonJiraProject - Issues that read from json file
+ * @param callback - All Issues
  */
 function getAllIssues(jsonJiraProject, callback) {
     var totalJiraIssues = jsonJiraProject.maxResults;

@@ -2,10 +2,21 @@
  * Created by jobi on 10/8/16.
  */
 
+/**
+ * Render jira issue creation form
+ * @param req
+ * @param res
+ */
 function renderForm(req, res) {
     res.render('jiraIssue');
 }
 
+/**
+ * To Create issues in jira
+ * @param req
+ * @param res
+ * @returns {*}
+ */
 function createJiraIssue(req, res) {
    /* var issueType = req.param('ap-issue-type');
     var district = req.param('ap-district');
@@ -57,38 +68,8 @@ function createJiraIssue(req, res) {
                 console.log('result:', result);
             });
         }
-        else {
-            //throw "Login failed :(";
-        }
     });
-/*
 
-    var jira = require('jira-api');
-
-    var options = {
-        config: {
-            "username": "jobikjohn",
-            "passowrd": "jkjjkj",
-            "host": "https://swarmact.atlassian.net/rest/api/2/issue"
-        },
-        data: {
-            fields: {
-                project: {
-                    id: "10000"
-                },
-                summary: "A short summary of the issue",
-                description: "A more elaborate decription of the issue",
-                issuetype: {
-                    id: "10002"
-                }
-            }
-        }
-    };
-
-    jira.issue.post(options, function(response) {
-        console.log(JSON.stringify(response, null, 4));
-    });
-*/
 
 
     return res.json({

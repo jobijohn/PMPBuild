@@ -3,8 +3,7 @@ var express = require('express'),
     index = require('./index'),
     session = require('express-session'),
     graph = require('./graph'),
-    jiraIssue = require('./jiraIssue'),
-    saveXml = require('./saveXml');
+    jiraIssue = require('./jiraIssue');
 
 
 function launchApp() {
@@ -58,8 +57,6 @@ function launchApp() {
     app.get('/CreateIssue', jiraIssue.renderForm);
     app.post('/CreateIssue', jiraIssue.createJiraIssue);
 
-    app.post('/save/xml', saveXml.saveToXml);
-    app.get('/getCharts', saveXml.getCharts);
 
     app.post('/filter-issues', index.filterIssues);
     app.post('/save-to-dashboard', index.saveToDashboard);
